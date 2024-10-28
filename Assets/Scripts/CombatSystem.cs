@@ -7,8 +7,16 @@ using UnityEngine.UI;
 
 public class CombatSystem : MonoBehaviour
 {
-	private GameObject player;
-	private GameObject enemy;
+	private enum CombatState {
+		PlayersTurn,
+		EnemiesTurn,
+		Won,
+		Lost
+	}
+
+	private CombatState state;
+	private Player player;
+	private Enemy enemy;
 
 	[SerializeField] private TextMeshProUGUI playerHealth;
 	[SerializeField] private TextMeshProUGUI playerDamage;
@@ -16,6 +24,7 @@ public class CombatSystem : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI enemyDamage;
 	[SerializeField] private Image playerHpBar;
 	[SerializeField] private Image enemyHpBar;
+	[SerializeField] private TextMeshProUGUI enemyName;
 	[SerializeField] private GameObject combatScreen;
 
 	private void Awake() {
@@ -26,19 +35,35 @@ public class CombatSystem : MonoBehaviour
 		PlayerController.CombatTriggered -= OnCombatTriggered;
 	}
 
-	public void OnCombatTriggered(Player p, Enemy e) {
-		InitCombatScreen(p, e);
+	public void OnCombatTriggered(Enemy enemy) {
+		InitCombatScreen(GameManager.Instance.Player, enemy);
+		state = CombatState.PlayersTurn;
 		combatScreen.SetActive(true);
 	}
 
-	public void InitCombatScreen(Player p, Enemy e) {
-		playerHealth.text = p.getCurrentHp().ToString() + "/" + p.getMaxHp();
-		playerDamage.text = p.getDamage().ToString();
-		playerHpBar.fillAmount = p.getCurrentHp() / p.getMaxHp();
+	public void InitCombatScreen(Player player, Enemy enemy) {
+		this.player = player;
+		this.enemy = enemy;
+		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
+		playerDamage.text = player.Damage.ToString();
+		playerHpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
 
-		enemyHealth.text = e.getCurrentHp().ToString() + "/" + e.getMaxHp();
-		enemyDamage.text = e.getDamage().ToString();
-		enemyHpBar.fillAmount = e.getCurrentHp() / e.getMaxHp();
+		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
+		enemyDamage.text = enemy.Damage.ToString();
+		enemyHpBar.fillAmount = enemy.CurrentHp / (float)enemy.MaxHp;
+		enemyName.text = enemy.Name;
 	}
 
+	public void UpdateCombatScreen() {
+		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
+		playerHpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
+
+		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
+		enemyHpBar.fillAmount = enemy.CurrentHp / (float)enemy.MaxHp;
+	}
+
+	public void AttackButton() {
+		enemy.CurrentHp -= player.Damage;
+		UpdateCombatScreen();
+	}
 }

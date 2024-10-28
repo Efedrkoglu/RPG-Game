@@ -10,17 +10,14 @@ public class PlayerController : MonoBehaviour
 	private Vector3 movementDirection;
 	private bool isHit;
 
-	private Player player;
-
 	[SerializeField] private float movementSpeed;
 
-	public static event Action<Player, Enemy> CombatTriggered;
+	public static event Action<Enemy> CombatTriggered;
 
 	private void Start() {
 		rigidBody = GetComponent<Rigidbody>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
-		player = new Player(100, 10, 0);
 	}
 
 	private void Update() {
@@ -57,13 +54,13 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isRunning", false);
 		}
 	}
-	private void CombatTriggeredEvent(Player p, Enemy e) {
-		CombatTriggered?.Invoke(p, e);
+	private void CombatTriggeredEvent(Enemy enemy) {
+		CombatTriggered?.Invoke(enemy);
 	}
 
-	private IEnumerator TriggerCombatEvent(Player p, Enemy e) {
+	private IEnumerator TriggerCombatEvent(Enemy enemy) {
 		yield return new WaitForSeconds(.15f);
-		CombatTriggeredEvent(p, e);
+		CombatTriggeredEvent(enemy);
 	}
 
 	public void ExitAttackAnimation() {
@@ -80,7 +77,7 @@ public class PlayerController : MonoBehaviour
 		if (isHit) {
 			if (hitInfo.collider.gameObject.CompareTag("Enemy")) {
 				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("hurtTrigger");
-				StartCoroutine(TriggerCombatEvent(player, new Bandit()));
+				StartCoroutine(TriggerCombatEvent(hitInfo.collider.gameObject.GetComponent<EnemyUnit>().Enemy));
 			}
 		}
 	}

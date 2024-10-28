@@ -501,7 +501,7 @@ TextureImporter:
         serializedVersion: 2
         x: 144
         y: 96
-        width: 48
+        width: 47
         height: 48
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -520,9 +520,9 @@ TextureImporter:
       name: Bandit_20
       rect:
         serializedVersion: 2
-        x: 192
+        x: 191
         y: 96
-        width: 48
+        width: 49
         height: 48
       alignment: 7
       pivot: {x: 0.5, y: 0}

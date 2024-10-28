@@ -4,41 +4,51 @@ using UnityEngine;
 
 public abstract class Enemy
 {
-	private int maxHp;
-	private int currentHp;
-	private int damage;
-	
-	public Enemy(int hp, int damage) {
-		this.maxHp = hp;
-		this.currentHp = maxHp;
-		this.damage = damage;
-	}
+    private string name;
+    private int maxHp;
+    private int currentHp;
+    private int damage;
+    private int bounty;
+    private int xpPoints;
 
-	public void TakeDamage(int val) {
-		currentHp -= val;
+    public Enemy(string name, int maxHp, int damage, int bounty, int xpPoints) {
+        this.name = name;
+        this.maxHp = maxHp;
+        this.currentHp = maxHp;
+        this.damage = damage;
+        this.bounty = bounty;
+        this.xpPoints = xpPoints;
+    }
 
-		if(currentHp <= 0) {
-			currentHp = 0;
-		}
-	}
+    public string Name {
+        get { return name; }
+    }
 
-	public void Heal(int val) {
-		currentHp += val;
+    public int MaxHp {
+        get { return maxHp; }
+    }
 
-		if(currentHp > maxHp) {
-			currentHp = maxHp;
-		}
-	}
+    public int CurrentHp {
+        get { return currentHp; }
+        set {
+            currentHp = value;
 
-	public int getDamage() {
-		return this.damage;
-	}
+            if (currentHp < 0)
+                currentHp = 0;
+            if (currentHp > maxHp)
+                currentHp = maxHp;
+        }
+    }
 
-	public int getMaxHp() {
-		return this.maxHp;
-	}
+    public int Damage {
+        get { return damage; }
+    }
 
-	public int getCurrentHp() {
-		return this.currentHp;
-	}
+    public int Bounty {
+        get { return bounty; }
+    }
+
+    public int XpPoints {
+        get { return xpPoints; }
+    }
 }
