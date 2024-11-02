@@ -2,26 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy
+public class Enemy : MonoBehaviour
 {
-    private string name;
-    private int maxHp;
-    private int currentHp;
-    private int damage;
-    private int bounty;
-    private int xpPoints;
+    protected string enemyName;
+    protected int maxHp;
+    protected int currentHp;
+    protected int damage;
 
-    public Enemy(string name, int maxHp, int damage, int bounty, int xpPoints) {
-        this.name = name;
-        this.maxHp = maxHp;
-        this.currentHp = maxHp;
-        this.damage = damage;
-        this.bounty = bounty;
-        this.xpPoints = xpPoints;
+    protected virtual void Start() {
+
     }
 
-    public string Name {
-        get { return name; }
+    public string EnemyName {
+        get { return enemyName; }
     }
 
     public int MaxHp {
@@ -35,20 +28,13 @@ public abstract class Enemy
 
             if (currentHp < 0)
                 currentHp = 0;
-            if (currentHp > maxHp)
+            else if (currentHp > maxHp)
                 currentHp = maxHp;
         }
     }
 
     public int Damage {
         get { return damage; }
-    }
-
-    public int Bounty {
-        get { return bounty; }
-    }
-
-    public int XpPoints {
-        get { return xpPoints; }
+        set { damage = value; }
     }
 }

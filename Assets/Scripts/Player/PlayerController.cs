@@ -9,20 +9,26 @@ public class PlayerController : MonoBehaviour
 	private Animator animator;
 	private Vector3 movementDirection;
 	private bool isHit;
+	private bool listenInputs;
 
 	[SerializeField] private float movementSpeed;
 
-	public static event Action<Enemy> CombatTriggered;
+	public static event Action<GameObject, Enemy> CombatTriggered;
 
 	private void Start() {
 		rigidBody = GetComponent<Rigidbody>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+        listenInputs = true;
 	}
 
 	private void Update() {
-		float X_axis = Input.GetAxis("Horizontal");
-		float Z_axis = Input.GetAxis("Vertical");
+		float X_axis = 0;
+		float Z_axis = 0;
+		if(listenInputs) {
+            X_axis = Input.GetAxis("Horizontal");
+            Z_axis = Input.GetAxis("Vertical");
+        }
 
 		movementDirection = new Vector3(X_axis, 0, Z_axis);
 
@@ -54,13 +60,10 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isRunning", false);
 		}
 	}
-	private void CombatTriggeredEvent(Enemy enemy) {
-		CombatTriggered?.Invoke(enemy);
-	}
-
-	private IEnumerator TriggerCombatEvent(Enemy enemy) {
+	private IEnumerator CombatTriggeredEvent(GameObject enemyGO, Enemy enemy) {
 		yield return new WaitForSeconds(.15f);
-		CombatTriggeredEvent(enemy);
+        listenInputs = false;
+		CombatTriggered?.Invoke(enemyGO, enemy);
 	}
 
 	public void ExitAttackAnimation() {
@@ -77,7 +80,7 @@ public class PlayerController : MonoBehaviour
 		if (isHit) {
 			if (hitInfo.collider.gameObject.CompareTag("Enemy")) {
 				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("hurtTrigger");
-				StartCoroutine(TriggerCombatEvent(hitInfo.collider.gameObject.GetComponent<EnemyUnit>().Enemy));
+				StartCoroutine(CombatTriggeredEvent(hitInfo.collider.gameObject, hitInfo.collider.gameObject.GetComponent<Enemy>()));
 			}
 		}
 	}

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Bandit : Enemy
 {
-    public Bandit() : base("Bandit", 15, 5, 5, 10) {
-
+    protected override void Start() {
+        enemyName = "Bandit";
+        maxHp = 15;
+        currentHp = maxHp;
+        damage = 5;
     }
+
 }

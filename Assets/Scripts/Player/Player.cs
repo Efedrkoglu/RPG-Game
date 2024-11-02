@@ -9,9 +9,6 @@ public class Player
 	private int damage;
 	private int gold;
 
-	private string idleAnim = "Player/Idle/";
-	private string attackAnim = "Player/Attack/";
-
 	public Player(int hp, int damage, int gold) {
 		this.maxHp = hp;
 		this.currentHp = this.maxHp;
@@ -43,13 +40,5 @@ public class Player
 	public int Gold {
 		get { return gold; }
 		set { gold = value; }
-	}
-
-	public string IdleAnim {
-		get { return idleAnim; }
-	}
-
-	public string AttackAnim {
-		get { return attackAnim; }
 	}
 }

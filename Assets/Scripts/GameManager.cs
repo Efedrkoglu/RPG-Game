@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
 	private Player player;
+	[SerializeField] private GameObject playerCombatUnit;
 
 	private void Awake() {
 		if(instance != null && instance != this) {
@@ -39,5 +40,9 @@ public class GameManager : MonoBehaviour
 
 	public Player Player {
 		get { return player; }
+	}
+
+	public GameObject PlayerCombatUnit {
+		get { return playerCombatUnit; }
 	}
 }

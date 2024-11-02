@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
-	public Skeleton() : base("Skeleton", 10, 3, 5, 5) {
-
-	}
+    protected override void Start() {
+        enemyName = "Skeleton";
+        maxHp = 10;
+        currentHp = maxHp;
+        damage = 5;
+    }
 }

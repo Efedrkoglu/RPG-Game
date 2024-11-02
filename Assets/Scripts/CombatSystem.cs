@@ -7,24 +7,19 @@ using UnityEngine.UI;
 
 public class CombatSystem : MonoBehaviour
 {
-	private enum CombatState {
-		PlayersTurn,
-		EnemiesTurn,
-		Won,
-		Lost
-	}
-
-	private CombatState state;
 	private Player player;
 	private Enemy enemy;
+	private GameObject playerGO;
+	private GameObject enemyGO;
 
+	[SerializeField] private Transform playerCombatStation;
+	[SerializeField] private Transform enemyCombatStation;
 	[SerializeField] private TextMeshProUGUI playerHealth;
 	[SerializeField] private TextMeshProUGUI playerDamage;
 	[SerializeField] private TextMeshProUGUI enemyHealth;
 	[SerializeField] private TextMeshProUGUI enemyDamage;
-	[SerializeField] private Image playerHpBar;
-	[SerializeField] private Image enemyHpBar;
 	[SerializeField] private TextMeshProUGUI enemyName;
+	[SerializeField] private SwitchCamera switchCamera;
 	[SerializeField] private GameObject combatScreen;
 
 	private void Awake() {
@@ -35,35 +30,41 @@ public class CombatSystem : MonoBehaviour
 		PlayerController.CombatTriggered -= OnCombatTriggered;
 	}
 
-	public void OnCombatTriggered(Enemy enemy) {
-		InitCombatScreen(GameManager.Instance.Player, enemy);
-		state = CombatState.PlayersTurn;
+	private IEnumerator ActivateCombatScreen() {
+		yield return new WaitForSeconds(.4f);
 		combatScreen.SetActive(true);
 	}
 
-	public void InitCombatScreen(Player player, Enemy enemy) {
-		this.player = player;
+	public void OnCombatTriggered(GameObject enemyGO, Enemy enemy) {
+		playerGO = Instantiate(GameManager.Instance.PlayerCombatUnit, playerCombatStation.position, playerCombatStation.rotation);
+		this.enemyGO = Instantiate(enemyGO, enemyCombatStation.position, enemyCombatStation.rotation);
+
+		player = GameManager.Instance.Player;
 		this.enemy = enemy;
+
+        InitCombatScreen(player, this.enemy);
+		switchCamera.TriggerSwitchAnimation();
+		StartCoroutine(ActivateCombatScreen());
+    }
+
+	public void InitCombatScreen(Player player, Enemy enemy) {
 		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
 		playerDamage.text = player.Damage.ToString();
-		playerHpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
 
 		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
 		enemyDamage.text = enemy.Damage.ToString();
-		enemyHpBar.fillAmount = enemy.CurrentHp / (float)enemy.MaxHp;
-		enemyName.text = enemy.Name;
+		enemyName.text = enemy.EnemyName;
 	}
 
 	public void UpdateCombatScreen() {
 		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
-		playerHpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
+		playerDamage.text = player.Damage.ToString();
 
 		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
-		enemyHpBar.fillAmount = enemy.CurrentHp / (float)enemy.MaxHp;
+		enemyDamage.text = enemy.Damage.ToString();
 	}
 
 	public void AttackButton() {
-		enemy.CurrentHp -= player.Damage;
-		UpdateCombatScreen();
+		Debug.Log("Attack button");
 	}
 }
