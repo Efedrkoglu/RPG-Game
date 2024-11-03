@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     protected int maxHp;
     protected int currentHp;
     protected int damage;
+    [SerializeField] protected GameObject unit;
 
     protected virtual void Start() {
 
@@ -19,6 +20,10 @@ public class Enemy : MonoBehaviour
 
     public int MaxHp {
         get { return maxHp; }
+    }
+
+    public GameObject Unit {
+        get { return unit; }
     }
 
     public int CurrentHp {

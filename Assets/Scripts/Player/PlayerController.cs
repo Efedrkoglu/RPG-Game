@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] private float movementSpeed;
 
-	public static event Action<GameObject, Enemy> CombatTriggered;
+	public static event Action<Enemy> CombatTriggered;
 
 	private void Start() {
 		rigidBody = GetComponent<Rigidbody>();
@@ -67,10 +67,10 @@ public class PlayerController : MonoBehaviour
 			animator.SetBool("isRunning", false);
 		}
 	}
-	private IEnumerator CombatTriggeredEvent(GameObject enemyGO, Enemy enemy) {
+	private IEnumerator CombatTriggeredEvent(Enemy enemy) {
 		yield return new WaitForSeconds(.15f);
         listenInputs = false;
-		CombatTriggered?.Invoke(enemyGO, enemy);
+		CombatTriggered?.Invoke(enemy);
 	}
 
 	public void ExitAttackAnimation() {
@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour
 		if (isHit) {
 			if (hitInfo.collider.gameObject.CompareTag("Enemy")) {
 				lastHitEnemy = hitInfo.collider.gameObject;
-				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("hurtTrigger");
-				StartCoroutine(CombatTriggeredEvent(hitInfo.collider.gameObject, hitInfo.collider.gameObject.GetComponent<Enemy>()));
+				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+				StartCoroutine(CombatTriggeredEvent(hitInfo.collider.gameObject.GetComponent<Enemy>()));
 			}
 		}
 	}

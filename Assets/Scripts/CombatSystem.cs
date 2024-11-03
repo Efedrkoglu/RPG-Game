@@ -18,8 +18,8 @@ public class CombatSystem : MonoBehaviour
 
 	private Player player;
 	private Enemy enemy;
-	private GameObject playerGO;
-	private GameObject enemyGO;
+	private GameObject playerUnit;
+	private GameObject enemyUnit;
 	private BattleState state;
 
 	[SerializeField] private Transform playerCombatStation;
@@ -56,10 +56,10 @@ public class CombatSystem : MonoBehaviour
 			combatScreen.SetActive(false);
 	}
 
-	private void OnCombatTriggered(GameObject enemyGO, Enemy enemy) {
+	private void OnCombatTriggered(Enemy enemy) {
         state = BattleState.STARTED;
-        playerGO = Instantiate(GameManager.Instance.PlayerCombatUnit, playerCombatStation.position, playerCombatStation.rotation);
-		this.enemyGO = Instantiate(enemyGO, enemyCombatStation.position, enemyCombatStation.rotation);
+        playerUnit = Instantiate(GameManager.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
+		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
 
 		player = GameManager.Instance.Player;
 		this.enemy = enemy;
@@ -92,8 +92,8 @@ public class CombatSystem : MonoBehaviour
 	private void ExitBattleStation() {
         switchCamera.TriggerSwitchAnimation();
         StartCoroutine(ToggleCombatScreen());
-		Destroy(playerGO);
-		Destroy(enemyGO);
+		Destroy(playerUnit);
+		Destroy(enemyUnit);
     }
 
 	private IEnumerator PlayerTurn() {
@@ -108,13 +108,16 @@ public class CombatSystem : MonoBehaviour
 		player.CurrentHp -= enemy.Damage;
 		UpdateCombatScreen();
 
+		enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
         info.text = enemy.EnemyName + " dealt " + enemy.Damage + " damage";
 
         if (player.CurrentHp <= 0) {
 			state = BattleState.LOST;
+			playerUnit.GetComponent<Animator>().SetTrigger("Death");
 			StartCoroutine(EndBattle());
 		}
 		else {
+			playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
 			StartCoroutine(PlayerTurn());
 		}
 	}
@@ -148,12 +151,16 @@ public class CombatSystem : MonoBehaviour
 		enemy.CurrentHp -= player.Damage;
 		UpdateCombatScreen();
 
+		playerUnit.GetComponent<Animator>().SetTrigger("Attack");
+
 		if(enemy.CurrentHp <= 0) {
 			state = BattleState.WON;
+			enemyUnit.GetComponent<Animator>().SetTrigger("Death");
 			StartCoroutine(EndBattle());
 		}
 		else {
 			state = BattleState.ENEMYTURN;
+			enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
 			info.text = enemy.EnemyName + "'s turn";
 			StartCoroutine(EnemyTurn());
 		}
