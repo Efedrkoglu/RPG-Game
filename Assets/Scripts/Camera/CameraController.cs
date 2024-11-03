@@ -16,7 +16,9 @@ public class CameraController : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position = player.transform.position + cameraOffset;
-		transform.eulerAngles = new Vector3(X_rotation, transform.rotation.y, transform.rotation.z);
+		if(player != null) {
+            transform.position = player.transform.position + cameraOffset;
+            transform.eulerAngles = new Vector3(X_rotation, transform.rotation.y, transform.rotation.z);
+        }
 	}
 }

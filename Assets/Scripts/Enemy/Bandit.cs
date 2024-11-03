@@ -6,7 +6,7 @@ public class Bandit : Enemy
 {
     protected override void Start() {
         enemyName = "Bandit";
-        maxHp = 15;
+        maxHp = 20;
         currentHp = maxHp;
         damage = 5;
     }

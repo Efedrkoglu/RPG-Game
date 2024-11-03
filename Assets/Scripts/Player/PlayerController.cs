@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	private Vector3 movementDirection;
 	private bool isHit;
 	private bool listenInputs;
+	private GameObject lastHitEnemy;
 
 	[SerializeField] private float movementSpeed;
 
@@ -20,9 +21,15 @@ public class PlayerController : MonoBehaviour
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
         listenInputs = true;
+
+		CombatSystem.CombatEnded += OnCombatEnded;
 	}
 
-	private void Update() {
+    private void OnDestroy() {
+		CombatSystem.CombatEnded -= OnCombatEnded;
+    }
+
+    private void Update() {
 		float X_axis = 0;
 		float Z_axis = 0;
 		if(listenInputs) {
@@ -79,9 +86,20 @@ public class PlayerController : MonoBehaviour
 
 		if (isHit) {
 			if (hitInfo.collider.gameObject.CompareTag("Enemy")) {
+				lastHitEnemy = hitInfo.collider.gameObject;
 				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("hurtTrigger");
 				StartCoroutine(CombatTriggeredEvent(hitInfo.collider.gameObject, hitInfo.collider.gameObject.GetComponent<Enemy>()));
 			}
+		}
+	}
+
+	public void OnCombatEnded(bool combatResult) {
+		if(combatResult) {
+			Destroy(lastHitEnemy);
+			listenInputs = true;
+		}
+		else {
+			Destroy(gameObject);
 		}
 	}
 
