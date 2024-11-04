@@ -73,10 +73,12 @@ public class CombatSystem : MonoBehaviour
 	private void InitCombatScreen(Player player, Enemy enemy) {
 		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
 		playerDamage.text = player.Damage.ToString();
+		playerUnit.GetComponent<HpBar>().InitHpBar(player.MaxHp, player.CurrentHp);
 
-		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
+        enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
 		enemyDamage.text = enemy.Damage.ToString();
 		enemyName.text = enemy.EnemyName;
+		enemyUnit.GetComponent<HpBar>().InitHpBar(enemy.MaxHp, enemy.CurrentHp);
 
         info.text = "Battle against " + enemy.EnemyName;
     }
@@ -84,9 +86,11 @@ public class CombatSystem : MonoBehaviour
 	private void UpdateCombatScreen() {
 		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
 		playerDamage.text = player.Damage.ToString();
+		playerUnit.GetComponent<HpBar>().UpdateHpBar(player.CurrentHp);
 
 		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
 		enemyDamage.text = enemy.Damage.ToString();
+		enemyUnit.GetComponent<HpBar>().UpdateHpBar(enemy.CurrentHp);
 	}
 
 	private void ExitBattleStation() {

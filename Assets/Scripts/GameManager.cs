@@ -18,11 +18,9 @@ public class GameManager : MonoBehaviour
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-	}
 
-	private void Start() {
-		player = new Player(100, 10 ,0);
-	}
+        player = new Player(100, 10, 0);
+    }
 
 	public static GameManager Instance {
 		get {

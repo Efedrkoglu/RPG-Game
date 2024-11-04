@@ -8,7 +8,7 @@ public class Bandit : Enemy
         enemyName = "Bandit";
         maxHp = 20;
         currentHp = maxHp;
-        damage = 5;
+        damage = 7;
     }
 
 }

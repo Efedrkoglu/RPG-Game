@@ -6,8 +6,8 @@ public class Skeleton : Enemy
 {
     protected override void Start() {
         enemyName = "Skeleton";
-        maxHp = 10;
+        maxHp = 35;
         currentHp = maxHp;
-        damage = 5;
+        damage = 15;
     }
 }
