@@ -2,18 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player
+public class Player : MonoBehaviour
 {
+	private static Player instance;
+
 	private int maxHp;
 	private int currentHp;
 	private int damage;
 	private int gold;
 
-	public Player(int hp, int damage, int gold) {
-		this.maxHp = hp;
-		this.currentHp = this.maxHp;
-		this.damage = damage;
-		this.gold = gold;
+	[SerializeField] private GameObject playerUnit;
+
+    private void Awake() {
+        if(instance != null && instance != this) {
+			Destroy(gameObject);
+		}
+		else {
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+		}
+
+		maxHp = 100;
+		currentHp = maxHp;
+		damage = 10;
+		gold = 0;
+	}
+
+	public static Player Instance {
+		get {
+			if(instance == null) {
+				instance = FindObjectOfType<Player>();
+			}
+
+			return instance;
+		}
 	}
 
 	public int MaxHp {
@@ -40,5 +62,9 @@ public class Player
 	public int Gold {
 		get { return gold; }
 		set { gold = value; }
+	}
+
+	public GameObject PlayerUnit {
+		get { return playerUnit; }
 	}
 }

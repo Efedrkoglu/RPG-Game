@@ -18,7 +18,7 @@ public class GameScreen : MonoBehaviour
     }
 
     private void Start() {
-        player = GameManager.Instance.Player;
+        player = Player.Instance;
         UpdateHpBar();
     }
 
@@ -38,7 +38,7 @@ public class GameScreen : MonoBehaviour
 
     public void OnCombatEnded(bool combatResult) {
         gameScreen.SetActive(true);
-        player = GameManager.Instance.Player;
+        player = Player.Instance;
         UpdateHpBar();
     }
 

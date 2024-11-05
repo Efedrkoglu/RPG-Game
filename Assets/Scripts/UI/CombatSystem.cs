@@ -58,10 +58,10 @@ public class CombatSystem : MonoBehaviour
 
 	private void OnCombatTriggered(Enemy enemy) {
         state = BattleState.STARTED;
-        playerUnit = Instantiate(GameManager.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
+        playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
 
-		player = GameManager.Instance.Player;
+		player = Player.Instance;
 		this.enemy = enemy;
 
         InitCombatScreen(player, this.enemy);
@@ -102,8 +102,10 @@ public class CombatSystem : MonoBehaviour
 
 	private IEnumerator PlayerTurn() {
 		yield return new WaitForSeconds(2f);
-		state = BattleState.PLAYERTURN;
-		info.text = "Choose an action";
+		info.text = "Your turn";
+		yield return new WaitForSeconds(1f);
+        info.text = "Choose an action";
+        state = BattleState.PLAYERTURN;
 	}
 
 	private IEnumerator EnemyTurn() {
