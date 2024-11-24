@@ -188,5 +188,10 @@ public class CombatSystem : MonoBehaviour
 		StartCoroutine(EnemyTurn());
 	}
 
+	public void InventoryButton() {
+		if(state != BattleState.PLAYERTURN)
+			return;
 
+		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+	}
 }

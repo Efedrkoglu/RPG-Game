@@ -6,19 +6,27 @@ using UnityEngine;
 public class InventoryPanel : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private Animator inventoryAnimator;
 
-    void Update() {
-        ToggleInventory();
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.I)) {
+            ToggleInventory();
+        }
     }
 
-    private void ToggleInventory() {
-        if(Input.GetKeyDown(KeyCode.I)) {
-            if(!inventoryPanel.activeInHierarchy) {
-                inventoryPanel.SetActive(true);
-            }
-            else {
-                inventoryPanel.SetActive(false);
-            }
+    public void ToggleInventory() {
+        if(!inventoryPanel.activeInHierarchy) {
+            inventoryPanel.SetActive(true);
+            inventoryAnimator.SetTrigger("Open");
         }
+        else {
+            StartCoroutine(CloseInventory());
+        }
+    }
+
+    private IEnumerator CloseInventory() {
+        inventoryAnimator.SetTrigger("Close");
+        yield return new WaitForSeconds(.6f);
+        inventoryPanel.SetActive(false);
     }
 }
