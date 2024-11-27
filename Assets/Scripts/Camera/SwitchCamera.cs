@@ -18,7 +18,7 @@ public class SwitchCamera : MonoBehaviour
     }
 
     public void ToggleCombatCamera() {
-        if(mainCamera.active == true) {
+        if(mainCamera.activeInHierarchy == true) {
             mainCamera.SetActive(false);
             combatCamera.SetActive(true);
         }

@@ -50,7 +50,7 @@ public class CombatSystem : MonoBehaviour
 	private IEnumerator ToggleCombatScreen() {
         yield return new WaitForSeconds(.4f);
 
-        if (combatScreen.active == false) 
+        if (combatScreen.activeInHierarchy == false) 
 			combatScreen.SetActive(true);
 		else
 			combatScreen.SetActive(false);

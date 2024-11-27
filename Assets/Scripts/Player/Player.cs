@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 	private int currentHp;
 	private int damage;
 	private int gold;
+	private int inventorySize;
 
 	[SerializeField] private GameObject playerUnit;
 
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
 		currentHp = maxHp;
 		damage = 10;
 		gold = 0;
+		inventorySize = 10;
 	}
 
 	public static Player Instance {
@@ -62,6 +64,11 @@ public class Player : MonoBehaviour
 	public int Gold {
 		get { return gold; }
 		set { gold = value; }
+	}
+
+	public int InventorySize {
+		get{return inventorySize; }
+		set{inventorySize = value; }
 	}
 
 	public GameObject PlayerUnit {
