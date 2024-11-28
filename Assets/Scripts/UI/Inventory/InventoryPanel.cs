@@ -26,7 +26,7 @@ public class InventoryPanel : MonoBehaviour
 
     private IEnumerator CloseInventory() {
         inventoryAnimator.SetTrigger("Close");
-        yield return new WaitForSeconds(.6f);
+        yield return new WaitForSeconds(.4f);
         inventoryPanel.SetActive(false);
     }
 }

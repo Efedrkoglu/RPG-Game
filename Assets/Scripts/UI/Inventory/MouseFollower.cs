@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class MouseFollower : MonoBehaviour
+{
+    private Canvas canvas;
+    private InventorySlot slot;
+
+    void Start() {
+        canvas = transform.root.GetComponent<Canvas>();
+        slot = GetComponentInChildren<InventorySlot>();
+        gameObject.SetActive(false);
+    }
+
+    void Update() {
+        Vector2 position;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            (RectTransform)canvas.transform,
+            Input.mousePosition,
+            canvas.worldCamera,
+            out position
+        );
+
+        transform.position = canvas.transform.TransformPoint(position);
+    }
+
+    public void SetData(Sprite sprite, int itemAmount) {
+        slot.SetSlotItem(sprite, itemAmount);
+    }
+
+    public void Toggle(bool val) {
+        gameObject.SetActive(val);
+    }
+}

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI itemAmount;
@@ -48,28 +48,36 @@ public class InventorySlot : MonoBehaviour
         gameObject.GetComponent<Image>().sprite = slotImage;
     }
 
-    public void OnBeginDrag() {
+    public void OnPointerClick(PointerEventData eventData)
+    {
         if(empty)
             return;
+        
+        if(eventData.button == PointerEventData.InputButton.Left) {
+            OnItemClicked?.Invoke(this);
+        }
+    }
 
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(empty)
+            return;
+        
         OnItemBeginDrag?.Invoke(this);
     }
 
-    public void OnEndDrag() {
+    public void OnEndDrag(PointerEventData eventData)
+    {
         OnItemEndDrag?.Invoke(this);
     }
 
-    public void OnDrop() {
+    public void OnDrop(PointerEventData eventData)
+    {
         OnItemDropped?.Invoke(this);
     }
 
-    public void OnPointerClick(BaseEventData data) {
-        if(empty)
-            return;
-
-        PointerEventData pointerData = (PointerEventData)data;
-        if(pointerData.button == PointerEventData.InputButton.Left) {
-            OnItemClicked?.Invoke(this);
-        }
+    public void OnDrag(PointerEventData eventData)
+    {
+        
     }
 }
