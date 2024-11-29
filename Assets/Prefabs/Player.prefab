@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3624404332887520169}
   - component: {fileID: 6940922707614375247}
   - component: {fileID: 6916699666327114006}
+  - component: {fileID: 930287690907052844}
   - component: {fileID: 4478395316562474787}
   - component: {fileID: 5846862221161603193}
   m_Layer: 0
@@ -143,6 +144,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
+--- !u!114 &930287690907052844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7388059893318517508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccb5d296807d934a82f18579aaeee30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 0}
+  inventorySO: {fileID: 11400000, guid: 763e9fd189327b342ac2c107556a117b, type: 2}
 --- !u!95 &4478395316562474787
 Animator:
   serializedVersion: 5

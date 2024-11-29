@@ -7,13 +7,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
+public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI itemAmount;
     [SerializeField] private Sprite slotImage, selectedSlotImage;
 
-    public event Action<InventorySlot> OnItemClicked, OnItemDropped, OnItemBeginDrag, OnItemEndDrag;
+    public event Action<InventorySlotUI> OnItemClicked, OnItemDropped, OnItemBeginDrag, OnItemEndDrag;
     
     private bool empty;
 
@@ -50,9 +50,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(empty)
-            return;
-        
         if(eventData.button == PointerEventData.InputButton.Left) {
             OnItemClicked?.Invoke(this);
         }
@@ -79,5 +76,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     public void OnDrag(PointerEventData eventData)
     {
         
+    }
+
+    public bool isEmpty() {
+        return empty;
     }
 }

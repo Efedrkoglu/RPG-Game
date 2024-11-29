@@ -67,8 +67,8 @@ public class Player : MonoBehaviour
 	}
 
 	public int InventorySize {
-		get{return inventorySize; }
-		set{inventorySize = value; }
+		get{ return inventorySize; }
+		set{ inventorySize = value; }
 	}
 
 	public GameObject PlayerUnit {

@@ -332,13 +332,6 @@ MonoBehaviour:
   itemDescriptionName: {fileID: 5170557588450488308}
   itemDescription: {fileID: 2579493703318089611}
   mouseFollower: {fileID: 0}
-  testItem1: {fileID: 21300000, guid: b28ee094abbb88c4f94df0fd4aedcb13, type: 3}
-  testItem2: {fileID: 21300000, guid: 85ae1729adca4c04691c021f1189354c, type: 3}
-  testAmount1: 3
-  testAmount2: 2
-  testItemName1: Apple
-  testItemName2: Bread
-  testItemDescription: Do i really need to explain what this is
 --- !u!95 &2711005374979705564
 Animator:
   serializedVersion: 5

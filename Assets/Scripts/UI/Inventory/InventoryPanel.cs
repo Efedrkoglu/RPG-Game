@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,8 @@ public class InventoryPanel : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private Animator inventoryAnimator;
 
+    public static event Action OnInventoryToggleOpen, OnInventoryToggleClose;
+
     private void Update() {
         if(Input.GetKeyDown(KeyCode.I)) {
             ToggleInventory();
@@ -17,6 +20,7 @@ public class InventoryPanel : MonoBehaviour
     public void ToggleInventory() {
         if(!inventoryPanel.activeInHierarchy) {
             inventoryPanel.SetActive(true);
+            OnInventoryToggleOpen?.Invoke();
             inventoryAnimator.SetTrigger("Open");
         }
         else {
@@ -28,5 +32,6 @@ public class InventoryPanel : MonoBehaviour
         inventoryAnimator.SetTrigger("Close");
         yield return new WaitForSeconds(.4f);
         inventoryPanel.SetActive(false);
+        OnInventoryToggleClose?.Invoke();
     }
 }

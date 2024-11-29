@@ -6,11 +6,11 @@ using UnityEngine;
 public class MouseFollower : MonoBehaviour
 {
     private Canvas canvas;
-    private InventorySlot slot;
+    private InventorySlotUI slot;
 
     void Start() {
         canvas = transform.root.GetComponent<Canvas>();
-        slot = GetComponentInChildren<InventorySlot>();
+        slot = GetComponentInChildren<InventorySlotUI>();
         gameObject.SetActive(false);
     }
 
