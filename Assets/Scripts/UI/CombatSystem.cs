@@ -44,6 +44,7 @@ public class CombatSystem : MonoBehaviour
 	}
 
 	private void CombatEndedEvent(bool combatResult) {
+		Player.Instance.IsInCombat = false;
 		CombatEnded?.Invoke(combatResult);
 	}
 
@@ -58,6 +59,7 @@ public class CombatSystem : MonoBehaviour
 
 	private void OnCombatTriggered(Enemy enemy) {
         state = BattleState.STARTED;
+		Player.Instance.IsInCombat = true;
         playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
 

@@ -14,6 +14,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemDescriptionName;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private MouseFollower mouseFollower;
+    [SerializeField] private Button dropItemButton;
+    [SerializeField] private Button useItemButton;
 
     private List<InventorySlotUI> inventorySlotsList;
     private int currentlyDraggedItemIndex = -1;
@@ -65,7 +67,7 @@ public class InventoryUI : MonoBehaviour
             if(slot.IsEmpty)
                 inventorySlotsList[slotIndex].ResetSlotData();
             else
-                inventorySlotsList[slotIndex].SetSlotItem(slot.item.itemImage, slot.amount);
+                inventorySlotsList[slotIndex].SetSlotItem(slot.item.itemImage, slot.amount, slot.item.isStackable);
         }
     }
 
@@ -88,22 +90,23 @@ public class InventoryUI : MonoBehaviour
             return;
         int index = inventorySlotsList.IndexOf(slot);
         slot.Select();
+        
         OnDescriptionRequested?.Invoke(index);
     }
 
     private void OnInventoryItemBeginDrag(InventorySlotUI slot)
     {
-        int index = inventorySlotsList.IndexOf(slot);
-        if(index == -1)
+        if(slot.isEmpty())
             return;
 
+        int index = inventorySlotsList.IndexOf(slot);
         currentlyDraggedItemIndex = index;
         OnInventroyItemClicked(slot);
         OnStartDragging?.Invoke(index);
     }
 
-    public void SetMouseFollower(Sprite sprite, int amount) {
-        mouseFollower.SetData(sprite, amount);
+    public void SetMouseFollower(Sprite sprite, int amount, bool isStackable) {
+        mouseFollower.SetData(sprite, amount, isStackable);
         mouseFollower.Toggle(true);
     }
 
@@ -115,10 +118,10 @@ public class InventoryUI : MonoBehaviour
 
     private void OnInventoryItemDropped(InventorySlotUI slot)
     {
-        int index = inventorySlotsList.IndexOf(slot);
-        if(index == -1) {
+        if(currentlyDraggedItemIndex == -1)
             return;
-        }
+        
+        int index = inventorySlotsList.IndexOf(slot);
         OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
     }
 
@@ -126,13 +129,65 @@ public class InventoryUI : MonoBehaviour
         itemDescriptionImage.gameObject.SetActive(false);
         itemDescriptionName.text = "";
         itemDescription.text = "";
+        useItemButton.interactable = false;
+        dropItemButton.interactable = false;
+        useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
     }
 
-    public void SetItemDescription(Sprite sprite, string itemName, string itemDescription) {
+    public void SetItemDescription(Sprite sprite, string itemName, string itemDescription, ItemType type, bool equipped) {
         itemDescriptionImage.sprite = sprite;
         itemDescriptionImage.gameObject.SetActive(true);
         itemDescriptionName.text = itemName;
         this.itemDescription.text = itemDescription;
+
+        switch(type) {
+            case ItemType.Default:
+                dropItemButton.interactable = true;
+                useItemButton.interactable = false;
+                useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                break;
+
+            case ItemType.Consumable:
+                useItemButton.interactable = true;
+                useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                if (Player.Instance.IsInCombat)
+                    dropItemButton.interactable = false;
+                else
+                    dropItemButton.interactable = true;
+                break;
+
+            case ItemType.ConsumableOnlyInCombat:
+                if(Player.Instance.IsInCombat) {
+                    useItemButton.interactable = true;
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                    dropItemButton.interactable = false;
+                }
+                else {
+                    useItemButton.interactable = false;
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                    dropItemButton.interactable = true;
+                }
+                break;
+
+            case ItemType.Equipment:
+                if(Player.Instance.IsInCombat) {
+                    useItemButton.interactable = false;
+                    dropItemButton.interactable = false;
+                }
+                else {
+                    useItemButton.interactable = true;
+                    dropItemButton.interactable = true;
+                }
+                if (equipped)
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "unequip";
+                else
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "equip";
+                break;
+
+            default:
+                Debug.Log("Item type error in InventoryUI.SetItemDescription()");
+                break;
+        }
     }
 
 }

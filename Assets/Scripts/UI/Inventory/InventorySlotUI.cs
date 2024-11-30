@@ -28,12 +28,16 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
         empty = true;
     }
 
-    public void SetSlotItem(Sprite sprite, int amount) {
+    public void SetSlotItem(Sprite sprite, int amount, bool isStackable) {
         if(!itemImage.gameObject.activeInHierarchy)
             itemImage.gameObject.SetActive(true);
         
-        if(!itemAmount.gameObject.activeInHierarchy)
+        if(isStackable) {
             itemAmount.gameObject.SetActive(true);
+        }
+        else {
+            itemAmount.gameObject.SetActive(false);
+        }
 
         itemImage.sprite = sprite;
         itemAmount.text = amount.ToString();
@@ -49,7 +53,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     }
 
     public void OnPointerClick(PointerEventData eventData)
-    {
+    {   
         if(eventData.button == PointerEventData.InputButton.Left) {
             OnItemClicked?.Invoke(this);
         }

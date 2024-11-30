@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 	private int damage;
 	private int gold;
 	private int inventorySize;
+	private bool isInCombat;
 
 	[SerializeField] private GameObject playerUnit;
 
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 		damage = 10;
 		gold = 0;
 		inventorySize = 10;
+		isInCombat = false;
 	}
 
 	public static Player Instance {
@@ -71,7 +73,13 @@ public class Player : MonoBehaviour
 		set{ inventorySize = value; }
 	}
 
+	public bool IsInCombat {
+		get { return isInCombat; }
+        set { isInCombat = value; }
+    }
+
 	public GameObject PlayerUnit {
 		get { return playerUnit; }
 	}
+
 }
