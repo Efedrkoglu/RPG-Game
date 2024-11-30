@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14a85a3de5629c42ba6dd92ba8af53d, type: 3}
   m_Name: Wooden Shield
   m_EditorClassIdentifier: 
-  type: 3
   itemImage: {fileID: 21300000, guid: 3a7a72cea01978641871e0f80b6d8728, type: 3}
   itemName: Wooden Shield
-  description: Protects you.
+  description: Protects you
   isStackable: 0
   stackAmount: 1
   attackDamage: 0

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
   m_Name: Beer
   m_EditorClassIdentifier: 
-  type: 1
   itemImage: {fileID: 21300000, guid: 20c754ef729dbae40a674a1e4e3bf53d, type: 3}
   itemName: Beer
   description: Tavern's best seller.
   isStackable: 1
   stackAmount: 99
   healAmount: 10
+  onlyConsumableDuringCombat: 0

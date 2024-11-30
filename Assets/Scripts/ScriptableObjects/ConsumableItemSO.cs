@@ -6,6 +6,7 @@ using UnityEngine;
 public class ConsumableItemSO : ItemSO
 {
     public int healAmount;
+    public bool onlyConsumableDuringCombat;
 
     private void Awake() {
         type = ItemType.Consumable;

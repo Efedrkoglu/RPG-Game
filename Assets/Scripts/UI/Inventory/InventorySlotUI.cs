@@ -15,7 +15,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public event Action<InventorySlotUI> OnItemClicked, OnItemDropped, OnItemBeginDrag, OnItemEndDrag;
     
-    private bool empty;
+    private bool empty, stackable;
 
     void Awake() {
         ResetSlotData();
@@ -26,6 +26,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
         itemImage.gameObject.SetActive(false);
         itemAmount.gameObject.SetActive(false);
         empty = true;
+        stackable = false;
     }
 
     public void SetSlotItem(Sprite sprite, int amount, bool isStackable) {
@@ -42,6 +43,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
         itemImage.sprite = sprite;
         itemAmount.text = amount.ToString();
         empty = false;
+        stackable = isStackable;
     }
 
     public void Select() {
@@ -84,5 +86,9 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public bool isEmpty() {
         return empty;
+    }
+
+    public bool isStackable() {
+        return stackable;
     }
 }

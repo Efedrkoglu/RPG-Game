@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  type: 2
   itemImage: {fileID: 21300000, guid: b28ee094abbb88c4f94df0fd4aedcb13, type: 3}
   itemName: Apple
   description: 'Juicy apple.
 
-    [Can only be used in combat]'
+    Can only be used in combat'
   isStackable: 1
   stackAmount: 99
-  healAmount: 5
+  healAmount: 10
+  onlyConsumableDuringCombat: 1

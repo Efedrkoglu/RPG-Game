@@ -14,14 +14,21 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemDescriptionName;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private MouseFollower mouseFollower;
+    [SerializeField] private Button dropItemMenuButton;
+    [SerializeField] private Button cancelDropItemButton;
     [SerializeField] private Button dropItemButton;
     [SerializeField] private Button useItemButton;
 
+    [SerializeField] private GameObject inventoryBG;
+    [SerializeField] private GameObject dropItemMenu;
+    [SerializeField] private TMP_InputField dropInput;
+
     private List<InventorySlotUI> inventorySlotsList;
     private int currentlyDraggedItemIndex = -1;
+    private int selectedItemIndex = -1;
 
-    public event Action<int> OnDescriptionRequested, OnStartDragging;
-    public event Action<int, int> OnSwapItems;
+    public event Action<int> OnDescriptionRequested, OnStartDragging, OnUseButton;
+    public event Action<int, int> OnSwapItems, OnDropButton;
 
     private void Start() {
         mouseFollower.Toggle(false);
@@ -44,6 +51,7 @@ public class InventoryUI : MonoBehaviour
     private void OnDisable() {
         ResetSelection();
         ResetItemDescription();
+        CancelDropButton();
     }
 
     public void InitializeInventoryUI(int inventorySize) {
@@ -74,12 +82,14 @@ public class InventoryUI : MonoBehaviour
     public void SwapSelection(int index1, int index2) {
         inventorySlotsList[index1].Deselect();
         inventorySlotsList[index2].Select();
+        selectedItemIndex = index2;
     }  
 
     private void ResetSelection() {
         foreach(InventorySlotUI slot in inventorySlotsList) {
             slot.Deselect();
         }
+        selectedItemIndex = -1;
     }
 
     private void OnInventroyItemClicked(InventorySlotUI slot)
@@ -90,7 +100,7 @@ public class InventoryUI : MonoBehaviour
             return;
         int index = inventorySlotsList.IndexOf(slot);
         slot.Select();
-        
+        selectedItemIndex = index;
         OnDescriptionRequested?.Invoke(index);
     }
 
@@ -130,55 +140,49 @@ public class InventoryUI : MonoBehaviour
         itemDescriptionName.text = "";
         itemDescription.text = "";
         useItemButton.interactable = false;
-        dropItemButton.interactable = false;
+        dropItemMenuButton.interactable = false;
         useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
     }
 
-    public void SetItemDescription(Sprite sprite, string itemName, string itemDescription, ItemType type, bool equipped) {
-        itemDescriptionImage.sprite = sprite;
+    public void SetItemDescription(ItemSO item) {
+        itemDescriptionImage.sprite = item.itemImage;
         itemDescriptionImage.gameObject.SetActive(true);
-        itemDescriptionName.text = itemName;
-        this.itemDescription.text = itemDescription;
+        itemDescriptionName.text = item.itemName;
+        this.itemDescription.text = item.description;
 
-        switch(type) {
+        if (Player.Instance.IsInCombat)
+            dropItemMenuButton.interactable = false;
+        else
+            dropItemMenuButton.interactable = true;
+
+        switch(item.Type) {
             case ItemType.Default:
-                dropItemButton.interactable = true;
-                useItemButton.interactable = false;
                 useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                useItemButton.interactable = false;
                 break;
 
             case ItemType.Consumable:
-                useItemButton.interactable = true;
-                useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
-                if (Player.Instance.IsInCombat)
-                    dropItemButton.interactable = false;
-                else
-                    dropItemButton.interactable = true;
-                break;
-
-            case ItemType.ConsumableOnlyInCombat:
                 if(Player.Instance.IsInCombat) {
-                    useItemButton.interactable = true;
-                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
-                    dropItemButton.interactable = false;
+                    if (((ConsumableItemSO)item).onlyConsumableDuringCombat)
+                        useItemButton.interactable = true;
+                    else
+                        useItemButton.interactable = false;
                 }
                 else {
-                    useItemButton.interactable = false;
-                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
-                    dropItemButton.interactable = true;
+                    if (((ConsumableItemSO)item).onlyConsumableDuringCombat)
+                        useItemButton.interactable = false;
+                    else
+                        useItemButton.interactable = true;
                 }
                 break;
 
             case ItemType.Equipment:
-                if(Player.Instance.IsInCombat) {
+                if(Player.Instance.IsInCombat)
                     useItemButton.interactable = false;
-                    dropItemButton.interactable = false;
-                }
-                else {
+                else
                     useItemButton.interactable = true;
-                    dropItemButton.interactable = true;
-                }
-                if (equipped)
+
+                if (((EquipmentItemSO)item).Equipped)
                     useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "unequip";
                 else
                     useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "equip";
@@ -188,6 +192,31 @@ public class InventoryUI : MonoBehaviour
                 Debug.Log("Item type error in InventoryUI.SetItemDescription()");
                 break;
         }
+    }
+
+    public void DropMenuButton() {
+        if (!inventorySlotsList[selectedItemIndex].isStackable()) {
+            DropButton();
+            return;
+        }
+        inventoryBG.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        dropItemMenu.SetActive(true);
+    }
+
+    public void DropButton() {
+        int dropAmount = Convert.ToInt32(dropInput.text);
+        OnDropButton?.Invoke(dropAmount, selectedItemIndex);
+        CancelDropButton();
+    }
+
+    public void CancelDropButton() {
+        inventoryBG.GetComponent<Image>().color = new Color(0, 0, 0, .92f);
+        dropInput.text = "1";
+        dropItemMenu.SetActive(false);
+    }
+
+    public void UseButton() {
+        OnUseButton?.Invoke(selectedItemIndex);
     }
 
 }

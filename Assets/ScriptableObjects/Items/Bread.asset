@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
   m_Name: Bread
   m_EditorClassIdentifier: 
-  type: 1
   itemImage: {fileID: 21300000, guid: 85ae1729adca4c04691c021f1189354c, type: 3}
   itemName: Bread
-  description: Bread.
+  description: Bread
   isStackable: 1
   stackAmount: 99
-  healAmount: 10
+  healAmount: 5
+  onlyConsumableDuringCombat: 0

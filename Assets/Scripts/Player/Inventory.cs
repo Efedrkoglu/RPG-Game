@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private InventorySO inventorySO;
+    [SerializeField] private Item itemPrefab;
 
     private void Start() {
         InventoryPanel.OnInventoryToggleOpen += OnInventoryOpen;
@@ -17,6 +18,8 @@ public class Inventory : MonoBehaviour
         inventoryUI.OnDescriptionRequested += HandleDesriptionRequest;
         inventoryUI.OnStartDragging += OnStartDragging;
         inventoryUI.OnSwapItems += OnSwapItems;
+        inventoryUI.OnDropButton += OnDropItem;
+        inventoryUI.OnUseButton += OnUseItem;
     }
 
     private void OnDestroy() {
@@ -26,6 +29,8 @@ public class Inventory : MonoBehaviour
         inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
         inventoryUI.OnStartDragging -= OnStartDragging;
         inventoryUI.OnSwapItems -= OnSwapItems;
+        inventoryUI.OnDropButton -= OnDropItem;
+        inventoryUI.OnUseButton -= OnUseItem;
     }
 
     private void UpdateInventory() {
@@ -49,14 +54,7 @@ public class Inventory : MonoBehaviour
     public void HandleDesriptionRequest(int index) {
         ItemSO requestedItem = inventorySO.GetItemAt(index)?.item;
         if(requestedItem != null) {
-            ItemType type = requestedItem.type;
-            if(type == ItemType.Equipment) {
-                bool equipped = ((EquipmentItemSO)requestedItem).Equipped;
-                inventoryUI.SetItemDescription(requestedItem.itemImage, requestedItem.itemName, requestedItem.description, type, equipped);
-            }
-            else {
-                inventoryUI.SetItemDescription(requestedItem.itemImage, requestedItem.itemName, requestedItem.description, type, false);
-            }
+            inventoryUI.SetItemDescription(requestedItem);
         }
     }
 
@@ -87,5 +85,20 @@ public class Inventory : MonoBehaviour
 
         UpdateInventory();
         inventoryUI.SwapSelection(itemIndex1, itemIndex2);
+    }
+
+    public void OnDropItem(int dropAmount, int index) {
+        ItemSO droppedItem = inventorySO.GetItemAt(index)?.item;
+        int droppedItemAmount = inventorySO.DropItem(dropAmount, index);
+
+        if(droppedItem != null && droppedItemAmount > 0) {
+            Item item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+            item.InitializeItem(droppedItem, droppedItemAmount);
+        }
+        UpdateInventory();
+    }
+
+    public void OnUseItem(int index) {
+
     }
 }
