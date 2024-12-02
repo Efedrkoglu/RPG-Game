@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - CombatCamera
+  - Item
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,8 @@ public class InventorySO : ScriptableObject
     public List<InventorySlot> slots;
     public int size;
 
+    public event Action<Item, int> OnAddItem;
+
     public void Initialize(int _size) {
         size = _size;
 
@@ -23,6 +25,7 @@ public class InventorySO : ScriptableObject
             if(slots[i].IsEmpty) {
                 slots[i].Item = item.GetItem;
                 slots[i].Amount = item.Amount;
+                OnAddItem?.Invoke(item, item.Amount);
                 return 0;
             }
             else if (slots[i].item.ID == item.GetItem.ID && item.GetItem.isStackable) {
@@ -33,10 +36,12 @@ public class InventorySO : ScriptableObject
                 int currentStackAmount = slots[i].amount + item.Amount;
                 if(currentStackAmount > maxStackAmount) {
                     slots[i].amount = maxStackAmount;
+                    OnAddItem?.Invoke(item, item.Amount - (currentStackAmount % maxStackAmount));
                     item.Amount = currentStackAmount % maxStackAmount;
                 }
                 else {
                     slots[i].amount = currentStackAmount;
+                    OnAddItem?.Invoke(item, item.Amount);
                     return 0;
                 }
             }

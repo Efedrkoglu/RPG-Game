@@ -101,4 +101,8 @@ public class Inventory : MonoBehaviour
     public void OnUseItem(int index) {
 
     }
+
+    public InventorySO getInventorySO() {
+        return inventorySO;
+    }
 }

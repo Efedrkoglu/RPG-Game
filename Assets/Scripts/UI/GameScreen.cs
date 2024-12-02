@@ -11,6 +11,7 @@ public class GameScreen : MonoBehaviour
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private GameObject gameScreen;
+    [SerializeField] private GameObject pressEMessage;
 
     private void Awake() {
         PlayerController.CombatTriggered += OnCombatTriggered;
@@ -20,6 +21,13 @@ public class GameScreen : MonoBehaviour
     private void Start() {
         player = Player.Instance;
         UpdateHpBar();
+    }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.E)) {
+            if (pressEMessage.activeInHierarchy)
+                pressEMessage.SetActive(false);
+        }
     }
 
     private void OnDisable() {
@@ -42,5 +50,13 @@ public class GameScreen : MonoBehaviour
         UpdateHpBar();
     }
 
-    
+    public void TogglePressEMessage(bool toggle) {
+        pressEMessage.SetActive(toggle);
+    }
+
+    public void TogglePressEMessage(bool toggle, string message) {
+        pressEMessage.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        pressEMessage.SetActive(toggle);
+    }
+
 }

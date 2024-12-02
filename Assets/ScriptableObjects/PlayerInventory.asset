@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   slots:
+  - item: {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
+    amount: 24
   - item: {fileID: 11400000, guid: feb4ebc11747e4e459b50b719b2c9d39, type: 2}
     amount: 2
-  - item: {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
-    amount: 14
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 0}
-    amount: 0
-  - item: {fileID: 11400000, guid: 7c43ae8ca0b644846ba96db30020e3ba, type: 2}
+  - item: {fileID: 11400000, guid: 829ae361fad4e7542961dc8bf6eaa532, type: 2}
     amount: 1
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   - item: {fileID: 11400000, guid: c37cd08f37650e840b1080b4d479e1de, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 7c43ae8ca0b644846ba96db30020e3ba, type: 2}
     amount: 1
   - item: {fileID: 0}
     amount: 0

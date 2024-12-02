@@ -93,7 +93,19 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	public void OnCombatEnded(bool combatResult) {
+    private void OnTriggerEnter(Collider other) {
+		if(other.gameObject.CompareTag("Item")) {
+			GameObject.FindGameObjectWithTag("UI").GetComponent<GameScreen>().TogglePressEMessage(true, "pick up");
+		}
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.gameObject.CompareTag("Item")) {
+            GameObject.FindGameObjectWithTag("UI").GetComponent<GameScreen>().TogglePressEMessage(false);
+        }
+    }
+
+    public void OnCombatEnded(bool combatResult) {
 		if(combatResult) {
 			Destroy(lastHitEnemy);
 			listenInputs = true;
