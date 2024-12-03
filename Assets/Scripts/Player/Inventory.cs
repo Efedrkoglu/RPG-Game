@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private InventorySO inventorySO;
     [SerializeField] private Item itemPrefab;
+
+    public event Action OnInventoryItemUsed;
 
     private void Start() {
         InventoryPanel.OnInventoryToggleOpen += OnInventoryOpen;
@@ -99,7 +102,11 @@ public class Inventory : MonoBehaviour
     }
 
     public void OnUseItem(int index) {
+        inventorySO.UseItem(index);
+        UpdateInventory();
 
+        if (Player.Instance.IsInCombat)
+            OnInventoryItemUsed?.Invoke();
     }
 
     public InventorySO getInventorySO() {

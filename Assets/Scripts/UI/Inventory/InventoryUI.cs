@@ -86,7 +86,7 @@ public class InventoryUI : MonoBehaviour
     }  
 
     private void ResetSelection() {
-        foreach(InventorySlotUI slot in inventorySlotsList) {
+        foreach (InventorySlotUI slot in inventorySlotsList) {
             slot.Deselect();
         }
         selectedItemIndex = -1;
@@ -148,7 +148,7 @@ public class InventoryUI : MonoBehaviour
         itemDescriptionImage.sprite = item.itemImage;
         itemDescriptionImage.gameObject.SetActive(true);
         itemDescriptionName.text = item.itemName;
-        this.itemDescription.text = item.description;
+        itemDescription.text = item.description;
 
         if (Player.Instance.IsInCombat)
             dropItemMenuButton.interactable = false;
@@ -163,10 +163,8 @@ public class InventoryUI : MonoBehaviour
 
             case ItemType.Consumable:
                 if(Player.Instance.IsInCombat) {
-                    if (((ConsumableItemSO)item).onlyConsumableDuringCombat)
-                        useItemButton.interactable = true;
-                    else
-                        useItemButton.interactable = false;
+                    useItemButton.interactable = true;
+                    itemDescription.text += "\nconsuming cost: " + ((ConsumableItemSO)item).consumingCost;
                 }
                 else {
                     if (((ConsumableItemSO)item).onlyConsumableDuringCombat)
@@ -217,6 +215,11 @@ public class InventoryUI : MonoBehaviour
 
     public void UseButton() {
         OnUseButton?.Invoke(selectedItemIndex);
+        if (inventorySlotsList[selectedItemIndex].isEmpty()) {
+            ResetSelection();
+            ResetItemDescription();
+        }
+            
     }
 
 }

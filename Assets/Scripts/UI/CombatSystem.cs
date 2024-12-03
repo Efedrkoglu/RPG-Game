@@ -37,11 +37,13 @@ public class CombatSystem : MonoBehaviour
 
 	private void Awake() {
 		PlayerController.CombatTriggered += OnCombatTriggered;
+		Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed += InventoryItemUsed;
 	}
 
 	private void OnDestroy() {
 		PlayerController.CombatTriggered -= OnCombatTriggered;
-	}
+        Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed -= InventoryItemUsed;
+    }
 
 	private void CombatEndedEvent(bool combatResult) {
 		Player.Instance.IsInCombat = false;
@@ -83,6 +85,7 @@ public class CombatSystem : MonoBehaviour
 		enemyUnit.GetComponent<HpBar>().InitHpBar(enemy.MaxHp, enemy.CurrentHp);
 
         info.text = "Battle against " + enemy.EnemyName;
+        combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
     }
 
 	private void UpdateCombatScreen() {
@@ -93,6 +96,8 @@ public class CombatSystem : MonoBehaviour
 		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
 		enemyDamage.text = enemy.Damage.ToString();
 		enemyUnit.GetComponent<HpBar>().UpdateHpBar(enemy.CurrentHp);
+
+		combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
 	}
 
 	private void ExitBattleStation() {
@@ -104,7 +109,9 @@ public class CombatSystem : MonoBehaviour
 
 	private IEnumerator PlayerTurn() {
 		yield return new WaitForSeconds(2f);
-		info.text = "Your turn";
+		player.ActionCount = player.MaxActionCount;
+        combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
+        info.text = "Your turn";
 		yield return new WaitForSeconds(1f);
         info.text = "Choose an action";
         state = BattleState.PLAYERTURN;
@@ -157,6 +164,7 @@ public class CombatSystem : MonoBehaviour
 			return;
 
 		enemy.CurrentHp -= player.Damage;
+		player.ActionCount = 0;
 		UpdateCombatScreen();
 
 		playerUnit.GetComponent<Animator>().SetTrigger("Attack");
@@ -195,5 +203,23 @@ public class CombatSystem : MonoBehaviour
 			return;
 
 		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+	}
+
+	public void InventoryItemUsed() {
+		UpdateCombatScreen();
+
+		if(player.ActionCount == 0) {
+            if (enemy.CurrentHp <= 0) {
+                state = BattleState.WON;
+                enemyUnit.GetComponent<Animator>().SetTrigger("Death");
+                StartCoroutine(EndBattle());
+            } 
+			else {
+                state = BattleState.ENEMYTURN;
+                enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
+                info.text = enemy.EnemyName + "'s turn";
+                StartCoroutine(EnemyTurn());
+            }
+        }
 	}
 }

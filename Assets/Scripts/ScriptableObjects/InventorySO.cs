@@ -65,6 +65,11 @@ public class InventorySO : ScriptableObject
         return dropAmount;
     }
 
+    public void UseItem(int index) {
+        if(slots[index].item.UseItem()) 
+            DropItem(1, index);
+    }
+
     public Dictionary<int, InventorySlot> GetCurrentInventoryState() {
         Dictionary<int, InventorySlot> inventoryState = new Dictionary<int, InventorySlot>();
 

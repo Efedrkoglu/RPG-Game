@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 21300000, guid: b28ee094abbb88c4f94df0fd4aedcb13, type: 3}
   itemName: Apple
-  description: 'Juicy apple.
+  description: 'Juicy apple
 
-    Can only be used in combat'
+    Healing amount: 3'
   isStackable: 1
   stackAmount: 99
-  healAmount: 10
-  onlyConsumableDuringCombat: 1
+  consumeEffect: 0
+  healAmount: 3
+  onlyConsumableDuringCombat: 0
+  consumingCost: 1

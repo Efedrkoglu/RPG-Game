@@ -10,16 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
-  m_Name: Bread
+  m_Name: StrongHealthPotion
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 21300000, guid: 85ae1729adca4c04691c021f1189354c, type: 3}
-  itemName: Bread
-  description: 'Bread
+  itemImage: {fileID: 21300000, guid: f5a345eeda205b941a07b1a5a5a0929b, type: 3}
+  itemName: Strong Health Potion
+  description: 'Restores great amount of health
 
-    healing amount: 5'
+    Only consumable during combat
+
+    Healing
+    Amount: 20'
   isStackable: 1
-  stackAmount: 99
+  stackAmount: 10
   consumeEffect: 0
-  healAmount: 5
-  onlyConsumableDuringCombat: 0
-  consumingCost: 2
+  healAmount: 20
+  onlyConsumableDuringCombat: 1
+  consumingCost: 3

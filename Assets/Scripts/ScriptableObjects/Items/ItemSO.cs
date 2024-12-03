@@ -18,6 +18,10 @@ public class ItemSO : ScriptableObject
         type = ItemType.Default;
     }
 
+    public virtual bool UseItem() {
+        return false;
+    }
+
     public ItemType Type {
         get { return type; }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,12 @@ public class Player : MonoBehaviour
 	private int inventorySize;
 	private bool isInCombat;
 
+	private int actionCount;
+	private int maxActionCount;
+
 	[SerializeField] private GameObject playerUnit;
+
+	public event Action OnHealthChanged;
 
     private void Awake() {
         if(instance != null && instance != this) {
@@ -25,11 +31,13 @@ public class Player : MonoBehaviour
 		}
 
 		maxHp = 100;
-		currentHp = maxHp;
+		currentHp = maxHp - 50;
 		damage = 10;
 		gold = 0;
 		inventorySize = 10;
 		isInCombat = false;
+		maxActionCount = 5;
+		actionCount = maxActionCount;
 	}
 
 	public static Player Instance {
@@ -55,6 +63,8 @@ public class Player : MonoBehaviour
 				currentHp = 0;
 			if (currentHp > maxHp)
 				currentHp = maxHp;
+
+			OnHealthChanged?.Invoke();
 		}
 	}
 
@@ -77,6 +87,21 @@ public class Player : MonoBehaviour
 		get { return isInCombat; }
         set { isInCombat = value; }
     }
+
+	public int ActionCount {
+		get { return actionCount; }
+		set {
+			actionCount = value;
+			if (actionCount > maxActionCount)
+				actionCount = maxActionCount;
+			if (actionCount < 0)
+				actionCount = 0;
+		}
+	}
+
+	public int MaxActionCount {
+		get { return maxActionCount; }
+	}
 
 	public GameObject PlayerUnit {
 		get { return playerUnit; }

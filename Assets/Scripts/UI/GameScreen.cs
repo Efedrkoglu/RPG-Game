@@ -20,6 +20,7 @@ public class GameScreen : MonoBehaviour
 
     private void Start() {
         player = Player.Instance;
+        player.OnHealthChanged += OnPlayerHealthChanged;
         UpdateHpBar();
     }
 
@@ -30,14 +31,19 @@ public class GameScreen : MonoBehaviour
         }
     }
 
-    private void OnDisable() {
+    private void OnDestroy() {
         PlayerController.CombatTriggered -= OnCombatTriggered;
         CombatSystem.CombatEnded -= OnCombatEnded;
+        player.OnHealthChanged -= OnPlayerHealthChanged;
     }
 
     private void UpdateHpBar() {
         hpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
         hpText.text = player.CurrentHp + "/" + player.MaxHp;
+    }
+
+    public void OnPlayerHealthChanged() {
+        UpdateHpBar();
     }
 
     public void OnCombatTriggered(Enemy enemy) {
