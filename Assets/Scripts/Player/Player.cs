@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 		gold = 0;
 		inventorySize = 10;
 		isInCombat = false;
-		maxActionCount = 5;
+		maxActionCount = 3;
 		actionCount = maxActionCount;
 	}
 

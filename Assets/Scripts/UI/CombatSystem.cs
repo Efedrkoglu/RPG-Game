@@ -182,22 +182,6 @@ public class CombatSystem : MonoBehaviour
 		}
 	}
 
-	public void HealButton() {
-		if (state != BattleState.PLAYERTURN)
-			return;
-
-		player.CurrentHp += 10;
-
-		if (player.CurrentHp > player.MaxHp)
-			player.CurrentHp = player.MaxHp;
-
-        UpdateCombatScreen();
-
-        state = BattleState.ENEMYTURN;
-		info.text = enemy.EnemyName + "'s turn";
-		StartCoroutine(EnemyTurn());
-	}
-
 	public void InventoryButton() {
 		if(state != BattleState.PLAYERTURN)
 			return;

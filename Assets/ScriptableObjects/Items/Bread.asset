@@ -20,6 +20,6 @@ MonoBehaviour:
   isStackable: 1
   stackAmount: 99
   consumeEffect: 0
-  healAmount: 5
+  healAmount: 7
   onlyConsumableDuringCombat: 0
   consumingCost: 2
