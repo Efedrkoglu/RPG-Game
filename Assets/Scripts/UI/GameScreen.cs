@@ -12,6 +12,8 @@ public class GameScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hpText;
     [SerializeField] private GameObject gameScreen;
     [SerializeField] private GameObject pressEMessage;
+    [SerializeField] private GameObject statsPanel;
+    [SerializeField] private Animator statsPanelAnimator;
 
     private void Awake() {
         PlayerController.CombatTriggered += OnCombatTriggered;
@@ -40,6 +42,22 @@ public class GameScreen : MonoBehaviour
     private void UpdateHpBar() {
         hpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
         hpText.text = player.CurrentHp + "/" + player.MaxHp;
+    }
+
+    public void ToggleStatsPanel() {
+        if(!statsPanel.activeInHierarchy) {
+            statsPanel.SetActive(true);
+            statsPanelAnimator.SetTrigger("Open");
+        }
+        else {
+            StartCoroutine(CloseStatsPanel());
+        }
+    }
+
+    private IEnumerator CloseStatsPanel() {
+        statsPanelAnimator.SetTrigger("Close");
+        yield return new WaitForSeconds(.4f);
+        statsPanel.SetActive(false);
     }
 
     public void OnPlayerHealthChanged() {

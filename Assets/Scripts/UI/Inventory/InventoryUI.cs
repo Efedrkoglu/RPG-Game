@@ -141,7 +141,7 @@ public class InventoryUI : MonoBehaviour
         itemDescription.text = "";
         useItemButton.interactable = false;
         dropItemMenuButton.interactable = false;
-        useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+        useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
     }
 
     public void SetItemDescription(ItemSO item) {
@@ -157,7 +157,7 @@ public class InventoryUI : MonoBehaviour
 
         switch(item.Type) {
             case ItemType.Default:
-                useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "use";
+                useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
                 useItemButton.interactable = false;
                 break;
 
@@ -181,9 +181,9 @@ public class InventoryUI : MonoBehaviour
                     useItemButton.interactable = true;
 
                 if (((EquipmentItemSO)item).Equipped)
-                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "unequip";
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
                 else
-                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "equip";
+                    useItemButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
                 break;
 
             default:

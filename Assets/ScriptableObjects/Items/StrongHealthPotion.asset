@@ -16,10 +16,10 @@ MonoBehaviour:
   itemName: Strong Health Potion
   description: 'Restores great amount of health
 
-    Only consumable during combat
+    Healing Amount: 20
 
-    Healing
-    Amount: 20'
+    (Only
+    consumable during combat)'
   isStackable: 1
   stackAmount: 10
   consumeEffect: 0

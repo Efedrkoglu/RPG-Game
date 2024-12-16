@@ -47,6 +47,6 @@ public class ConsumableItemSO : ItemSO
 public enum Effect
 {
     Heal,
-    HealOverTime,
-    BuffAttack
+    HealingBuff,
+    AttackBuff
 }

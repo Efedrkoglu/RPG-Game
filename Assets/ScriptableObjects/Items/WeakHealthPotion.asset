@@ -16,10 +16,10 @@ MonoBehaviour:
   itemName: Weak Health Potion
   description: 'Restores small amount of health
 
-    Only consumable during combat
+    Healing Amount: 5
 
-    Healing
-    Amount: 5'
+    (Only
+    consumable during combat)'
   isStackable: 1
   stackAmount: 10
   consumeEffect: 0

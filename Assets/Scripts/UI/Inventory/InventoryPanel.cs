@@ -11,14 +11,6 @@ public class InventoryPanel : MonoBehaviour
 
     public static event Action OnInventoryToggleOpen, OnInventoryToggleClose;
 
-    private void Update() {
-        if(!Player.Instance.IsInCombat) {
-            if (Input.GetKeyDown(KeyCode.I)) {
-                ToggleInventory();
-            }
-        }
-    }
-
     public void ToggleInventory() {
         if(!inventoryPanel.activeInHierarchy) {
             inventoryPanel.SetActive(true);
