@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Bread
   description: 'Bread
 
-    healing amount: 5'
+    Healing Amount: 7'
   isStackable: 1
   stackAmount: 99
   consumeEffect: 0

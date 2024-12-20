@@ -17,10 +17,22 @@ public class EquipmentItemSO : ItemSO
     }
 
     public override bool UseItem() {
-        switch(equipmentType) {
+        switch (equipmentType) {
             case EquipmentType.Weapon:
-                
                 break;
+            case EquipmentType.Shield:
+                break;
+            case EquipmentType.BodyArmor:
+                Player.Instance.DefPercent += defValue;
+                break;
+            case EquipmentType.Helmet:
+                break;
+            case EquipmentType.Boots:
+                break;
+            case EquipmentType.Trinket:
+                break;
+            default:
+                return false;
         }
         return true;
     }
@@ -37,5 +49,6 @@ public enum EquipmentType
     Shield,
     BodyArmor,
     Helmet,
-    Boot
+    Boots,
+    Trinket
 }

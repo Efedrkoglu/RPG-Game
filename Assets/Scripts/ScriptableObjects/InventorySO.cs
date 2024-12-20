@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Inventory", menuName = "ScriptableObjects/Inventory")]
+[CreateAssetMenu(fileName = "Inventory", menuName = "ScriptableObjects/Inventory/Inventory")]
 public class InventorySO : ScriptableObject
 {
     public List<InventorySlot> slots;
     public int size;
 
     public event Action<Item, int> OnAddItem;
+    public event Action<EquipmentItemSO> EquipmentEquipped;
 
     public void Initialize(int _size) {
         size = _size;
@@ -66,8 +67,16 @@ public class InventorySO : ScriptableObject
     }
 
     public void UseItem(int index) {
-        if(slots[index].item.UseItem()) 
+        if (slots[index].IsEmpty)
+            return;
+
+        if(slots[index].item.UseItem()) {
+            if (slots[index].item is EquipmentItemSO) {
+                EquipmentItemSO equippedItem = (EquipmentItemSO)slots[index].item;
+                EquipmentEquipped?.Invoke(equippedItem);
+            }
             DropItem(1, index);
+        }
     }
 
     public Dictionary<int, InventorySlot> GetCurrentInventoryState() {
@@ -107,28 +116,5 @@ public class InventorySO : ScriptableObject
             slots[itemIndex1] = new InventorySlot();
             slots[itemIndex2].amount = currentStackAmount;
         }
-    }
-}
-
-[Serializable]
-public class InventorySlot
-{
-    public ItemSO item;
-    public int amount;
-    public bool IsEmpty => item == null;
-
-    public InventorySlot() {
-        item = null;
-        amount = 0;
-    }
-
-    public ItemSO Item {
-        get { return item; }
-        set { item = value; }
-    }
-
-    public int Amount {
-        get { return amount; }
-        set { amount = value; }
     }
 }

@@ -27,6 +27,7 @@ public class InventoryUI : MonoBehaviour
     private int currentlyDraggedItemIndex = -1;
     private int selectedItemIndex = -1;
 
+    public event Action InventoryUpdateRequested;
     public event Action<int> OnDescriptionRequested, OnStartDragging, OnUseButton;
     public event Action<int, int> OnSwapItems, OnDropButton;
 
@@ -45,7 +46,7 @@ public class InventoryUI : MonoBehaviour
     }
 
     private void OnEnable() {
-        
+        InventoryUpdateRequested?.Invoke();
     }
 
     private void OnDisable() {
@@ -164,7 +165,7 @@ public class InventoryUI : MonoBehaviour
             case ItemType.Consumable:
                 if(Player.Instance.IsInCombat) {
                     useItemButton.interactable = true;
-                    itemDescription.text += "\nconsuming cost: " + ((ConsumableItemSO)item).consumingCost;
+                    itemDescription.text += "\nConsuming Cost: " + ((ConsumableItemSO)item).consumingCost;
                 }
                 else {
                     if (((ConsumableItemSO)item).onlyConsumableDuringCombat)
@@ -192,9 +193,16 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
+    private void ResetInventoryUI() {
+        ResetSelection();
+        ResetItemDescription();
+    }
+
     public void DropMenuButton() {
         if (!inventorySlotsList[selectedItemIndex].isStackable()) {
-            DropButton();
+            OnDropButton?.Invoke(1, selectedItemIndex);
+            if (inventorySlotsList[selectedItemIndex].isEmpty())
+                ResetInventoryUI();
             return;
         }
         inventoryBG.GetComponent<Image>().color = new Color(0, 0, 0, 0);
@@ -204,6 +212,8 @@ public class InventoryUI : MonoBehaviour
     public void DropButton() {
         int dropAmount = Convert.ToInt32(dropInput.text);
         OnDropButton?.Invoke(dropAmount, selectedItemIndex);
+        if (inventorySlotsList[selectedItemIndex].isEmpty())
+            ResetInventoryUI();
         CancelDropButton();
     }
 
@@ -215,11 +225,8 @@ public class InventoryUI : MonoBehaviour
 
     public void UseButton() {
         OnUseButton?.Invoke(selectedItemIndex);
-        if (inventorySlotsList[selectedItemIndex].isEmpty()) {
-            ResetSelection();
-            ResetItemDescription();
-        }
-            
+        if (inventorySlotsList[selectedItemIndex].isEmpty())
+            ResetInventoryUI();
     }
 
 }

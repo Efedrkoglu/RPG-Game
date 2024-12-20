@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Apple
   description: 'Juicy apple
 
-    Healing amount: 3'
+    Healing Amount: 3'
   isStackable: 1
   stackAmount: 99
   consumeEffect: 0

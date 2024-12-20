@@ -4050,26 +4050,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1236156240899965838, guid: f69bb463e8fdeb74c862139d852d0643,
         type: 3}
-      propertyPath: m_fontSize
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 1236156240899965838, guid: f69bb463e8fdeb74c862139d852d0643,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 667a2e30fedeca742a7b3e9584343123,
-        type: 2}
-    - target: {fileID: 1236156240899965838, guid: f69bb463e8fdeb74c862139d852d0643,
-        type: 3}
       propertyPath: m_fontSizeBase
       value: 42
       objectReference: {fileID: 0}
-    - target: {fileID: 1236156240899965838, guid: f69bb463e8fdeb74c862139d852d0643,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -1927005924639231015, guid: 667a2e30fedeca742a7b3e9584343123,
-        type: 2}
     - target: {fileID: 1236156240899965838, guid: f69bb463e8fdeb74c862139d852d0643,
         type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -18416,6 +18399,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 590a560764c4bfe4da96b956bb9a662d, type: 3}
+--- !u!114 &1654790307 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1686701803026094987, guid: f69bb463e8fdeb74c862139d852d0643,
+    type: 3}
+  m_PrefabInstance: {fileID: 365322221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14dc044e090850e4e9247ec56c58bced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1655549520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5848263705604093031, guid: 35b8a8d6cb66cfa40afdda7cf801dacb,
@@ -22004,15 +21999,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 930287690907052844, guid: f0f799fb98283984bbed12c1ba87feac,
         type: 3}
-      propertyPath: itemPrefab
-      value: 
-      objectReference: {fileID: 1718588639868609159, guid: efb519bbb72416443b119a1a6ca9e103,
-        type: 3}
-    - target: {fileID: 930287690907052844, guid: f0f799fb98283984bbed12c1ba87feac,
-        type: 3}
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 1627447451}
+    - target: {fileID: 930287690907052844, guid: f0f799fb98283984bbed12c1ba87feac,
+        type: 3}
+      propertyPath: equipmentInventoryUI
+      value: 
+      objectReference: {fileID: 1654790307}
     - target: {fileID: 5542866504399015647, guid: f0f799fb98283984bbed12c1ba87feac,
         type: 3}
       propertyPath: m_LocalPosition.x

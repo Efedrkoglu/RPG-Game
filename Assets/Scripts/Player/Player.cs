@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +8,7 @@ public class Player : MonoBehaviour
 	private int maxHp;
 	private int currentHp;
 	private int damage;
+	private int defPercent;
 	private int gold;
 	private int inventorySize;
 	private bool isInCombat;
@@ -19,7 +18,7 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private GameObject playerUnit;
 
-	public event Action OnHealthChanged;
+	public event Action OnHealthChanged, EquipmentEquipped;
 
     private void Awake() {
         if(instance != null && instance != this) {
@@ -33,6 +32,7 @@ public class Player : MonoBehaviour
 		maxHp = 100;
 		currentHp = maxHp - 50;
 		damage = 10;
+		defPercent = 0;
 		gold = 0;
 		inventorySize = 10;
 		isInCombat = false;
@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
 
 			return instance;
 		}
+	}
+
+	public void OnEquipmentEquipped() {
+		EquipmentEquipped?.Invoke();
 	}
 
 	public int MaxHp {
@@ -71,6 +75,11 @@ public class Player : MonoBehaviour
 	public int Damage {
 		get { return damage; }
 		set { damage = value; }
+	}
+
+	public int DefPercent {
+		get { return defPercent; }
+		set { defPercent = value; }
 	}
 
 	public int Gold {
