@@ -4,11 +4,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	private static Player instance;
-
+	
+	private int level;
+	private int maxExp;
+	private int currentExp;
 	private int maxHp;
 	private int currentHp;
 	private int damage;
 	private int defPercent;
+	private int blockChance;
+	private int luck;
 	private int gold;
 	private int inventorySize;
 	private bool isInCombat;
@@ -29,16 +34,25 @@ public class Player : MonoBehaviour
 			DontDestroyOnLoad(gameObject);
 		}
 
-		maxHp = 100;
-		currentHp = maxHp - 50;
-		damage = 10;
-		defPercent = 0;
-		gold = 0;
-		inventorySize = 10;
-		isInCombat = false;
-		maxActionCount = 3;
-		actionCount = maxActionCount;
+		InitializePlayer();
 	}
+
+	private void InitializePlayer() {
+        level = 1;
+        maxExp = 100;
+        currentExp = 0;
+        maxHp = 50;
+        currentHp = maxHp;
+        damage = 10;
+        defPercent = 0;
+        blockChance = 0;
+		luck = 5;
+        gold = 0;
+        inventorySize = 10;
+        isInCombat = false;
+        maxActionCount = 3;
+        actionCount = maxActionCount;
+    }
 
 	public static Player Instance {
 		get {
@@ -54,8 +68,31 @@ public class Player : MonoBehaviour
 		EquipmentEquipped?.Invoke();
 	}
 
+	public int Level {
+		get { return level; }
+		set { level = value; }
+	}
+
+	public int MaxExp {
+		get { return maxExp; }
+	}
+
+	public int CurrentExp {
+		get { return currentExp; }
+		set {
+			currentExp = value;
+
+			if (currentExp > maxExp) {
+				level++;
+				//level up
+				currentExp = currentExp % maxExp;
+			}
+		}
+	}
+
 	public int MaxHp {
 		get { return maxHp; }
+		set { maxHp = value; }
 	}
 
 	public int CurrentHp {
@@ -80,6 +117,16 @@ public class Player : MonoBehaviour
 	public int DefPercent {
 		get { return defPercent; }
 		set { defPercent = value; }
+	}
+
+	public int BlockChance {
+		get { return blockChance; }
+		set { blockChance = value; }
+	}
+
+	public int Luck {
+		get { return luck; }
+		set { luck = value; }
 	}
 
 	public int Gold {

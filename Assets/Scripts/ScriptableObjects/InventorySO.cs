@@ -117,4 +117,12 @@ public class InventorySO : ScriptableObject
             slots[itemIndex2].amount = currentStackAmount;
         }
     }
+
+    public bool HasEmptySlot() {
+        foreach(var slot in slots) {
+            if (slot.IsEmpty)
+                return true;
+        }
+        return false;
+    }
 }

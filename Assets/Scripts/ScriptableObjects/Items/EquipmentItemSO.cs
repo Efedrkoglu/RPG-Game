@@ -7,6 +7,7 @@ public class EquipmentItemSO : ItemSO
 {
     public int attackDamage;
     public int defValue;
+    public int blockChance;
     public EquipmentType equipmentType;
 
     private bool equipped;
@@ -19,18 +20,28 @@ public class EquipmentItemSO : ItemSO
     public override bool UseItem() {
         switch (equipmentType) {
             case EquipmentType.Weapon:
+                Player.Instance.Damage += attackDamage;
                 break;
+
             case EquipmentType.Shield:
+                Player.Instance.BlockChance += blockChance;
                 break;
+
             case EquipmentType.BodyArmor:
                 Player.Instance.DefPercent += defValue;
                 break;
+
             case EquipmentType.Helmet:
+                Player.Instance.DefPercent += defValue;
                 break;
+
             case EquipmentType.Boots:
+                Player.Instance.DefPercent += defValue;
                 break;
+
             case EquipmentType.Trinket:
                 break;
+
             default:
                 return false;
         }

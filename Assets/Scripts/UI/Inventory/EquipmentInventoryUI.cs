@@ -22,6 +22,7 @@ public class EquipmentInventoryUI : MonoBehaviour
 
     private void OnEnable() {
         EquipmentInventoryUpdateRequested?.Invoke();
+        ResetSelection();
     }
 
     private void OnDestroy() {
@@ -45,6 +46,7 @@ public class EquipmentInventoryUI : MonoBehaviour
             else
                 equipmentSlotsList[slotIndex].ResetSlot();
         }
+        gameObject.GetComponent<PlayerStatsUI>()?.SetUI(Player.Instance);
     }
 
     public void OnEquipmentSlotClicked(EquipmentInventorySlotUI equipmentSlotUI) {

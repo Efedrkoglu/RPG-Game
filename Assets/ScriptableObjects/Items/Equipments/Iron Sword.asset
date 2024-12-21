@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44de2ff7699f64340a4b6a37d63f3653, type: 3}
-  m_Name: Leather Armor
+  m_Name: Iron Sword
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 21300000, guid: dbc41341162b9af48a276ca6afef5916, type: 3}
-  itemName: Leather Armor
-  description: + %6 protection
+  itemImage: {fileID: 21300000, guid: 53ad36c14b968d846934c7402958250e, type: 3}
+  itemName: Iron Sword
+  description: 'A handy tool for killing creatures.
+
+    +5 damage'
   isStackable: 0
   stackAmount: 1
-  attackDamage: 0
-  defValue: 6
-  equipmentType: 2
+  attackDamage: 5
+  defValue: 0
+  blockChance: 0
+  equipmentType: 0

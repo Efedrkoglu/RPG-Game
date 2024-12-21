@@ -125,8 +125,16 @@ public class Inventory : MonoBehaviour
     } 
 
     public void OnEquipmentUnequipped(ItemSO unequippedItem) {
-        Item item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
-        item.InitializeItem(unequippedItem, 1);
+        if(inventorySO.HasEmptySlot()) {
+            Item item = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
+            item.InitializeItem(unequippedItem, 1);
+            inventorySO.AddItem(item);
+            Destroy(item.gameObject);
+        }
+        else {
+            Item item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+            item.InitializeItem(unequippedItem, 1);
+        }
         UpdateEquipmentInventory();
     }
 
@@ -139,7 +147,7 @@ public class Inventory : MonoBehaviour
         inventorySO.UseItem(index);
         UpdateInventory();
 
-        if (Player.Instance.IsInCombat)
+        if(Player.Instance.IsInCombat)
             OnInventoryItemUsed?.Invoke();
     }
 

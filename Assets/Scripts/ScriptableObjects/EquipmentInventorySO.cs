@@ -21,26 +21,38 @@ public class EquipmentInventorySO : ScriptableObject
     public void EquipItem(EquipmentItemSO item) {
         switch(item.equipmentType) {
             case EquipmentType.Helmet:
+                if (!slots[0].IsEmpty)
+                    UnequipItem(0);
                 slots[0].Item = item;
                 break;
 
             case EquipmentType.BodyArmor:
+                if (!slots[1].IsEmpty)
+                    UnequipItem(1);
                 slots[1].Item = item;
                 break;
 
             case EquipmentType.Boots:
+                if (!slots[2].IsEmpty)
+                    UnequipItem(2);
                 slots[2].Item = item;
                 break;
 
             case EquipmentType.Weapon:
+                if (!slots[3].IsEmpty)
+                    UnequipItem(3);
                 slots[3].Item = item;
                 break;
 
             case EquipmentType.Shield:
+                if (!slots[4].IsEmpty)
+                    UnequipItem(4);
                 slots[4].Item = item;
                 break;
 
             case EquipmentType.Trinket:
+                if (!slots[5].IsEmpty)
+                    UnequipItem(5);
                 slots[5].Item = item;
                 break;
 
@@ -50,8 +62,37 @@ public class EquipmentInventorySO : ScriptableObject
     }
 
     public void UnequipItem(int index) {
-        ItemSO unequippedItem = slots[index].item;
+        EquipmentItemSO unequippedItem = (EquipmentItemSO)slots[index].item;
         slots[index] = new InventorySlot();
+
+        switch (unequippedItem.equipmentType) {
+            case EquipmentType.Weapon:
+                Player.Instance.Damage -= unequippedItem.attackDamage;
+                break;
+
+            case EquipmentType.Shield:
+                Player.Instance.BlockChance -= unequippedItem.blockChance;
+                break;
+
+            case EquipmentType.BodyArmor:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Helmet:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Boots:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Trinket:
+                break;
+
+            default:
+                break;
+        }
+
         OnEquipmentUnequipped?.Invoke(unequippedItem);
     }
 
