@@ -7,17 +7,23 @@ public class EquipmentInventoryUI : MonoBehaviour
 {
     [SerializeField] private List<EquipmentInventorySlotUI> equipmentSlotsList;
     [SerializeField] private Button unequipButton;
+    [SerializeField] private GameObject equipmentInfoPanel;
 
     private int selectedSlotIndex;
+    private EquipmentInfo equipmentInfo;
+    private EquipmentInventorySlotUI lastPointerEnteredSlot;
 
     public event Action EquipmentInventoryUpdateRequested;
-    public event Action<int> UnEquipButtonClicked;
+    public event Action<int> UnEquipButtonClicked, EquipmentDescriptionRequested;
 
     private void Start() {
         foreach(var slot in equipmentSlotsList) {
             slot.OnEquipmentSlotClicked += OnEquipmentSlotClicked;
+            slot.OnEquipmentSlotPointerEnter += OnEquipmentSlotPointerEnter;
+            slot.OnEquipmentSlotPointerExit += OnEquipmentSlotPointerExit;
         }
         selectedSlotIndex = -1;
+        equipmentInfo = equipmentInfoPanel.GetComponent<EquipmentInfo>();
     }
 
     private void OnEnable() {
@@ -28,6 +34,8 @@ public class EquipmentInventoryUI : MonoBehaviour
     private void OnDestroy() {
         foreach (var slot in equipmentSlotsList) {
             slot.OnEquipmentSlotClicked -= OnEquipmentSlotClicked;
+            slot.OnEquipmentSlotPointerEnter -= OnEquipmentSlotPointerEnter;
+            slot.OnEquipmentSlotPointerExit -= OnEquipmentSlotPointerExit;
         }
     }
 
@@ -57,6 +65,26 @@ public class EquipmentInventoryUI : MonoBehaviour
         equipmentSlotUI.Select();
         selectedSlotIndex = equipmentSlotsList.IndexOf(equipmentSlotUI);
         unequipButton.interactable = true;
+    }
+
+    public void OnEquipmentSlotPointerEnter(EquipmentInventorySlotUI equipmentSlotUI) {
+        lastPointerEnteredSlot = equipmentSlotUI;
+        EquipmentDescriptionRequested?.Invoke(equipmentSlotsList.IndexOf(equipmentSlotUI));
+    }
+
+    public void OnEquipmentSlotPointerExit(EquipmentInventorySlotUI equipmentSlotUI) {
+        lastPointerEnteredSlot = null;
+        HideEquipmentInfoPanel();
+    }
+
+    public void ShowEquipmentInfoPanel(EquipmentItemSO equipmentItem) {
+        Vector3 position = lastPointerEnteredSlot.transform.position + new Vector3(0, 100, 0);
+        equipmentInfo.SetInfo(equipmentItem, position);
+        equipmentInfoPanel.SetActive(true);
+    }
+
+    public void HideEquipmentInfoPanel() {
+        equipmentInfoPanel.SetActive(false);
     }
 
     public void UnequipButton() {

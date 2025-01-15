@@ -8,6 +8,7 @@ public class EquipmentItemSO : ItemSO
     public int attackDamage;
     public int defValue;
     public int blockChance;
+    public string equipmentStats;
     public EquipmentType equipmentType;
 
     private bool equipped;

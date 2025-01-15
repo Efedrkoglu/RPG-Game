@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 21300000, guid: 3a7a72cea01978641871e0f80b6d8728, type: 3}
   itemName: Wooden Shield
-  description: + %10 block chance
+  description: +10% block chance
   isStackable: 0
   stackAmount: 1
   attackDamage: 0
   defValue: 0
   blockChance: 10
+  equipmentStats: +10% Block Chance
   equipmentType: 1

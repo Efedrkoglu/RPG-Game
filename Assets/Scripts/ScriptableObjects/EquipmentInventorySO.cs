@@ -104,4 +104,13 @@ public class EquipmentInventorySO : ScriptableObject
         }
         return inventoryState;
     }
+
+    public EquipmentItemSO getItemAt(int index) {
+        if(index < slots.Count) {
+            if (!slots[index].IsEmpty) {
+                return (EquipmentItemSO)slots[index].Item;
+            }
+        }
+        return null;
+    }
 }

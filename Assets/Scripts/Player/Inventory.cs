@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour
 
         equipmentInventoryUI.EquipmentInventoryUpdateRequested += UpdateEquipmentInventory;
         equipmentInventoryUI.UnEquipButtonClicked += UnequipItem;
+        equipmentInventoryUI.EquipmentDescriptionRequested += OnEquipmentDescriptionRequested;
 
         equipmentInventorySO.OnEquipmentUnequipped += OnEquipmentUnequipped;
     }
@@ -49,6 +50,7 @@ public class Inventory : MonoBehaviour
 
         equipmentInventoryUI.EquipmentInventoryUpdateRequested -= UpdateEquipmentInventory;
         equipmentInventoryUI.UnEquipButtonClicked -= UnequipItem;
+        equipmentInventoryUI.EquipmentDescriptionRequested -= OnEquipmentDescriptionRequested;
 
         equipmentInventorySO.OnEquipmentUnequipped -= OnEquipmentUnequipped;
     }
@@ -149,6 +151,11 @@ public class Inventory : MonoBehaviour
 
         if(Player.Instance.IsInCombat)
             OnInventoryItemUsed?.Invoke();
+    }
+
+    public void OnEquipmentDescriptionRequested(int index) {
+        EquipmentItemSO equipmentItem = equipmentInventorySO.getItemAt(index);
+        equipmentInventoryUI.ShowEquipmentInfoPanel(equipmentItem);
     }
 
     public InventorySO getInventorySO() {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler
+public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image emptySlotImage;
     [SerializeField] private Image itemImage;
@@ -17,7 +17,7 @@ public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler
 
     private bool isEmpty = true;
 
-    public event Action<EquipmentInventorySlotUI> OnEquipmentSlotClicked;
+    public event Action<EquipmentInventorySlotUI> OnEquipmentSlotClicked, OnEquipmentSlotPointerEnter, OnEquipmentSlotPointerExit;
 
     public void SetSlot(Sprite _itemImage) {
         emptySlotImage.gameObject.SetActive(false);
@@ -41,9 +41,26 @@ public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler
     }
 
     public void OnPointerClick(PointerEventData eventData) {
+        if (isEmpty)
+            return;
+
         if(eventData.button == PointerEventData.InputButton.Left) {
             OnEquipmentSlotClicked?.Invoke(this);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        if (isEmpty)
+            return;
+        
+        OnEquipmentSlotPointerEnter?.Invoke(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        if (isEmpty)
+            return;
+        
+        OnEquipmentSlotPointerExit?.Invoke(this);
     }
 
     public EquipmentType EquipmentType {
@@ -54,4 +71,5 @@ public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler
     public bool IsEmpty() {
         return isEmpty;
     }
+    
 }

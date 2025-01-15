@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 21300000, guid: 37bb48001c0b51141b25956830ade891, type: 3}
   itemName: Leather Boots
-  description: + %3 protection
+  description: +3% protection
   isStackable: 0
   stackAmount: 1
   attackDamage: 0
   defValue: 3
   blockChance: 0
+  equipmentStats: +3% Protection
   equipmentType: 4

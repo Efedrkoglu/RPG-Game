@@ -22,4 +22,5 @@ MonoBehaviour:
   attackDamage: 5
   defValue: 0
   blockChance: 0
+  equipmentStats: +5 Damage
   equipmentType: 0
