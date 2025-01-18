@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 21300000, guid: 0b2f369162ec5ec4085c40266f4dffa5, type: 3}
   itemName: Strength Potion
-  description: 'Grants attack bonus for a certain amount of time.
+  description: 'Grants attack bonus for current round, at the end of current round
+    grants attack buff lasts for certain amount of time that keeps your attack boosted.
 
-    Attack Bonus:
-    5,
+    Attack
+    Bonus: 5,
 
-    Duration: 3
+    Duration: 3,
 
     (Only consumable during combat)'
   isStackable: 1

@@ -7,7 +7,7 @@ public class AttackBuff : Buff
     private int attackBonus;
     private bool alreadyCleared;
 
-    public AttackBuff(int duration, int attackBonus) : base(duration) {
+    public AttackBuff(int duration, int attackBonus) : base(duration, 0) {
         this.attackBonus = attackBonus;
         this.alreadyCleared = false;
         ApplyBuff();
@@ -39,7 +39,7 @@ public class AttackBuff : Buff
         alreadyCleared = true;
     }
 
-    public override string Description() {
-        return "Attack buff, attackBonus: " + attackBonus.ToString() + ", duration: " + duration.ToString();
+    public override string getDescription() {
+        return "Attack Buff\nAttack Bonus: " + attackBonus.ToString();
     }
 }

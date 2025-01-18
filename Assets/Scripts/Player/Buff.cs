@@ -6,9 +6,11 @@ public abstract class Buff
 {
     protected int duration;
     protected bool skip;
+    protected int type;
     
-    protected Buff(int duration) {
+    protected Buff(int duration, int type) {
         this.duration = duration;
+        this.type = type;
         this.skip = true;
     }
 
@@ -16,8 +18,12 @@ public abstract class Buff
         get { return duration; }
     }
 
+    public int Type {
+        get { return type; }
+    }
+
     protected abstract void ApplyBuff();
     public abstract void ReApplyBuff();
     public abstract void ClearBuff();
-    public abstract string Description();
+    public abstract string getDescription();
 }

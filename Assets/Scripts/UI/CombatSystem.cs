@@ -32,6 +32,7 @@ public class CombatSystem : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI info;
 	[SerializeField] private SwitchCamera switchCamera;
 	[SerializeField] private GameObject combatScreen;
+	[SerializeField] private BuffIcon[] buffIcons;
 
     public static List<Buff> activeBuffs;
 
@@ -65,6 +66,9 @@ public class CombatSystem : MonoBehaviour
 	private void OnCombatTriggered(Enemy enemy) {
         state = BattleState.STARTED;
 		activeBuffs = new List<Buff>();
+		for(int i = 0; i < buffIcons.Length; i++) {
+			buffIcons[i].gameObject.SetActive(false);
+		}
 		Player.Instance.IsInCombat = true;
         playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
@@ -221,13 +225,17 @@ public class CombatSystem : MonoBehaviour
 
                 if (buff.Duration == 0) {
 					buff.ClearBuff();
-				}       
+				}
             }
 
 			for(int i = 0; i < activeBuffs.Count; i++) {
 				if (activeBuffs[i].Duration != 0) {
-                    Debug.Log((i + 1) + ". " + activeBuffs[i].Description());
-                }
+					buffIcons[i].SetBuffIcon(activeBuffs[i].Type, activeBuffs[i].Duration, activeBuffs[i].getDescription());
+					buffIcons[i].gameObject.SetActive(true);
+				}
+				else {
+					buffIcons[i].gameObject.SetActive(false);
+				}
 			}
         }
     }

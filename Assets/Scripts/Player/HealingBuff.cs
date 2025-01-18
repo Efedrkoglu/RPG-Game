@@ -6,7 +6,7 @@ public class HealingBuff : Buff
 {
     private int healingAmount;
 
-    public HealingBuff(int duration, int healingAmount) : base(duration) {
+    public HealingBuff(int duration, int healingAmount) : base(duration, 1) {
         this.healingAmount = healingAmount;
         ApplyBuff();
     }
@@ -32,7 +32,7 @@ public class HealingBuff : Buff
         
     }
 
-    public override string Description() {
-        return "Healing buff, healingAmount: " + healingAmount.ToString() + ", duration: " + duration.ToString();
+    public override string getDescription() {
+        return "Healing Buff\nHealing Amount: " + healingAmount.ToString();
     }
 }

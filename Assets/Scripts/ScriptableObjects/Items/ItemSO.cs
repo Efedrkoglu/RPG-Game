@@ -8,7 +8,7 @@ public class ItemSO : ScriptableObject
     public int ID => GetInstanceID();
     public Sprite itemImage;
     public string itemName;
-    [TextArea] public string description;
+    [TextArea(10, 15)] public string description;
     public bool isStackable;
     public int stackAmount = 1;
 

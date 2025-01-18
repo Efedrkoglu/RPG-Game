@@ -184,8 +184,8 @@ RectTransform:
   - {fileID: 8465267769530146339}
   - {fileID: 4279609373076070949}
   - {fileID: 1236602314902382480}
-  - {fileID: 8918101836082634945}
   - {fileID: 1952419059527239166}
+  - {fileID: 8918101836082634945}
   m_Father: {fileID: 5049913828827687565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -4661,17 +4661,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8408748069788536399}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8309519967000584111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
-  m_SizeDelta: {x: 465, y: 225}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 270, y: -325.00006}
+  m_SizeDelta: {x: 473, y: 220.0001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5783726970522946680
 CanvasRenderer:
@@ -4703,6 +4703,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris massa neque,
     aliquam dapibus nulla accumsan, aliquet cursus nibh. Aliquam mi leo, pretium
+    sed auctor sed, convallis in turpis. Nunc pellentesque feugiat lorem molestie
+    egestas.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris massa
+    neque, aliquam dapibus nulla accumsan, aliquet cursus nibh. Aliquam mi leo, pretium
     sed auctor sed, convallis in turpis. Nunc pellentesque feugiat lorem molestie
     egestas.
   m_isRightToLeft: 0
@@ -4768,7 +4771,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 10, y: 0, z: 10, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
