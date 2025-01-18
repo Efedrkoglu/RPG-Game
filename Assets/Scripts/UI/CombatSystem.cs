@@ -33,11 +33,14 @@ public class CombatSystem : MonoBehaviour
 	[SerializeField] private SwitchCamera switchCamera;
 	[SerializeField] private GameObject combatScreen;
 
-	public static event Action<bool> CombatEnded;
+    public static List<Buff> activeBuffs;
+
+    public static event Action<bool> CombatEnded;
 
 	private void Awake() {
 		PlayerController.CombatTriggered += OnCombatTriggered;
 		Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed += InventoryItemUsed;
+		activeBuffs = new List<Buff>(Player.Instance.EffectsCount);
 	}
 
 	private void OnDestroy() {
@@ -61,6 +64,7 @@ public class CombatSystem : MonoBehaviour
 
 	private void OnCombatTriggered(Enemy enemy) {
         state = BattleState.STARTED;
+		activeBuffs = new List<Buff>();
 		Player.Instance.IsInCombat = true;
         playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
@@ -139,7 +143,7 @@ public class CombatSystem : MonoBehaviour
 
 	private IEnumerator EndBattle() {
 		if(state == BattleState.WON) {
-			info.text = "You killed the " + enemy.EnemyName;
+			info.text = "You defeated the " + enemy.EnemyName;
 			yield return new WaitForSeconds(2f);
 			info.text = "You won the battle!";
 			yield return new WaitForSeconds(2f);
@@ -149,7 +153,7 @@ public class CombatSystem : MonoBehaviour
         }
 		else if(state == BattleState.LOST) {
 			yield return new WaitForSeconds(2f);
-			info.text = enemy.EnemyName + " killed you";
+			info.text = enemy.EnemyName + " defeated you";
 			yield return new WaitForSeconds(2f);
 			info.text = "You lost the battle";
 			yield return new WaitForSeconds(2f);
@@ -165,6 +169,7 @@ public class CombatSystem : MonoBehaviour
 
 		enemy.CurrentHp -= player.Damage;
 		player.ActionCount = 0;
+		UpdateBuffs();
 		UpdateCombatScreen();
 
 		playerUnit.GetComponent<Animator>().SetTrigger("Attack");
@@ -193,6 +198,8 @@ public class CombatSystem : MonoBehaviour
 		UpdateCombatScreen();
 
 		if(player.ActionCount == 0) {
+			gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+			UpdateBuffs();
             if (enemy.CurrentHp <= 0) {
                 state = BattleState.WON;
                 enemyUnit.GetComponent<Animator>().SetTrigger("Death");
@@ -205,5 +212,31 @@ public class CombatSystem : MonoBehaviour
                 StartCoroutine(EnemyTurn());
             }
         }
+	}
+
+	public void UpdateBuffs() {
+        if (activeBuffs.Count > 0) {
+            foreach (var buff in activeBuffs) {
+                buff.ReApplyBuff();
+
+                if (buff.Duration == 0) {
+					buff.ClearBuff();
+				}       
+            }
+
+			for(int i = 0; i < activeBuffs.Count; i++) {
+				if (activeBuffs[i].Duration != 0) {
+                    Debug.Log((i + 1) + ". " + activeBuffs[i].Description());
+                }
+			}
+        }
+    }
+
+	public static void AddBuff(Buff buff) {
+		activeBuffs.Add(buff);
+		if(activeBuffs.Count > Player.Instance.EffectsCount) {
+			activeBuffs[0].ClearBuff();
+			activeBuffs.RemoveAt(0);
+		}
 	}
 }

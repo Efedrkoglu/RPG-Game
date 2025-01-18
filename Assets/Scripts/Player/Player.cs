@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
 	private int actionCount;
 	private int maxActionCount;
+	private int effectsCount;
 
 	[SerializeField] private GameObject playerUnit;
 
@@ -41,9 +42,9 @@ public class Player : MonoBehaviour
         level = 1;
         maxExp = 100;
         currentExp = 0;
-        maxHp = 50;
-        currentHp = maxHp;
-        damage = 10;
+        maxHp = 1000;
+        currentHp = maxHp - 300;
+        damage = 1;
         defPercent = 0;
         blockChance = 0;
 		luck = 5;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour
         isInCombat = false;
         maxActionCount = 3;
         actionCount = maxActionCount;
+		effectsCount = 3;
     }
 
 	public static Player Instance {
@@ -142,7 +144,12 @@ public class Player : MonoBehaviour
 	public bool IsInCombat {
 		get { return isInCombat; }
         set { isInCombat = value; }
-    }
+	}
+
+	public int EffectsCount {
+		get { return effectsCount; }
+		set { effectsCount = value; }
+	}
 
 	public int ActionCount {
 		get { return actionCount; }

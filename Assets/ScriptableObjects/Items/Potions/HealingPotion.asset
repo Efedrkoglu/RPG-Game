@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
+  m_Name: HealingPotion
+  m_EditorClassIdentifier: 
+  itemImage: {fileID: 21300000, guid: f6e4d65b9fc03bf4e8976cd1577a55b4, type: 3}
+  itemName: Healing Potion
+  description: 'Regenerates health continuously.
+
+    Healing amount: 5,
+
+    Duration:
+    3
+
+    (Only consumable during combat)
+
+'
+  isStackable: 1
+  stackAmount: 5
+  consumeEffect: 1
+  healAmount: 5
+  attackBonus: 0
+  duration: 3
+  onlyConsumableDuringCombat: 1
+  consumingCost: 1

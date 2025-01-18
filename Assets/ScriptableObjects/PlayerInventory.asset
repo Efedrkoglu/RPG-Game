@@ -13,24 +13,24 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   slots:
-  - item: {fileID: 11400000, guid: 406aa5ff69a8e814fa7899c7b1043163, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 829ae361fad4e7542961dc8bf6eaa532, type: 2}
-    amount: 6
-  - item: {fileID: 11400000, guid: 41f2c344fc9e4664da8bb062673c8822, type: 2}
-    amount: 4
-  - item: {fileID: 11400000, guid: 1d7bb651ba967ae49b3f3761ab14acef, type: 2}
-    amount: 2
-  - item: {fileID: 11400000, guid: a667dc16d5fd46740b08df5984c6a1fe, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: c9f00b58ece407b4cafa2b29fdb4b4da, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 085a6f8793b5d6f4881f21caa4343a87, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 78b2e1e576c75f1478adbdb121034bdd, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: cc2e38def189283448939189633d5521, type: 2}
-    amount: 1
+  - item: {fileID: 11400000, guid: b68ccc2545d15df41998db926eff55cb, type: 2}
+    amount: 3
   - item: {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
-    amount: 23
+    amount: 9
+  - item: {fileID: 11400000, guid: 89af2fd9c51e78043bb6ada9de2e8db2, type: 2}
+    amount: 2
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   size: 10
