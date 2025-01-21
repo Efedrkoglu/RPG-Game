@@ -42,9 +42,9 @@ public class Player : MonoBehaviour
         level = 1;
         maxExp = 100;
         currentExp = 0;
-        maxHp = 1000;
-        currentHp = maxHp - 300;
-        damage = 1;
+        maxHp = 50;
+        currentHp = maxHp;
+        damage = 225;
         defPercent = 0;
         blockChance = 0;
 		luck = 5;

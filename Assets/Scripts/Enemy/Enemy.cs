@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,44 @@ public class Enemy : MonoBehaviour
     protected int maxHp;
     protected int currentHp;
     protected int damage;
+    protected List<Loot> loots;
+
     [SerializeField] protected GameObject unit;
+    [SerializeField] protected GameObject lootBagPrefab;
+    [SerializeField] protected ItemSO[] drops;
+    [SerializeField] protected double[] dropChances;
+    [SerializeField] protected int[] maxDropAmount;
 
     protected virtual void Start() {
+        CreateDrops();
+    }
 
+    private void CreateDrops() {
+        loots = new List<Loot>();
+        System.Random rng = new System.Random();
+
+        for(int i = 0; i < drops.Length; i++) {
+            double randomNumber = (double)rng.Next(0, 101) / 100;
+
+            if(randomNumber <= dropChances[i]) {
+                int dropAmount = rng.Next(1, (maxDropAmount[i] + 1));
+                loots.Add(new Loot(drops[i], dropAmount));
+            }
+        }
+    }
+
+    public void Die() {
+        if(loots.Count > 0) {
+            GameObject lootBag = Instantiate(lootBagPrefab, new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z), Quaternion.identity);
+            lootBag.GetComponent<LootBag>().Loots = loots;
+        }
+        StartCoroutine(PlayDeathAnim());
+    }
+
+    private IEnumerator PlayDeathAnim() {
+        gameObject.GetComponent<Animator>().SetTrigger("Die");
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
     }
 
     public string EnemyName {
@@ -41,5 +76,9 @@ public class Enemy : MonoBehaviour
     public int Damage {
         get { return damage; }
         set { damage = value; }
+    }
+
+    public List<Loot> Loots {
+        get { return loots; }
     }
 }

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	private GameObject lastHitEnemy;
 
 	[SerializeField] private float movementSpeed;
+	[SerializeField] private GameScreen gameScreen;
 
 	public static event Action<Enemy> CombatTriggered;
 
@@ -95,19 +96,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Item")) {
-			GameObject.FindGameObjectWithTag("UI").GetComponent<GameScreen>().TogglePressEMessage(true, "pick up");
+			gameScreen.TogglePressEMessage(true, "pick up");
+		}
+		else if(other.gameObject.CompareTag("LootBag")) {
+			gameScreen.TogglePressEMessage(true, "Loot");
+			
 		}
     }
 
     private void OnTriggerExit(Collider other) {
         if(other.gameObject.CompareTag("Item")) {
-            GameObject.FindGameObjectWithTag("UI").GetComponent<GameScreen>().TogglePressEMessage(false);
+            gameScreen.TogglePressEMessage(false);
+        } 
+		else if (other.gameObject.CompareTag("LootBag")) {
+            gameScreen.TogglePressEMessage(false);
         }
     }
 
     public void OnCombatEnded(bool combatResult) {
 		if(combatResult) {
-			Destroy(lastHitEnemy);
+			lastHitEnemy.GetComponent<Enemy>().Die();
 			listenInputs = true;
 		}
 		else {

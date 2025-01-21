@@ -22548,6 +22548,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6916699666327114006, guid: f0f799fb98283984bbed12c1ba87feac,
+        type: 3}
+      propertyPath: gameScreen
+      value: 
+      objectReference: {fileID: 2019446745}
     - target: {fileID: 7388059893318517508, guid: f0f799fb98283984bbed12c1ba87feac,
         type: 3}
       propertyPath: m_Name
@@ -25470,6 +25475,59 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: lootBagPrefab
+      value: 
+      objectReference: {fileID: 2614861107313315734, guid: 50676344999a07b4786e5295a9e7d807,
+        type: 3}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: drops.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: drops.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0,
+        type: 2}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: drops.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 829ae361fad4e7542961dc8bf6eaa532,
+        type: 2}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: dropChances.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: maxDropAmount.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: dropChances.Array.data[0]
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: dropChances.Array.data[1]
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: maxDropAmount.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: maxDropAmount.Array.data[1]
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -6,8 +6,10 @@ public class Skeleton : Enemy
 {
     protected override void Start() {
         enemyName = "Skeleton";
-        maxHp = 500;
+        maxHp = 35;
         currentHp = maxHp;
         damage = 15;
+        base.Start();
     }
+
 }
