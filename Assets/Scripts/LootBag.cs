@@ -6,9 +6,11 @@ public class LootBag : MonoBehaviour
 {
     private List<Loot> loots;
     private bool listenInputs;
+    private LootMenu lootMenu;
 
     private void Start() {
         listenInputs = false;
+        lootMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<LootMenu>();
     }
 
     private void Update() {
@@ -16,7 +18,7 @@ public class LootBag : MonoBehaviour
             return;
 
         if(Input.GetKeyDown(KeyCode.E)) {
-            PrintLoots();
+            lootMenu.ShowMenu(this);
         }
     }
 
