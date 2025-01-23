@@ -17,9 +17,9 @@ public class ItemObtainedFeed : MonoBehaviour
         Player.Instance.gameObject.GetComponent<Inventory>().getInventorySO().OnAddItem -= OnAddItem;
     }
 
-    public void OnAddItem(Item item, int amount) {
+    public void OnAddItem(ItemSO item, int amount) {
         ItemObtainedFeedRow itemObtainedFeedRow = Instantiate(itemObtainedFeedRowPrefab, Vector3.zero, Quaternion.identity);
         itemObtainedFeedRow.transform.SetParent(rectTransform);
-        itemObtainedFeedRow.Initialize(item.GetItem.itemImage, item.GetItem.itemName, amount);
+        itemObtainedFeedRow.Initialize(item.itemImage, item.itemName, amount);
     }
 }

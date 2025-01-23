@@ -11,6 +11,11 @@ public class LootBag : MonoBehaviour
     private void Start() {
         listenInputs = false;
         lootMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<LootMenu>();
+        lootMenu.CurrentLootBagLooted += OnLootBagLooted;
+    }
+
+    private void OnDestroy() {
+        lootMenu.CurrentLootBagLooted -= OnLootBagLooted;
     }
 
     private void Update() {
@@ -19,12 +24,6 @@ public class LootBag : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.E)) {
             lootMenu.ShowMenu(this);
-        }
-    }
-
-    public void PrintLoots() {
-        foreach(var loot in loots) {
-            Debug.Log(loot.Item.itemName + ", " + loot.Amount);
         }
     }
 
@@ -40,8 +39,29 @@ public class LootBag : MonoBehaviour
         }
     }
 
+    public bool IsEmpty() {
+        bool result = true;
+
+        foreach (var item in loots) {
+            if (!item.IsEmpty()) {
+                result = false;
+            }
+        }
+        return result;
+    }
+
+    public void OnLootBagLooted() {
+        Destroy(gameObject);
+    }
+
     public List<Loot> Loots {
         get { return loots; }
         set { loots = value; }
     }
+
+    public bool ListenInputs {
+        get { return listenInputs; }
+        set { listenInputs = value; }
+    }
+    
 }

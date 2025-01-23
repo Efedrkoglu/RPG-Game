@@ -71,6 +71,10 @@ public class Inventory : MonoBehaviour
         return inventorySO.AddItem(item);
     }
 
+    public int AddItem(ItemSO item, int amount) {
+        return inventorySO.AddItem(item, amount);
+    }
+
     public void OnInventoryOpen() {
         UpdateInventory();
     }

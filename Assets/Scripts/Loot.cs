@@ -18,5 +18,13 @@ public class Loot
 
     public int Amount {
         get { return amount; }
+        set { amount = value; }
+    }
+
+    public bool IsEmpty() {
+        if (amount == 0)
+            return true;
+
+        return false;
     }
 }

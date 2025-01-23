@@ -9,7 +9,7 @@ public class InventorySO : ScriptableObject
     public List<InventorySlot> slots;
     public int size;
 
-    public event Action<Item, int> OnAddItem;
+    public event Action<ItemSO, int> OnAddItem;
     public event Action<EquipmentItemSO> EquipmentEquipped;
 
     public void Initialize(int _size) {
@@ -26,28 +26,57 @@ public class InventorySO : ScriptableObject
             if(slots[i].IsEmpty) {
                 slots[i].Item = item.GetItem;
                 slots[i].Amount = item.Amount;
-                OnAddItem?.Invoke(item, item.Amount);
+                OnAddItem?.Invoke(item.GetItem, item.Amount);
                 return 0;
             }
-            else if (slots[i].item.ID == item.GetItem.ID && item.GetItem.isStackable) {
+            else if(slots[i].item.ID == item.GetItem.ID && item.GetItem.isStackable) {
                 int maxStackAmount = item.GetItem.stackAmount;
-                if (slots[i].amount == maxStackAmount)
+                if(slots[i].amount == maxStackAmount)
                     continue;
 
                 int currentStackAmount = slots[i].amount + item.Amount;
                 if(currentStackAmount > maxStackAmount) {
                     slots[i].amount = maxStackAmount;
-                    OnAddItem?.Invoke(item, item.Amount - (currentStackAmount % maxStackAmount));
+                    OnAddItem?.Invoke(item.GetItem, item.Amount - (currentStackAmount % maxStackAmount));
                     item.Amount = currentStackAmount % maxStackAmount;
                 }
                 else {
                     slots[i].amount = currentStackAmount;
-                    OnAddItem?.Invoke(item, item.Amount);
+                    OnAddItem?.Invoke(item.GetItem, item.Amount);
                     return 0;
                 }
             }
         }
         return item.Amount;
+    }
+
+    public int AddItem(ItemSO item, int amount) {
+        for(int i = 0; i < size; i++) {
+            if(slots[i].IsEmpty) {
+                slots[i].Item = item;
+                slots[i].Amount = amount;
+                OnAddItem?.Invoke(item, amount);
+                return 0;
+            }
+            else if(slots[i].item.ID == item.ID && item.isStackable) {
+                int maxStackAmount = item.stackAmount;
+                if (slots[i].amount == maxStackAmount)
+                    continue;
+
+                int currentStackAmount = slots[i].amount + amount;
+                if(currentStackAmount > maxStackAmount) {
+                    slots[i].amount = maxStackAmount;
+                    OnAddItem?.Invoke(item, amount - (currentStackAmount % maxStackAmount));
+                    amount = currentStackAmount % maxStackAmount;
+                }
+                else {
+                    slots[i].amount = currentStackAmount;
+                    OnAddItem?.Invoke(item, amount);
+                    return 0;
+                }
+            }
+        }
+        return amount;
     }
 
     public int DropItem(int dropAmount, int index) {
