@@ -17,6 +17,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected double[] dropChances;
     [SerializeField] protected int[] maxDropAmount;
 
+    [SerializeField] protected GameObject coinPrefab;
+    [SerializeField] protected CoinType coinType;
+    [SerializeField] protected int coinAmount;
+
     protected virtual void Start() {
         CreateDrops();
     }
@@ -38,8 +42,12 @@ public class Enemy : MonoBehaviour
     public void Die() {
         if(loots.Count > 0) {
             GameObject lootBag = Instantiate(lootBagPrefab, new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z), Quaternion.identity);
-            lootBag.GetComponent<LootBag>().Loots = loots;
+            lootBag.GetComponent<LootBag>().Loots = loots;    
         }
+
+        GameObject coin = Instantiate(coinPrefab, new Vector3(transform.position.x + .2f, transform.position.y + .1f, transform.position.z - .2f), Quaternion.identity);
+        coin.GetComponent<Coin>().SetCoin(coinType, coinAmount);
+
         StartCoroutine(PlayDeathAnim());
     }
 

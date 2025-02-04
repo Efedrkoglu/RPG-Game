@@ -11,8 +11,6 @@ public class LootMenu : MonoBehaviour
 
     private Inventory playerInventory;
 
-    public event Action CurrentLootBagLooted;
-
     private void Start() {
         for(int i = 0; i < rows.Length; i++) {
             rows[i].RowSelected += OnRowSelected;
@@ -55,7 +53,8 @@ public class LootMenu : MonoBehaviour
                 }
                 else {
                     if(currentLootBag.IsEmpty()) {
-                        CurrentLootBagLooted?.Invoke();
+                        Destroy(currentLootBag.gameObject);
+                        currentLootBag = null;
                         CloseLootMenu();
                         break;
                     }
@@ -75,7 +74,8 @@ public class LootMenu : MonoBehaviour
         }
 
         if(currentLootBag.IsEmpty()) {
-            CurrentLootBagLooted?.Invoke();
+            Destroy(currentLootBag.gameObject);
+            currentLootBag = null;
             CloseLootMenu();
         }
         else {

@@ -10,6 +10,7 @@ public class GameScreen : MonoBehaviour
 
     [SerializeField] private Image hpBar;
     [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI silverCoinText, goldCoinText;
     [SerializeField] private GameObject gameScreen;
     [SerializeField] private GameObject pressEMessage;
     [SerializeField] private GameObject statsPanel;
@@ -23,7 +24,9 @@ public class GameScreen : MonoBehaviour
     private void Start() {
         player = Player.Instance;
         player.OnHealthChanged += OnPlayerHealthChanged;
+        player.UpdateCoins += UpdateCoins;
         UpdateHpBar();
+        UpdateCoins();
     }
 
     private void Update() {
@@ -37,6 +40,7 @@ public class GameScreen : MonoBehaviour
         PlayerController.CombatTriggered -= OnCombatTriggered;
         CombatSystem.CombatEnded -= OnCombatEnded;
         player.OnHealthChanged -= OnPlayerHealthChanged;
+        player.UpdateCoins -= UpdateCoins;
     }
 
     private void UpdateHpBar() {
@@ -83,4 +87,8 @@ public class GameScreen : MonoBehaviour
         pressEMessage.SetActive(toggle);
     }
 
+    public void UpdateCoins() {
+        silverCoinText.text = player.SilverCoin.ToString();
+        goldCoinText.text = player.GoldCoin.ToString();
+    }
 }

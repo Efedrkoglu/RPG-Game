@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
 	private int defPercent;
 	private int blockChance;
 	private int luck;
-	private int gold;
+	private int silverCoin;
+	private int goldCoin;
 	private int inventorySize;
 	private bool isInCombat;
 
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private GameObject playerUnit;
 
-	public event Action OnHealthChanged, EquipmentEquipped;
+	public event Action OnHealthChanged, EquipmentEquipped, UpdateCoins;
 
     private void Awake() {
         if(instance != null && instance != this) {
@@ -48,7 +49,8 @@ public class Player : MonoBehaviour
         defPercent = 0;
         blockChance = 0;
 		luck = 5;
-        gold = 0;
+		silverCoin = 0;
+        goldCoin = 0;
         inventorySize = 10;
         isInCombat = false;
         maxActionCount = 3;
@@ -131,9 +133,20 @@ public class Player : MonoBehaviour
 		set { luck = value; }
 	}
 
-	public int Gold {
-		get { return gold; }
-		set { gold = value; }
+	public int SilverCoin {
+		get { return silverCoin; }
+		set { 
+			silverCoin = value;
+			UpdateCoins?.Invoke();
+		}
+	}
+
+	public int GoldCoin {
+		get { return goldCoin; }
+		set {
+			goldCoin = value;
+            UpdateCoins?.Invoke();
+        }
 	}
 
 	public int InventorySize {

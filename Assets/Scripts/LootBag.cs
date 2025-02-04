@@ -11,11 +11,6 @@ public class LootBag : MonoBehaviour
     private void Start() {
         listenInputs = false;
         lootMenu = GameObject.FindGameObjectWithTag("UI").GetComponent<LootMenu>();
-        lootMenu.CurrentLootBagLooted += OnLootBagLooted;
-    }
-
-    private void OnDestroy() {
-        lootMenu.CurrentLootBagLooted -= OnLootBagLooted;
     }
 
     private void Update() {

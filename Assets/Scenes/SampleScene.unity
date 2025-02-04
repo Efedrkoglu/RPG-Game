@@ -20641,7 +20641,7 @@ PrefabInstance:
     - target: {fileID: 5542866504399015647, guid: f0f799fb98283984bbed12c1ba87feac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.245
+      value: -4.142
       objectReference: {fileID: 0}
     - target: {fileID: 5542866504399015647, guid: f0f799fb98283984bbed12c1ba87feac,
         type: 3}
@@ -22129,6 +22129,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 3761303678634972418, guid: f774abf5cd9097345a3345a5539da819,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3878848098335491125, guid: f774abf5cd9097345a3345a5539da819,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -22704,6 +22709,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8234607748487459430, guid: 2e459cad0f3386b45bc67e46d204a82b,
+        type: 3}
+      propertyPath: coinAmount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234607748487459430, guid: 2e459cad0f3386b45bc67e46d204a82b,
+        type: 3}
+      propertyPath: coinPrefab
+      value: 
+      objectReference: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22845,6 +22861,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: coinAmount
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
+        type: 3}
+      propertyPath: coinPrefab
+      value: 
+      objectReference: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
+        type: 3}
     - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
         type: 3}
       propertyPath: lootBagPrefab

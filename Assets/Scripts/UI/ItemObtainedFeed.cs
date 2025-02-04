@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ItemObtainedFeed : MonoBehaviour
 {
@@ -21,5 +22,11 @@ public class ItemObtainedFeed : MonoBehaviour
         ItemObtainedFeedRow itemObtainedFeedRow = Instantiate(itemObtainedFeedRowPrefab, Vector3.zero, Quaternion.identity);
         itemObtainedFeedRow.transform.SetParent(rectTransform);
         itemObtainedFeedRow.Initialize(item.itemImage, item.itemName, amount);
+    }
+
+    public void OnAddCoin(Sprite coinSprite, string coinName, int amount) {
+        ItemObtainedFeedRow itemObtainedFeedRow = Instantiate(itemObtainedFeedRowPrefab, Vector3.zero, Quaternion.identity);
+        itemObtainedFeedRow.transform.SetParent(rectTransform);
+        itemObtainedFeedRow.Initialize(coinSprite, coinName, amount);
     }
 }
