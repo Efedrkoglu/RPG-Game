@@ -12,7 +12,8 @@ public class PlayerStatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI damageText;
     [SerializeField] private TextMeshProUGUI defText;
     [SerializeField] private TextMeshProUGUI blockChanceText;
-    [SerializeField] private TextMeshProUGUI luckText;
+
+    [SerializeField] private GameObject levelPointsMenu;
 
     private void OnEnable() {
         SetUI(Player.Instance);
@@ -25,6 +26,10 @@ public class PlayerStatsUI : MonoBehaviour
         damageText.text = player.Damage.ToString();
         defText.text = player.DefPercent.ToString() + "%";
         blockChanceText.text = player.BlockChance.ToString() + "%";
-        luckText.text = player.Luck.ToString() + "%";
+    }
+
+    public void OpenLevelPointsMenu() {
+        levelPointsMenu.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

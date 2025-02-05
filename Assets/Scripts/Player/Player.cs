@@ -13,11 +13,14 @@ public class Player : MonoBehaviour
 	private int damage;
 	private int defPercent;
 	private int blockChance;
-	private int luck;
 	private int silverCoin;
 	private int goldCoin;
 	private int inventorySize;
 	private bool isInCombat;
+
+	private int levelPoints;
+	private int vigorPoints;
+	private int strPoints;
 
 	private int actionCount;
 	private int maxActionCount;
@@ -48,11 +51,13 @@ public class Player : MonoBehaviour
         damage = 225;
         defPercent = 0;
         blockChance = 0;
-		luck = 5;
 		silverCoin = 0;
         goldCoin = 0;
         inventorySize = 10;
         isInCombat = false;
+		levelPoints = 0;
+		vigorPoints = 0;
+		strPoints = 0;
         maxActionCount = 3;
         actionCount = maxActionCount;
 		effectsCount = 3;
@@ -88,14 +93,14 @@ public class Player : MonoBehaviour
 
 			if (currentExp > maxExp) {
 				level++;
-				//level up
+				levelPoints++;
 				currentExp = currentExp % maxExp;
 			}
 		}
 	}
 
 	public int MaxHp {
-		get { return maxHp; }
+		get { return maxHp + vigorPoints * 5; }
 		set { maxHp = value; }
 	}
 
@@ -114,7 +119,7 @@ public class Player : MonoBehaviour
 	}
 
 	public int Damage {
-		get { return damage; }
+		get { return damage + strPoints * 5; }
 		set { damage = value; }
 	}
 
@@ -126,11 +131,6 @@ public class Player : MonoBehaviour
 	public int BlockChance {
 		get { return blockChance; }
 		set { blockChance = value; }
-	}
-
-	public int Luck {
-		get { return luck; }
-		set { luck = value; }
 	}
 
 	public int SilverCoin {
@@ -157,6 +157,21 @@ public class Player : MonoBehaviour
 	public bool IsInCombat {
 		get { return isInCombat; }
         set { isInCombat = value; }
+	}
+
+	public int LevelPoints {
+		get { return levelPoints; }
+		set { levelPoints = value; }
+	}
+
+	public int VigorPoints {
+		get { return vigorPoints; }
+		set { vigorPoints = value; }
+	}
+
+	public int StrPoints {
+		get { return strPoints; }
+		set { strPoints = value; }
 	}
 
 	public int EffectsCount {
