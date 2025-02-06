@@ -15,6 +15,7 @@ public class GameScreen : MonoBehaviour
     [SerializeField] private GameObject pressEMessage;
     [SerializeField] private GameObject statsPanel;
     [SerializeField] private Animator statsPanelAnimator;
+    [SerializeField] private GameObject levelUpIndicator;
 
     private void Awake() {
         PlayerController.CombatTriggered += OnCombatTriggered;
@@ -25,6 +26,7 @@ public class GameScreen : MonoBehaviour
         player = Player.Instance;
         player.OnHealthChanged += OnPlayerHealthChanged;
         player.UpdateCoins += UpdateCoins;
+        player.LevelUp += OnPlayerLevelUp;
         UpdateHpBar();
         UpdateCoins();
     }
@@ -41,14 +43,17 @@ public class GameScreen : MonoBehaviour
         CombatSystem.CombatEnded -= OnCombatEnded;
         player.OnHealthChanged -= OnPlayerHealthChanged;
         player.UpdateCoins -= UpdateCoins;
+        player.LevelUp -= OnPlayerLevelUp;
     }
 
-    private void UpdateHpBar() {
+    public void UpdateHpBar() {
         hpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
         hpText.text = player.CurrentHp + "/" + player.MaxHp;
     }
 
     public void ToggleStatsPanel() {
+        levelUpIndicator.SetActive(false);
+
         if(!statsPanel.activeInHierarchy) {
             statsPanel.SetActive(true);
             statsPanelAnimator.SetTrigger("Open");
@@ -90,5 +95,9 @@ public class GameScreen : MonoBehaviour
     public void UpdateCoins() {
         silverCoinText.text = player.SilverCoin.ToString();
         goldCoinText.text = player.GoldCoin.ToString();
+    }
+
+    public void OnPlayerLevelUp() {
+        levelUpIndicator.SetActive(true);
     }
 }

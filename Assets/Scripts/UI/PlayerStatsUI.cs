@@ -15,8 +15,19 @@ public class PlayerStatsUI : MonoBehaviour
 
     [SerializeField] private GameObject levelPointsMenu;
 
+    [SerializeField] private GameObject levelUpIndicator;
+
     private void OnEnable() {
         SetUI(Player.Instance);
+
+        if (Player.Instance.LevelPoints > 0)
+            levelUpIndicator.SetActive(true);
+        else
+            levelUpIndicator.SetActive(false);
+    }
+
+    private void OnDisable() {
+        levelUpIndicator.SetActive(false);
     }
 
     public void SetUI(Player player) {

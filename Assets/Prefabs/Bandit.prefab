@@ -149,6 +149,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 9101568889811975555, guid: 30780055e3947f54aa21c55cec80edb5, type: 3}
+  lootBagPrefab: {fileID: 2614861107313315734, guid: 50676344999a07b4786e5295a9e7d807,
+    type: 3}
+  drops:
+  - {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
+  dropChances:
+  - 0.7
+  maxDropAmount: 03000000
+  coinPrefab: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
+    type: 3}
+  coinType: 0
+  coinAmount: 15
 --- !u!65 &8321458174094434531
 BoxCollider:
   m_ObjectHideFlags: 0

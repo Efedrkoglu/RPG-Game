@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class LevelPointsUI : MonoBehaviour
 {
+    [SerializeField] private GameScreen gameScreen;
     [SerializeField] private GameObject prevWindow;
     [SerializeField] private TextMeshProUGUI levelPointsText, vigorPointsText, strengthPointsText;
     [SerializeField] private Button incVigor, decVigor, incStrength, decStrength, confirmBtn, closeBtn;
@@ -77,6 +78,9 @@ public class LevelPointsUI : MonoBehaviour
         Player.Instance.LevelPoints = levelPoints;
         Player.Instance.VigorPoints = vigorPoints;
         Player.Instance.StrPoints = strengthPoints;
+
+        gameScreen.UpdateHpBar();
+
         CloseBtn();
     }
 

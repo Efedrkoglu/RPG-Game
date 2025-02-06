@@ -15,9 +15,7 @@ public class Inventory : MonoBehaviour
     public event Action OnInventoryItemUsed;
 
     private void Start() {
-        //InventoryPanel.OnInventoryToggleOpen += OnInventoryOpen;
-
-        //inventorySO.Initialize(Player.Instance.InventorySize);
+        inventorySO.Initialize(Player.Instance.InventorySize);
         inventoryUI.InitializeInventoryUI(inventorySO.size);
 
         inventoryUI.InventoryUpdateRequested += UpdateInventory;
@@ -37,8 +35,6 @@ public class Inventory : MonoBehaviour
     }
 
     private void OnDestroy() {
-        //InventoryPanel.OnInventoryToggleOpen -= OnInventoryOpen;
-
         inventoryUI.InventoryUpdateRequested -= UpdateInventory;
         inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
         inventoryUI.OnStartDragging -= OnStartDragging;
@@ -73,10 +69,6 @@ public class Inventory : MonoBehaviour
 
     public int AddItem(ItemSO item, int amount) {
         return inventorySO.AddItem(item, amount);
-    }
-
-    public void OnInventoryOpen() {
-        UpdateInventory();
     }
 
     public void HandleDesriptionRequest(int index) {

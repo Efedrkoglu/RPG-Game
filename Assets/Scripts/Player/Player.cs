@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
 	[SerializeField] private GameObject playerUnit;
 
-	public event Action OnHealthChanged, EquipmentEquipped, UpdateCoins;
+	public event Action OnHealthChanged, EquipmentEquipped, UpdateCoins, LevelUp;
 
     private void Awake() {
         if(instance != null && instance != this) {
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 	}
 
 	private void InitializePlayer() {
-        level = 1;
+        level = 0;
         maxExp = 100;
         currentExp = 0;
         maxHp = 50;
@@ -63,7 +63,21 @@ public class Player : MonoBehaviour
 		effectsCount = 3;
     }
 
-	public static Player Instance {
+    public void OnEquipmentEquipped() {
+        EquipmentEquipped?.Invoke();
+    }
+
+    public void IncreaseExp(int exp) {
+        currentExp += exp;
+        while (currentExp >= maxExp) {
+            level++;
+            levelPoints++;
+			LevelUp?.Invoke();
+            currentExp -= maxExp;
+        }
+    }
+
+    public static Player Instance {
 		get {
 			if(instance == null) {
 				instance = FindObjectOfType<Player>();
@@ -71,10 +85,6 @@ public class Player : MonoBehaviour
 
 			return instance;
 		}
-	}
-
-	public void OnEquipmentEquipped() {
-		EquipmentEquipped?.Invoke();
 	}
 
 	public int Level {
@@ -88,15 +98,6 @@ public class Player : MonoBehaviour
 
 	public int CurrentExp {
 		get { return currentExp; }
-		set {
-			currentExp = value;
-
-			if (currentExp > maxExp) {
-				level++;
-				levelPoints++;
-				currentExp = currentExp % maxExp;
-			}
-		}
 	}
 
 	public int MaxHp {
@@ -111,8 +112,8 @@ public class Player : MonoBehaviour
 
 			if (currentHp < 0)
 				currentHp = 0;
-			if (currentHp > maxHp)
-				currentHp = maxHp;
+			if (currentHp > MaxHp)
+				currentHp = MaxHp;
 
 			OnHealthChanged?.Invoke();
 		}

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     protected int maxHp;
     protected int currentHp;
     protected int damage;
+    protected int exp;
     protected List<Loot> loots;
 
     [SerializeField] protected GameObject unit;
@@ -40,6 +41,8 @@ public class Enemy : MonoBehaviour
     }
 
     public void Die() {
+        Player.Instance.IncreaseExp(exp);
+
         if(loots.Count > 0) {
             GameObject lootBag = Instantiate(lootBagPrefab, new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z), Quaternion.identity);
             lootBag.GetComponent<LootBag>().Loots = loots;    
@@ -84,9 +87,5 @@ public class Enemy : MonoBehaviour
     public int Damage {
         get { return damage; }
         set { damage = value; }
-    }
-
-    public List<Loot> Loots {
-        get { return loots; }
     }
 }

@@ -23074,11 +23074,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bandit
       objectReference: {fileID: 0}
-    - target: {fileID: 5592405153502172229, guid: 2e459cad0f3386b45bc67e46d204a82b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6615268242158420171, guid: 2e459cad0f3386b45bc67e46d204a82b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23129,17 +23124,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8234607748487459430, guid: 2e459cad0f3386b45bc67e46d204a82b,
-        type: 3}
-      propertyPath: coinAmount
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8234607748487459430, guid: 2e459cad0f3386b45bc67e46d204a82b,
-        type: 3}
-      propertyPath: coinPrefab
-      value: 
-      objectReference: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
-        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23275,75 +23259,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skeleton
-      objectReference: {fileID: 0}
-    - target: {fileID: 567665190984249795, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: coinAmount
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: coinPrefab
-      value: 
-      objectReference: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
-        type: 3}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: lootBagPrefab
-      value: 
-      objectReference: {fileID: 2614861107313315734, guid: 50676344999a07b4786e5295a9e7d807,
-        type: 3}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: drops.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: drops.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0,
-        type: 2}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: drops.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 829ae361fad4e7542961dc8bf6eaa532,
-        type: 2}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: dropChances.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: maxDropAmount.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: dropChances.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: dropChances.Array.data[1]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: maxDropAmount.Array.data[0]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2772150128791974658, guid: 647948235f0aa124fac1cc9bcc9dcc7d,
-        type: 3}
-      propertyPath: maxDropAmount.Array.data[1]
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

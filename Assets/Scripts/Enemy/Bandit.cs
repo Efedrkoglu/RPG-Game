@@ -9,6 +9,8 @@ public class Bandit : Enemy
         maxHp = 20;
         currentHp = maxHp;
         damage = 7;
+        exp = 200;
+        base.Start();
     }
 
 }
