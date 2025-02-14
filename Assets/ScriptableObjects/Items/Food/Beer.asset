@@ -10,24 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
-  m_Name: StrengthPotion
+  m_Name: Beer
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 21300000, guid: f6c0d1cfdb592af459a326e51ebde150, type: 3}
-  itemName: Strength Potion
-  description: 'Grants attack bonus for current round, at the end of current round
-    grants attack buff lasts for certain amount of time that keeps your attack boosted.
-
-    Attack
-    Bonus: 5,
-
-    Duration: 3,
+  itemImage: {fileID: 21300000, guid: 20c754ef729dbae40a674a1e4e3bf53d, type: 3}
+  itemName: Beer
+  description: 'Beer
 
     (Only consumable during combat)'
   isStackable: 1
   stackAmount: 5
-  consumeEffect: 2
-  healAmount: 0
-  attackBonus: 5
-  duration: 3
+  consumeEffect: 3
+  healAmount: 10
+  attackBonus: 10
+  duration: 2
   onlyConsumableDuringCombat: 1
-  consumingCost: 2
+  consumingCost: 3

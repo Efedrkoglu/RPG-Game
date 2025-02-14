@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44de2ff7699f64340a4b6a37d63f3653, type: 3}
-  m_Name: Wooden Shield
+  m_Name: Iron Armor
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 21300000, guid: 3a7a72cea01978641871e0f80b6d8728, type: 3}
-  itemName: Wooden Shield
-  description: +15% block chance
+  itemImage: {fileID: 21300000, guid: 2c2b693894231e3489ac1d9aa68772be, type: 3}
+  itemName: Iron Armor
+  description: +7% Protection
   isStackable: 0
   stackAmount: 1
   attackDamage: 0
-  defValue: 0
-  blockChance: 15
-  equipmentStats: +15% Block Chance
-  equipmentType: 1
+  defValue: 7
+  blockChance: 0
+  equipmentStats: +7% Protection
+  equipmentType: 2

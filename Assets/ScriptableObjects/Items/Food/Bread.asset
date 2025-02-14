@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50b8f7f556a7490408069bf15cf0af70, type: 3}
-  m_Name: WeakHealthPotion
+  m_Name: Bread
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 21300000, guid: 1e281df463daec4419a148161d274ec5, type: 3}
-  itemName: Weak Health Potion
-  description: 'Restores small amount of health
-
-    Healing Amount: 5
-
-    (Only
-    consumable during combat)'
+  itemImage: {fileID: 21300000, guid: 85ae1729adca4c04691c021f1189354c, type: 3}
+  itemName: Bread
+  description: 'Healing Amount: 5'
   isStackable: 1
-  stackAmount: 10
+  stackAmount: 99
   consumeEffect: 0
   healAmount: 5
-  onlyConsumableDuringCombat: 1
-  consumingCost: 1
+  attackBonus: 0
+  duration: 0
+  onlyConsumableDuringCombat: 0
+  consumingCost: 2

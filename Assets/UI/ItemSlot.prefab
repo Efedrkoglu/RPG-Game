@@ -303,4 +303,4 @@ MonoBehaviour:
   itemImage: {fileID: 8363392395112837879}
   itemAmount: {fileID: 4958332051184527146}
   slotImage: {fileID: 21300000, guid: 7c30d63c7300ed544bad73fa74965795, type: 3}
-  selectedSlotImage: {fileID: 21300000, guid: 3a18d4466d363e448baf8f41d59246ad, type: 3}
+  selectedSlotImage: {fileID: 21300000, guid: bfcc166ee394bfb479514105ed50ba3b, type: 3}

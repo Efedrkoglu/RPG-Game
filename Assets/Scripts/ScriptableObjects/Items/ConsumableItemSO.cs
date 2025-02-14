@@ -6,7 +6,8 @@ public enum Effect
 {
     Heal,
     HealingBuff,
-    AttackBuff
+    AttackBuff,
+    Both
 }
 
 [CreateAssetMenu(fileName = "Consumable Item", menuName = "ScriptableObjects/Items/Consumable Item")]
@@ -60,6 +61,15 @@ public class ConsumableItemSO : ItemSO
             case Effect.AttackBuff:
                 if (Player.Instance.ActionCount >= consumingCost) {
                     CombatSystem.AddBuff(new AttackBuff(duration, attackBonus));
+                    Player.Instance.ActionCount -= consumingCost;
+                    return true;
+                }
+                break;
+
+            case Effect.Both:
+                if(Player.Instance.ActionCount >= consumingCost) {
+                    CombatSystem.AddBuff(new AttackBuff(duration, attackBonus));
+                    CombatSystem.AddBuff(new HealingBuff(duration, healAmount));
                     Player.Instance.ActionCount -= consumingCost;
                     return true;
                 }
