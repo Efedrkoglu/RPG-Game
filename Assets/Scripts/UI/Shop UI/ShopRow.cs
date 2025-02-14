@@ -43,4 +43,16 @@ public class ShopRow : MonoBehaviour, IPointerClickHandler
     public void DeselectRow() {
         background.sprite = row;
     }
+
+    public ItemSO Item {
+        get { return item; }
+    }
+
+    public int GoldAmount {
+        get { return goldAmount; }
+    }
+
+    public int SilverAmount {
+        get { return silverAmount; }
+    }
 }

@@ -51,8 +51,8 @@ public class Player : MonoBehaviour
         damage = 225;
         defPercent = 0;
         blockChance = 0;
-		silverCoin = 0;
-        goldCoin = 0;
+		silverCoin = 500;
+        goldCoin = 50;
         inventorySize = 10;
         isInCombat = false;
 		levelPoints = 0;
