@@ -70,8 +70,14 @@ public class PlayerController : MonoBehaviour
 	}
 	private IEnumerator CombatTriggeredEvent(Enemy enemy) {
 		yield return new WaitForSeconds(.15f);
-        listenInputs = false;
-		CombatTriggered?.Invoke(enemy);
+
+		if(enemy.CurrentHp <= Player.Instance.Damage) {
+			OnCombatEnded(true);
+		}
+		else {
+            listenInputs = false;
+            CombatTriggered?.Invoke(enemy);
+        }
 	}
 
 	public void ExitAttackAnimation() {
