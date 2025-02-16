@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToggleShopUI : MonoBehaviour
+public class ToggleBlacksmithUI : MonoBehaviour
 {
     [SerializeField] private GameObject gameUI;
-    [SerializeField] private GameObject shopUI;
-    [SerializeField] private string UIMessage;
+    [SerializeField] private GameObject blacksmithUI;
 
     private bool listenInputs;
 
@@ -27,7 +26,7 @@ public class ToggleShopUI : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             listenInputs = true;
-            gameUI.GetComponent<GameScreen>().TogglePressEMessage(true, UIMessage);
+            gameUI.GetComponent<GameScreen>().TogglePressEMessage(true, "to Open Blackmisth");
         }
     }
 
@@ -40,15 +39,15 @@ public class ToggleShopUI : MonoBehaviour
 
     public void OpenShopUI() {
         gameUI.SetActive(false);
-        shopUI.SetActive(true);
+        blacksmithUI.SetActive(true);
         listenInputs = false;
-        shopUI.GetComponent<ShopUI>().setToggleShopUI(this);
+        blacksmithUI.GetComponent<BlacksmithUI>().setToggleBlacksmithUI(this);
     }
 
     public void OpenGameUI() {
-        shopUI.SetActive(false);
+        blacksmithUI.SetActive(false);
         gameUI.SetActive(true);
         listenInputs = true;
-        gameUI.GetComponent<GameScreen>().TogglePressEMessage(true, UIMessage);
+        gameUI.GetComponent<GameScreen>().TogglePressEMessage(true, "to Open Blacksmith");
     }
 }

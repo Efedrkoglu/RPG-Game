@@ -96,6 +96,39 @@ public class EquipmentInventorySO : ScriptableObject
         OnEquipmentUnequipped?.Invoke(unequippedItem);
     }
 
+    public void ClearSlot(int index) {
+        EquipmentItemSO unequippedItem = (EquipmentItemSO)slots[index].item;
+        slots[index] = new InventorySlot();
+
+        switch (unequippedItem.equipmentType) {
+            case EquipmentType.Weapon:
+                Player.Instance.Damage -= unequippedItem.attackDamage;
+                break;
+
+            case EquipmentType.Shield:
+                Player.Instance.BlockChance -= unequippedItem.blockChance;
+                break;
+
+            case EquipmentType.BodyArmor:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Helmet:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Boots:
+                Player.Instance.DefPercent -= unequippedItem.defValue;
+                break;
+
+            case EquipmentType.Trinket:
+                break;
+
+            default:
+                break;
+        }
+    }
+
     public Dictionary<int, InventorySlot> GetInventoryState() {
         Dictionary<int, InventorySlot> inventoryState = new Dictionary<int, InventorySlot>();
 

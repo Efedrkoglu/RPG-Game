@@ -612,7 +612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8832665898129935755
 RectTransform:
   m_ObjectHideFlags: 0
@@ -716,35 +716,8 @@ MonoBehaviour:
   itemDescription: {fileID: 4790776907571232268}
   goldCoinText: {fileID: 1897075960637861018}
   silverCoinText: {fileID: 5845101887370574330}
-  soldItems:
-  - {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
-  - {fileID: 11400000, guid: 6aff0bce93cf1434cba8c7c21ffad2f3, type: 2}
-  - {fileID: 11400000, guid: 829ae361fad4e7542961dc8bf6eaa532, type: 2}
-  - {fileID: 11400000, guid: 668800ddc47d5f140854659e0217e086, type: 2}
-  - {fileID: 11400000, guid: 680a8578c4401dc43a964829756dc3a2, type: 2}
-  - {fileID: 11400000, guid: 4347f936a83a8f14dad5022753aa8769, type: 2}
-  - {fileID: 11400000, guid: 1d7bb651ba967ae49b3f3761ab14acef, type: 2}
-  - {fileID: 11400000, guid: 89af2fd9c51e78043bb6ada9de2e8db2, type: 2}
-  - {fileID: 11400000, guid: b68ccc2545d15df41998db926eff55cb, type: 2}
-  prices:
-  - goldAmount: 0
-    silverAmount: 30
-  - goldAmount: 1
-    silverAmount: 15
-  - goldAmount: 0
-    silverAmount: 50
-  - goldAmount: 0
-    silverAmount: 50
-  - goldAmount: 0
-    silverAmount: 75
-  - goldAmount: 0
-    silverAmount: 90
-  - goldAmount: 2
-    silverAmount: 50
-  - goldAmount: 1
-    silverAmount: 50
-  - goldAmount: 1
-    silverAmount: 50
+  soldItems: []
+  prices: []
   errorTextPrefab: {fileID: 1609508100588362466, guid: 3e66d6090b86acb4c90036c3131479a2,
     type: 3}
   buyButton: {fileID: 6295533954751123824}

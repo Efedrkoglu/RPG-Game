@@ -32,8 +32,10 @@ public class ShopRow : MonoBehaviour, IPointerClickHandler
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        OnRowClick?.Invoke(this);
-        SelectRow();
+        if(eventData.button == PointerEventData.InputButton.Left) {
+            OnRowClick?.Invoke(this);
+            SelectRow();
+        }
     }
 
     public void SelectRow() {

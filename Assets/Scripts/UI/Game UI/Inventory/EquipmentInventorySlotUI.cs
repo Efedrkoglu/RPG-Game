@@ -43,7 +43,7 @@ public class EquipmentInventorySlotUI : MonoBehaviour, IPointerClickHandler, IPo
     public void OnPointerClick(PointerEventData eventData) {
         if (isEmpty)
             return;
-
+        
         if(eventData.button == PointerEventData.InputButton.Left) {
             OnEquipmentSlotClicked?.Invoke(this);
         }

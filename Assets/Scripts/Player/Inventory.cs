@@ -157,4 +157,8 @@ public class Inventory : MonoBehaviour
     public InventorySO getInventorySO() {
         return inventorySO;
     }
+
+    public EquipmentInventorySO getEquipmentInventorySO() {
+        return equipmentInventorySO;
+    }
 }
