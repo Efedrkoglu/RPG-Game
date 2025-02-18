@@ -22,5 +22,6 @@ MonoBehaviour:
   attackDamage: 0
   defValue: 20
   blockChance: 0
+  level: 3
   equipmentStats: +20% Defence (3)
   equipmentType: 2

@@ -8,6 +8,8 @@ public class EquipmentItemSO : ItemSO
     public int attackDamage;
     public int defValue;
     public int blockChance;
+    public int level;
+    public EquipmentItemSO upgradedVersion;
     public string equipmentStats;
     public EquipmentType equipmentType;
 

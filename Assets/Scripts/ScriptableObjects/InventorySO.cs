@@ -121,6 +121,10 @@ public class InventorySO : ScriptableObject
         return slots[index].IsEmpty ? null : slots[index];
     }
 
+    public void ClearSlot(int index) {
+        slots[index] = new InventorySlot();
+    }
+
     public void SwapItems(int itemIndex1, int itemIndex2) {
         InventorySlot temp = slots[itemIndex1];
         slots[itemIndex1] = slots[itemIndex2];

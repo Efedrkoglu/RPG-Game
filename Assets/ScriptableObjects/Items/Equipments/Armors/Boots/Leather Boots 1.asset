@@ -22,5 +22,7 @@ MonoBehaviour:
   attackDamage: 0
   defValue: 3
   blockChance: 0
+  level: 2
+  upgradedVersion: {fileID: 11400000, guid: cec22f76864c3b14fa09a8f885451a14, type: 2}
   equipmentStats: +3% Defence (2)
   equipmentType: 4
