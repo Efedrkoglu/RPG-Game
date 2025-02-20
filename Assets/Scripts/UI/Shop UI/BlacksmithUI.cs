@@ -18,13 +18,16 @@ public class BlacksmithUI : MonoBehaviour
     [SerializeField] private GameObject errorTextPrefab;
 
     private ToggleBlacksmithUI toggleBlacksmithUI;
-    private EquipmentInventorySO playerEquipmentInventory = null;
-    private InventorySO playerInventory = null;
+    private EquipmentInventorySO playerEquipmentInventory;
+    private InventorySO playerInventory;
 
     private int silverIngot, playerSilverIngot, goldIngot, playerGoldIngot, leather, playerLeather;
     private int selectedItemIndex, selectedItemLevel;
 
-    private void Start() {
+    private void Awake() {
+        playerEquipmentInventory = Player.Instance.gameObject.GetComponent<Inventory>().getEquipmentInventorySO();
+        playerInventory = Player.Instance.gameObject.GetComponent<Inventory>().getInventorySO();
+
         selectedItemIndex = -1;
         silverIngot = 0;
         goldIngot = 0;
@@ -52,18 +55,6 @@ public class BlacksmithUI : MonoBehaviour
     }
 
     private void OnEnable() {
-        if(playerEquipmentInventory == null) {
-            playerEquipmentInventory = Player.Instance.gameObject.GetComponent<Inventory>().getEquipmentInventorySO();
-            Debug.Log("Player equipment inventory set");
-        }
-            
-
-        if (playerInventory == null) {
-            playerInventory = Player.Instance.gameObject.GetComponent<Inventory>().getInventorySO();
-            Debug.Log("Player inventory set");
-        }
-            
-
         foreach (var item in playerEquipmentInventory.GetInventoryState()) {
             if(item.Key < 5) {
                 if (!item.Value.IsEmpty)
@@ -101,6 +92,7 @@ public class BlacksmithUI : MonoBehaviour
         level2UpgradeRow.gameObject.SetActive(false);
         level3UpgradeRow.gameObject.SetActive(false);
         cantUpgradeMessage.SetActive(false);
+
         foreach (var item in slotsUI) {
             item.Deselect();
         }
@@ -112,7 +104,8 @@ public class BlacksmithUI : MonoBehaviour
                 }
             }
 
-            playerInventory.AddItem(leatherItem, leather);
+            if(leather > 0)
+                playerInventory.AddItem(leatherItem, leather);
         }
 
         if(playerSilverIngot != silverIngot) {
@@ -122,7 +115,8 @@ public class BlacksmithUI : MonoBehaviour
                 }
             }
 
-            playerInventory.AddItem(silverIngotItem, silverIngot);
+            if(silverIngot > 0)
+                playerInventory.AddItem(silverIngotItem, silverIngot);
         }
 
         if(playerGoldIngot != goldIngot) {
@@ -132,7 +126,8 @@ public class BlacksmithUI : MonoBehaviour
                 }
             }
 
-            playerInventory.AddItem(goldIngotItem, goldIngot);
+            if(goldIngot > 0)
+                playerInventory.AddItem(goldIngotItem, goldIngot);
         }
 
         silverIngot = 0;
@@ -254,10 +249,13 @@ public class BlacksmithUI : MonoBehaviour
                     leather -= upgrade.resourceAmount;
                     Player.Instance.GoldCoin -= upgrade.goldAmount;
                     Player.Instance.SilverCoin -= upgrade.silverAmount;
+
+                    selectedItemLevel++;
+                    upgradeButton.interactable = false;
                 }
                 else {
                     GameObject errorText = Instantiate(errorTextPrefab, upgradeButton.gameObject.transform);
-                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to buy this");
+                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to upgrade");
                 }
             }
             else if (upgrade.resource == "Silver Ingot") {
@@ -270,10 +268,13 @@ public class BlacksmithUI : MonoBehaviour
                     silverIngot -= upgrade.resourceAmount;
                     Player.Instance.GoldCoin -= upgrade.goldAmount;
                     Player.Instance.SilverCoin -= upgrade.silverAmount;
+
+                    selectedItemLevel++;
+                    upgradeButton.interactable = false;
                 }
                 else {
                     GameObject errorText = Instantiate(errorTextPrefab, upgradeButton.gameObject.transform);
-                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to buy this");
+                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to upgrade");
                 }
             }
             else if (upgrade.resource == "Gold Ingot") {
@@ -286,14 +287,17 @@ public class BlacksmithUI : MonoBehaviour
                     goldIngot -= upgrade.resourceAmount;
                     Player.Instance.GoldCoin -= upgrade.goldAmount;
                     Player.Instance.SilverCoin -= upgrade.silverAmount;
+
+                    selectedItemLevel++;
+                    upgradeButton.interactable = false;
                 }
                 else {
                     GameObject errorText = Instantiate(errorTextPrefab, upgradeButton.gameObject.transform);
-                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to buy this");
+                    errorText.GetComponentInChildren<ErrorText>().SetErrorText("Can't afford to upgrade");
                 }
             }
         }
-        upgradeButton.interactable = false;
+
         UpdateUI();
     }
 
@@ -308,8 +312,8 @@ public class BlacksmithUI : MonoBehaviour
             "Silver Sword 1",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
+                goldAmount = 2,
+                silverAmount = 50,
                 resourceAmount = 1
             }
         },
@@ -317,17 +321,17 @@ public class BlacksmithUI : MonoBehaviour
             "Silver Sword 2",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 3,
+                silverAmount = 50,
+                resourceAmount = 2
             }
         },
         {
             "Golden Sword 1",
             new Upgrade {
                 resource = "Gold Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
+                goldAmount = 3,
+                silverAmount = 50,
                 resourceAmount = 1
             }
         },
@@ -335,17 +339,17 @@ public class BlacksmithUI : MonoBehaviour
             "Golden Sword 2",
             new Upgrade {
                 resource = "Gold Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 4,
+                silverAmount = 50,
+                resourceAmount = 2
             }
         },
         {
             "Iron Shield 1",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
+                goldAmount = 2,
+                silverAmount = 50,
                 resourceAmount = 1
             }
         },
@@ -353,9 +357,9 @@ public class BlacksmithUI : MonoBehaviour
             "Iron Shield 2",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 3,
+                silverAmount = 50,
+                resourceAmount = 2
             }
         },
         {
@@ -363,7 +367,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Leather",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 50,
                 resourceAmount = 1
             }
         },
@@ -371,17 +375,17 @@ public class BlacksmithUI : MonoBehaviour
             "Leather Armor 2",
             new Upgrade {
                 resource = "Leather",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 2,
+                silverAmount = 50,
+                resourceAmount = 2
             }
         },
         {
             "Leather Boots 1",
             new Upgrade {
                 resource = "Leather",
-                goldAmount = 1,
-                silverAmount = 1,
+                goldAmount = 0,
+                silverAmount = 75,
                 resourceAmount = 1
             }
         },
@@ -390,7 +394,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Leather",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 25,
                 resourceAmount = 1
             }
         },
@@ -399,7 +403,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Leather",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 25,
                 resourceAmount = 1
             }
         },
@@ -407,17 +411,17 @@ public class BlacksmithUI : MonoBehaviour
             "Leather Helmet 2",
             new Upgrade {
                 resource = "Leather",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 2,
+                silverAmount = 0,
+                resourceAmount = 2
             }
         },
         {
             "Iron Armor 1",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
+                goldAmount = 2,
+                silverAmount = 50,
                 resourceAmount = 1
             }
         },
@@ -425,9 +429,9 @@ public class BlacksmithUI : MonoBehaviour
             "Iron Armor 2",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 3,
+                silverAmount = 50,
+                resourceAmount = 2
             }
         },
         {
@@ -435,7 +439,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Silver Ingot",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 0,
                 resourceAmount = 1
             }
         },
@@ -444,7 +448,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Silver Ingot",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 75,
                 resourceAmount = 1
             }
         },
@@ -453,7 +457,7 @@ public class BlacksmithUI : MonoBehaviour
             new Upgrade {
                 resource = "Silver Ingot",
                 goldAmount = 1,
-                silverAmount = 1,
+                silverAmount = 75,
                 resourceAmount = 1
             }
         },
@@ -461,9 +465,9 @@ public class BlacksmithUI : MonoBehaviour
             "Iron Helmet 2",
             new Upgrade {
                 resource = "Silver Ingot",
-                goldAmount = 1,
-                silverAmount = 1,
-                resourceAmount = 1
+                goldAmount = 2,
+                silverAmount = 75,
+                resourceAmount = 2
             }
         },
     };
