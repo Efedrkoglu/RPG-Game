@@ -33,8 +33,8 @@ public class PlayerStatsUI : MonoBehaviour
     public void SetUI(Player player) {
         levelText.text = player.Level.ToString();
         expText.text = player.CurrentExp.ToString() + "/" + player.MaxExp.ToString();
-        maxHpText.text = player.MaxHp.ToString();
-        damageText.text = player.Damage.ToString();
+        maxHpText.text = player.getMaxHp().ToString();
+        damageText.text = player.getDamage().ToString();
         defText.text = player.DefPercent.ToString() + "%";
         blockChanceText.text = player.BlockChance.ToString() + "%";
     }

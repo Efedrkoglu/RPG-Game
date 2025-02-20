@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
         currentExp = 0;
         maxHp = 50;
         currentHp = maxHp;
-        damage = 200;
+        damage = 5;
         defPercent = 0;
         blockChance = 0;
 		silverCoin = 500;
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
 	}
 
 	public int MaxHp {
-		get { return maxHp + vigorPoints * 5; }
+		get { return maxHp; }
 		set { maxHp = value; }
 	}
 
@@ -112,15 +112,15 @@ public class Player : MonoBehaviour
 
 			if (currentHp < 0)
 				currentHp = 0;
-			if (currentHp > MaxHp)
-				currentHp = MaxHp;
+			if (currentHp > getMaxHp())
+				currentHp = getMaxHp();
 
 			OnHealthChanged?.Invoke();
 		}
 	}
 
 	public int Damage {
-		get { return damage + strPoints * 5; }
+		get { return damage; }
 		set { damage = value; }
 	}
 
@@ -199,4 +199,11 @@ public class Player : MonoBehaviour
 		get { return playerUnit; }
 	}
 
+	public int getDamage() {
+		return damage + (strPoints * 5);
+	}
+
+	public int getMaxHp() {
+		return maxHp + (vigorPoints * 5);
+	}
 }

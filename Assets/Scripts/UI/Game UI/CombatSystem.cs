@@ -83,8 +83,8 @@ public class CombatSystem : MonoBehaviour
     }
 
 	private void InitCombatScreen(Player player, Enemy enemy) {
-		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
-		playerDamage.text = player.Damage.ToString();
+		playerHealth.text = player.CurrentHp + "/" + player.getMaxHp();
+		playerDamage.text = player.getDamage().ToString();
 		playerUnit.GetComponent<HpBar>().InitHpBar(player.MaxHp, player.CurrentHp);
 
         enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
@@ -97,8 +97,8 @@ public class CombatSystem : MonoBehaviour
     }
 
 	private void UpdateCombatScreen() {
-		playerHealth.text = player.CurrentHp + "/" + player.MaxHp;
-		playerDamage.text = player.Damage.ToString();
+		playerHealth.text = player.CurrentHp + "/" + player.getMaxHp();
+		playerDamage.text = player.getDamage().ToString();
 		playerUnit.GetComponent<HpBar>().UpdateHpBar(player.CurrentHp);
 
 		enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
@@ -171,7 +171,7 @@ public class CombatSystem : MonoBehaviour
 		if (state != BattleState.PLAYERTURN)
 			return;
 
-		enemy.CurrentHp -= player.Damage;
+		enemy.CurrentHp -= player.getDamage();
 		player.ActionCount = 0;
 		UpdateBuffs();
 		UpdateCombatScreen();

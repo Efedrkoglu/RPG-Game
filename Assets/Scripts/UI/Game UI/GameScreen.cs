@@ -47,8 +47,8 @@ public class GameScreen : MonoBehaviour
     }
 
     public void UpdateHpBar() {
-        hpBar.fillAmount = player.CurrentHp / (float)player.MaxHp;
-        hpText.text = player.CurrentHp + "/" + player.MaxHp;
+        hpBar.fillAmount = player.CurrentHp / (float)player.getMaxHp();
+        hpText.text = player.CurrentHp + "/" + player.getMaxHp();
     }
 
     public void ToggleStatsPanel() {
