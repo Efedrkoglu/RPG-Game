@@ -42,7 +42,7 @@ public class ToggleShopUI : MonoBehaviour
         gameUI.SetActive(false);
         shopUI.SetActive(true);
         listenInputs = false;
-        shopUI.GetComponent<ShopUI>().setToggleShopUI(this);
+        shopUI.GetComponent<BaseShopUI>().setToggleShopUI(this);
     }
 
     public void OpenGameUI() {

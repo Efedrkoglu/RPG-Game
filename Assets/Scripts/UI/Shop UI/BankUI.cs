@@ -4,12 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BankUI : MonoBehaviour
+public class BankUI : BaseShopUI
 {
     [SerializeField] private TextMeshProUGUI playerGoldCoinText, playerSilverCoinText;
     [SerializeField] private Button buyGoldButton, buySilverButton;
-
-    private ToggleBankUI toggleBankUI;
 
     private void OnEnable() {
         UpdatePlayerCoinTexts();
@@ -26,12 +24,8 @@ public class BankUI : MonoBehaviour
         buySilverButton.interactable = Player.Instance.GoldCoin >= 1;
     }
 
-    public void setToggleBankUI(ToggleBankUI toggleBankUI) {
-        this.toggleBankUI = toggleBankUI;
-    }
-
     public void CloseButton() {
-        toggleBankUI.OpenGameUI();
+        base.OpenGameUI();
     }
 
     public void BuyGoldButton() {

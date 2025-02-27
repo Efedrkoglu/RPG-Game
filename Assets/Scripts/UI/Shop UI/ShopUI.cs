@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopUI : MonoBehaviour
+public class ShopUI : BaseShopUI
 {
     [Serializable]
     private class Price {
@@ -25,8 +25,7 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField] private GameObject errorTextPrefab;
     [SerializeField] private Button buyButton;
-    
-    private ToggleShopUI toggleShopUI;
+
     private GameObject[] shopUIRow;
     private ShopRow selectedRow;
 
@@ -62,14 +61,8 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    public void setToggleShopUI(ToggleShopUI toggleShopUI) {
-        this.toggleShopUI = toggleShopUI;
-    }
-
     public void CloseButton() {
-        if(toggleShopUI != null) {
-            toggleShopUI.OpenGameUI();
-        }
+        base.OpenGameUI();
     }
 
     public void RowClicked(ShopRow selectedRow) {

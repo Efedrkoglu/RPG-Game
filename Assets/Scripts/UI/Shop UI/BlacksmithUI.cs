@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlacksmithUI : MonoBehaviour
+public class BlacksmithUI : BaseShopUI
 {
     [SerializeField] private GameObject cantUpgradeMessage;
     [SerializeField] private UpgradeRow level2UpgradeRow, level3UpgradeRow;
@@ -17,7 +17,6 @@ public class BlacksmithUI : MonoBehaviour
 
     [SerializeField] private GameObject errorTextPrefab;
 
-    private ToggleBlacksmithUI toggleBlacksmithUI;
     private EquipmentInventorySO playerEquipmentInventory;
     private InventorySO playerInventory;
 
@@ -218,12 +217,8 @@ public class BlacksmithUI : MonoBehaviour
         }
     }
 
-    public void setToggleBlacksmithUI(ToggleBlacksmithUI toggleBlacksmithUI) {
-        this.toggleBlacksmithUI = toggleBlacksmithUI;
-    }
-
     public void CloseButton() {
-        toggleBlacksmithUI.OpenGameUI();
+        base.OpenGameUI();
     }
 
     public void UpgradeButton() {
