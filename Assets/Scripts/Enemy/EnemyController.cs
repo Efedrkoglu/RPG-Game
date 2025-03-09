@@ -6,19 +6,23 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float sightRange, attackRange, walkPointRange;
     [SerializeField] private LayerMask playerMask;
+    [SerializeField] private bool invertSpriteFlip = false;
 
     private NavMeshAgent agent;
     private SpriteRenderer spriteRenderer;
     private Transform player;
-    private bool isPlayerInChasingRange, isPlayerInAttackRange, isWalkPointSet, isWaiting;
+    private Animator animator;
+    private bool isPlayerInChasingRange, isPlayerInAttackRange, isWalkPointSet, isWaiting, isAttacking;
     private Vector3 walkPoint;
 
     private void Start() {
         agent = gameObject.GetComponent<NavMeshAgent>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         isWalkPointSet = false;
         isWaiting = false;
+        isAttacking = false;
     }
 
     private void Update() {
@@ -26,17 +30,32 @@ public class EnemyController : MonoBehaviour
         isPlayerInAttackRange = Physics.CheckSphere(gameObject.transform.position, attackRange, playerMask);
 
         if(agent.velocity.x != 0) {
-            if (agent.velocity.x < 0f)
-                spriteRenderer.flipX = true;
-            else
-                spriteRenderer.flipX = false;
+            animator.SetBool("isRunning", true);
+
+            if(!invertSpriteFlip) {
+                if (agent.velocity.x < 0f)
+                    spriteRenderer.flipX = true;
+                else
+                    spriteRenderer.flipX = false;
+            }
+            else {
+                if (agent.velocity.x < 0f)
+                    spriteRenderer.flipX = false;
+                else
+                    spriteRenderer.flipX = true;
+            }
+        }
+        else {
+            animator.SetBool("isRunning", false);
         }
 
-        if (!isPlayerInChasingRange && !isPlayerInAttackRange) Patrol();
+        if(isAttacking) return;
 
-        if (isPlayerInChasingRange && !isPlayerInAttackRange) Chase();
+        if(!isPlayerInChasingRange && !isPlayerInAttackRange) Patrol();
 
-        if (isPlayerInChasingRange && isPlayerInAttackRange) Attack();
+        if(isPlayerInChasingRange && !isPlayerInAttackRange) Chase();
+
+        if(isPlayerInChasingRange && isPlayerInAttackRange) Attack();
     }
 
     private void Patrol() {
@@ -76,7 +95,13 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Attack() {
+        isAttacking = true;
         agent.SetDestination(transform.position);
-        Debug.Log("Attacking");
+        animator.SetBool("isAttacking", true);
+    }
+
+    private void EndAttacking() {
+        animator.SetBool("isAttacking", false);
+        isAttacking = false;
     }
 }
