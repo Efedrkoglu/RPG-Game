@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 	private int goldCoin;
 	private int inventorySize;
 	private bool isInCombat;
+	private bool isDead;
 
 	private int levelPoints;
 	private int vigorPoints;
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
         goldCoin = 50;
         inventorySize = 10;
         isInCombat = false;
+		isDead = false;
 		levelPoints = 0;
 		vigorPoints = 0;
 		strPoints = 0;
@@ -158,6 +160,11 @@ public class Player : MonoBehaviour
 	public bool IsInCombat {
 		get { return isInCombat; }
         set { isInCombat = value; }
+	}
+
+	public bool IsDead {
+		get { return isDead; }
+		set { isDead = value; }
 	}
 
 	public int LevelPoints {

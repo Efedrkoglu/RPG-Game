@@ -225,3 +225,5 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 128
+  invertSpriteFlip: 0
+  enemyScript: {fileID: 2772150128791974658}

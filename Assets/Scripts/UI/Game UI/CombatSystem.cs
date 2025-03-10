@@ -40,12 +40,14 @@ public class CombatSystem : MonoBehaviour
 
 	private void Awake() {
 		PlayerController.CombatTriggered += OnCombatTriggered;
+		EnemyController.CombatTriggered += OnCombatTriggered;
 		Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed += InventoryItemUsed;
 		activeBuffs = new List<Buff>(Player.Instance.EffectsCount);
 	}
 
 	private void OnDestroy() {
 		PlayerController.CombatTriggered -= OnCombatTriggered;
+        EnemyController.CombatTriggered -= OnCombatTriggered;
         Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed -= InventoryItemUsed;
     }
 
@@ -63,7 +65,7 @@ public class CombatSystem : MonoBehaviour
 			combatScreen.SetActive(false);
 	}
 
-	private void OnCombatTriggered(Enemy enemy) {
+	private void OnCombatTriggered(Enemy enemy, int turn) {
         state = BattleState.STARTED;
 		activeBuffs = new List<Buff>();
 		for(int i = 0; i < buffIcons.Length; i++) {
@@ -79,7 +81,10 @@ public class CombatSystem : MonoBehaviour
         InitCombatScreen(player, this.enemy);
 		switchCamera.TriggerSwitchAnimation();
 		StartCoroutine(ToggleCombatScreen());
-		StartCoroutine(PlayerTurn());
+
+		if(turn == 0) StartCoroutine(PlayerTurn());
+		else if(turn == 1) StartCoroutine(EnemyTurn());
+		else StartCoroutine(PlayerTurn());
     }
 
 	private void InitCombatScreen(Player player, Enemy enemy) {
@@ -120,13 +125,15 @@ public class CombatSystem : MonoBehaviour
 		player.ActionCount = player.MaxActionCount;
         combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
         info.text = "Your turn";
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(.5f);
         info.text = "Choose an action";
         state = BattleState.PLAYERTURN;
 	}
 
 	private IEnumerator EnemyTurn() {
-		yield return new WaitForSeconds(2f);
+        state = BattleState.ENEMYTURN;
+        info.text = enemy.EnemyName + "'s turn";
+        yield return new WaitForSeconds(2f);
 
 		player.CurrentHp -= enemy.Damage;
 		UpdateCombatScreen();
@@ -184,10 +191,8 @@ public class CombatSystem : MonoBehaviour
 			StartCoroutine(EndBattle());
 		}
 		else {
-			state = BattleState.ENEMYTURN;
-			enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
-			info.text = enemy.EnemyName + "'s turn";
-			StartCoroutine(EnemyTurn());
+            enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
+            StartCoroutine(EnemyTurn());
 		}
 	}
 
@@ -210,9 +215,6 @@ public class CombatSystem : MonoBehaviour
                 StartCoroutine(EndBattle());
             } 
 			else {
-                state = BattleState.ENEMYTURN;
-                enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
-                info.text = enemy.EnemyName + "'s turn";
                 StartCoroutine(EnemyTurn());
             }
         }

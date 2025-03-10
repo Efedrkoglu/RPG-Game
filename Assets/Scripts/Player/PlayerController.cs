@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private GameScreen gameScreen;
 
-	public static event Action<Enemy> CombatTriggered;
+	public static event Action<Enemy, int> CombatTriggered;
 
 	private void Start() {
 		rigidBody = GetComponent<Rigidbody>();
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else {
             listenInputs = false;
-            CombatTriggered?.Invoke(enemy);
+            CombatTriggered?.Invoke(enemy, 0);
         }
 	}
 
@@ -125,10 +125,19 @@ public class PlayerController : MonoBehaviour
 			listenInputs = true;
 		}
 		else {
-			Destroy(gameObject);
+			Die();
 		}
 	}
 
+	public void Die() {
+		animator.SetTrigger("Die");
+		Player.Instance.IsDead = true;
+		listenInputs = false;
+	}
+
+	public void SetLastHitEnemy(GameObject enemy) {
+		lastHitEnemy = enemy;
+	}
 }
 
 

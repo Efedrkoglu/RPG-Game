@@ -19,6 +19,7 @@ public class GameScreen : MonoBehaviour
 
     private void Awake() {
         PlayerController.CombatTriggered += OnCombatTriggered;
+        EnemyController.CombatTriggered += OnCombatTriggered;
         CombatSystem.CombatEnded += OnCombatEnded;
     }
 
@@ -40,6 +41,7 @@ public class GameScreen : MonoBehaviour
 
     private void OnDestroy() {
         PlayerController.CombatTriggered -= OnCombatTriggered;
+        EnemyController.CombatTriggered -= OnCombatTriggered;
         CombatSystem.CombatEnded -= OnCombatEnded;
         player.OnHealthChanged -= OnPlayerHealthChanged;
         player.UpdateCoins -= UpdateCoins;
@@ -73,7 +75,7 @@ public class GameScreen : MonoBehaviour
         UpdateHpBar();
     }
 
-    public void OnCombatTriggered(Enemy enemy) {
+    public void OnCombatTriggered(Enemy enemy, int turn) {
         gameScreen.SetActive(false);
     }
 

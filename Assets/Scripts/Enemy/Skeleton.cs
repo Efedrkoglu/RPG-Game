@@ -8,7 +8,7 @@ public class Skeleton : Enemy
         enemyName = "Skeleton";
         maxHp = 35;
         currentHp = maxHp;
-        damage = 15;
+        damage = 100;
         exp = 531;
         base.Start();
     }

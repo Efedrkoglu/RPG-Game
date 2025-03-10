@@ -218,9 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 3
-  attackRange: 0.5
+  attackRange: 0.2
   walkPointRange: 3
   playerMask:
     serializedVersion: 2
     m_Bits: 128
   invertSpriteFlip: 1
+  enemyScript: {fileID: 8234607748487459430}

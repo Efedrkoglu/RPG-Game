@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,6 +8,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float sightRange, attackRange, walkPointRange;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private bool invertSpriteFlip = false;
+    [SerializeField] private Enemy enemyScript;
 
     private NavMeshAgent agent;
     private SpriteRenderer spriteRenderer;
@@ -14,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private bool isPlayerInChasingRange, isPlayerInAttackRange, isWalkPointSet, isWaiting, isAttacking;
     private Vector3 walkPoint;
+
+    public static event Action<Enemy, int> CombatTriggered;
 
     private void Start() {
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -26,6 +30,8 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Update() {
+        if(Player.Instance.IsInCombat || Player.Instance.IsDead) return;
+
         isPlayerInChasingRange = Physics.CheckSphere(gameObject.transform.position, sightRange, playerMask);
         isPlayerInAttackRange = Physics.CheckSphere(gameObject.transform.position, attackRange, playerMask);
 
@@ -76,14 +82,14 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Wait() {
         isWaiting = true;
-        float randomNumber = Random.Range(2, 5);
+        float randomNumber = UnityEngine.Random.Range(2, 5);
         yield return new WaitForSeconds(randomNumber);
         isWaiting = false;
     }
 
     private void setWalkPoint() {
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
+        float randomZ = UnityEngine.Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -100,8 +106,49 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("isAttacking", true);
     }
 
+    private void CheckHit() {
+        if (Player.Instance.IsInCombat || Player.Instance.IsDead) return;
+
+        Vector3 hitDirection = (player.position - transform.position).normalized;
+
+        bool isHit = Physics.SphereCast(transform.position, .1f, hitDirection, out RaycastHit hitInfo, attackRange, playerMask);
+
+        if(isHit) {
+            if(Player.Instance.CurrentHp <= enemyScript.Damage) {
+                Player.Instance.CurrentHp -= enemyScript.Damage;
+                Player.Instance.gameObject.GetComponent<PlayerController>().OnCombatEnded(false);
+            }
+            else {
+                Player.Instance.gameObject.GetComponent<PlayerController>().SetLastHitEnemy(gameObject);
+                Player.Instance.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+                CombatTriggered?.Invoke(enemyScript, 1);
+            }
+        }
+    } 
+
     private void EndAttacking() {
         animator.SetBool("isAttacking", false);
         isAttacking = false;
+    }
+
+    private void OnDrawGizmos() {
+        if (player == null) return;
+
+        Vector3 hitDirection = (player.position - transform.position).normalized;
+        float radius = 0.1f;
+        float maxDistance = attackRange;
+
+        //Origin
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radius);
+
+        //Direction
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + hitDirection * maxDistance);
+
+        if (Physics.SphereCast(transform.position, radius, hitDirection, out RaycastHit hitInfo, maxDistance, playerMask)) {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(hitInfo.point, radius);
+        }
     }
 }
