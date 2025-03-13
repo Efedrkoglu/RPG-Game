@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
         isPlayerInChasingRange = Physics.CheckSphere(gameObject.transform.position, sightRange, playerMask);
         isPlayerInAttackRange = Physics.CheckSphere(gameObject.transform.position, attackRange, playerMask);
 
-        if(agent.velocity.x != 0) {
+        if(agent.velocity.magnitude != 0) {
             animator.SetBool("isRunning", true);
 
             if(!invertSpriteFlip) {
@@ -93,7 +93,10 @@ public class EnemyController : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        isWalkPointSet = true;
+        bool isHit = Physics.Raycast(walkPoint, Vector3.down, 2f, LayerMask.GetMask("Ground"));
+
+        if(isHit) isWalkPointSet = true;
+        else isWalkPointSet = false;
     }
 
     private void Chase() {

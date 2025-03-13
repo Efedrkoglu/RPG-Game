@@ -199,7 +199,7 @@ NavMeshAgent:
   m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.4
   m_BaseOffset: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightRange: 3
   attackRange: 0.2
-  walkPointRange: 3
+  walkPointRange: 2
   playerMask:
     serializedVersion: 2
     m_Bits: 128

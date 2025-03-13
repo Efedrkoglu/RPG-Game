@@ -135,10 +135,8 @@ public class CombatSystem : MonoBehaviour
         info.text = enemy.EnemyName + "'s turn";
         yield return new WaitForSeconds(2f);
 
-		player.CurrentHp -= enemy.Damage;
+		enemy.PlayTurn(enemyUnit, playerUnit);
 		UpdateCombatScreen();
-
-		enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
         info.text = enemy.EnemyName + " dealt " + enemy.Damage + " damage";
 
         if (player.CurrentHp <= 0) {
@@ -147,7 +145,6 @@ public class CombatSystem : MonoBehaviour
 			StartCoroutine(EndBattle());
 		}
 		else {
-			playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
 			StartCoroutine(PlayerTurn());
 		}
 	}

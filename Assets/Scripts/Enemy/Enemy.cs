@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     protected int currentHp;
     protected int damage;
     protected int exp;
+    protected int turnCount;
     protected List<Loot> loots;
 
     [SerializeField] protected GameObject unit;
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start() {
         CreateDrops();
+        turnCount = 0;
+        currentHp = maxHp;
     }
 
     private void CreateDrops() {
@@ -38,6 +41,10 @@ public class Enemy : MonoBehaviour
                 loots.Add(new Loot(drops[i], dropAmount));
             }
         }
+    }
+
+    public virtual void PlayTurn(GameObject enemyUnit, GameObject playerUnit) {
+        
     }
 
     public void Die() {
