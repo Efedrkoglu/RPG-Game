@@ -17,14 +17,22 @@ public class Skeleton : Enemy
 
         if(turnCount % 2 == 0 && turnCount != 0) {
             currentHp += 10;
-            Player.Instance.CurrentHp -= damage;
-            enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
-            if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+            if(Attack()) {
+                enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
+                if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+            }
+            else {
+                Debug.Log("Player blocked skeleton's attack");
+            }
         }
         else {
-            Player.Instance.CurrentHp -= damage;
-            enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
-            if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+            if(Attack()) {
+                enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
+                if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+            }
+            else {
+                Debug.Log("Player blocked skeleton's attack");
+            }
         }
         turnCount++;
     }

@@ -50,8 +50,8 @@ public class Player : MonoBehaviour
         maxHp = 50;
         currentHp = maxHp;
         damage = 10;
-        defPercent = 0;
-        blockChance = 0;
+        defPercent = 20;
+        blockChance = 40;
 		silverCoin = 500;
         goldCoin = 50;
         inventorySize = 10;

@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected CoinType coinType;
     [SerializeField] protected int coinAmount;
 
+    public int LastDealtDamage { get; set; }
+
     protected virtual void Start() {
         CreateDrops();
         turnCount = 0;
@@ -45,6 +47,22 @@ public class Enemy : MonoBehaviour
 
     public virtual void PlayTurn(GameObject enemyUnit, GameObject playerUnit) {
         
+    }
+
+    protected bool Attack() {
+        int random = UnityEngine.Random.Range(0, 100);
+
+        if (random > Player.Instance.BlockChance) {
+            int calculatedDamage = 0;
+
+            if (Player.Instance.DefPercent != 0) calculatedDamage = damage - ((damage * Player.Instance.DefPercent) / 100);
+            else calculatedDamage = damage;
+
+            Player.Instance.CurrentHp -= calculatedDamage;
+            LastDealtDamage = calculatedDamage;
+            return true;
+        }
+        else return false;
     }
 
     public void Die() {

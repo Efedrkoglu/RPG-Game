@@ -137,7 +137,7 @@ public class CombatSystem : MonoBehaviour
 
 		enemy.PlayTurn(enemyUnit, playerUnit);
 		UpdateCombatScreen();
-        info.text = enemy.EnemyName + " dealt " + enemy.Damage + " damage";
+        info.text = enemy.EnemyName + " dealt " + enemy.LastDealtDamage + " damage";
 
         if (player.CurrentHp <= 0) {
 			state = BattleState.LOST;

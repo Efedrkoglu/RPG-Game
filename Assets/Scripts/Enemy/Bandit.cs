@@ -15,9 +15,13 @@ public class Bandit : Enemy
     public override void PlayTurn(GameObject enemyUnit, GameObject playerUnit) {
         if(!Player.Instance.IsInCombat || Player.Instance.IsDead) return;
 
-        Player.Instance.CurrentHp -= damage;
-        enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
-        if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+        if(Attack()) {
+            enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
+            if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+        }
+        else {
+            Debug.Log("Player blocked bandit's attack");
+        }
     }
 
 }
