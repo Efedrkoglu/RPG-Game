@@ -50,9 +50,9 @@ public class Enemy : MonoBehaviour
     }
 
     protected bool Attack() {
-        int random = UnityEngine.Random.Range(0, 100);
+        float random = UnityEngine.Random.Range(0, 100f);
 
-        if (random > Player.Instance.BlockChance) {
+        if (random > (float)Player.Instance.BlockChance) {
             int calculatedDamage = 0;
 
             if (Player.Instance.DefPercent != 0) calculatedDamage = damage - ((damage * Player.Instance.DefPercent) / 100);

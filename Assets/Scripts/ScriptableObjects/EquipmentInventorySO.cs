@@ -87,6 +87,9 @@ public class EquipmentInventorySO : ScriptableObject
                 break;
 
             case EquipmentType.Trinket:
+                if(unequippedItem.itemName == "Ruby") Player.Instance.RubyEquipped = false;
+                else if(unequippedItem.itemName == "Sapphire") Player.Instance.SapphireEquipped = false;
+                else if(unequippedItem.itemName == "Emerald") Player.Instance.EmeraldEquipped = false;
                 break;
 
             default:
@@ -122,6 +125,9 @@ public class EquipmentInventorySO : ScriptableObject
                 break;
 
             case EquipmentType.Trinket:
+                if(unequippedItem.itemName == "Ruby") Player.Instance.RubyEquipped = false;
+                else if(unequippedItem.itemName == "Sapphire") Player.Instance.SapphireEquipped = false;
+                else if(unequippedItem.itemName == "Emerald") Player.Instance.EmeraldEquipped = false;
                 break;
 
             default:

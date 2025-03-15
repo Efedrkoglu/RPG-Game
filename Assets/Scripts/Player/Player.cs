@@ -27,7 +27,11 @@ public class Player : MonoBehaviour
 	private int maxActionCount;
 	private int effectsCount;
 
-	[SerializeField] private GameObject playerUnit;
+	public bool RubyEquipped { get; set; }
+    public bool SapphireEquipped { get; set; }
+    public bool EmeraldEquipped { get; set; }
+
+    [SerializeField] private GameObject playerUnit;
 
 	public event Action OnHealthChanged, EquipmentEquipped, UpdateCoins, LevelUp;
 
@@ -50,8 +54,8 @@ public class Player : MonoBehaviour
         maxHp = 50;
         currentHp = maxHp;
         damage = 10;
-        defPercent = 20;
-        blockChance = 40;
+        defPercent = 0;
+        blockChance = 0;
 		silverCoin = 500;
         goldCoin = 50;
         inventorySize = 10;
@@ -63,6 +67,10 @@ public class Player : MonoBehaviour
         maxActionCount = 3;
         actionCount = maxActionCount;
 		effectsCount = 3;
+
+        RubyEquipped = false;
+        SapphireEquipped = false;
+        EmeraldEquipped = false;
     }
 
     public void OnEquipmentEquipped() {

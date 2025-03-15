@@ -125,12 +125,14 @@ public class CombatSystem : MonoBehaviour
 		player.ActionCount = player.MaxActionCount;
         combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
         info.text = "Your turn";
-		yield return new WaitForSeconds(.5f);
+		yield return new WaitForSeconds(.7f);
         info.text = "Choose an action";
         state = BattleState.PLAYERTURN;
 	}
 
 	private IEnumerator EnemyTurn() {
+		if (state == BattleState.STARTED) yield return new WaitForSeconds(2f);
+
         state = BattleState.ENEMYTURN;
         info.text = enemy.EnemyName + "'s turn";
         yield return new WaitForSeconds(2f);
@@ -140,9 +142,15 @@ public class CombatSystem : MonoBehaviour
         info.text = enemy.EnemyName + " dealt " + enemy.LastDealtDamage + " damage";
 
         if (player.CurrentHp <= 0) {
-			state = BattleState.LOST;
-			playerUnit.GetComponent<Animator>().SetTrigger("Death");
-			StartCoroutine(EndBattle());
+			if(player.RubyEquipped) {
+				player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
+				StartCoroutine(RevivePlayer());
+			}
+			else {
+                state = BattleState.LOST;
+                playerUnit.GetComponent<Animator>().SetTrigger("Death");
+                StartCoroutine(EndBattle());
+            }
 		}
 		else {
 			StartCoroutine(PlayerTurn());
@@ -170,6 +178,17 @@ public class CombatSystem : MonoBehaviour
             CombatEndedEvent(false);
         }
 	}
+
+	private IEnumerator RevivePlayer() {
+		playerUnit.GetComponent<Animator>().SetTrigger("Death");
+		yield return new WaitForSeconds(2.5f);
+        player.CurrentHp = player.MaxHp / 2;
+        UpdateCombatScreen();
+        playerUnit.GetComponent<Animator>().SetTrigger("Revive");
+		info.text = "Your ruby revived you!";
+		yield return new WaitForSeconds(1f);
+        StartCoroutine(PlayerTurn());
+    }
 
 	public void AttackButton() {
 		if (state != BattleState.PLAYERTURN)
