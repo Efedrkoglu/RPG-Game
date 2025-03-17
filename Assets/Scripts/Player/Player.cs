@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     public bool SapphireEquipped { get; set; }
     public bool EmeraldEquipped { get; set; }
 
+	public bool IsSapphireEffectActive { get; set; }
+	public bool IsEmeraldEffectActive { get; set; }
+
     [SerializeField] private GameObject playerUnit;
 
 	public event Action OnHealthChanged, EquipmentEquipped, UpdateCoins, LevelUp;
@@ -53,9 +56,9 @@ public class Player : MonoBehaviour
         currentExp = 0;
         maxHp = 50;
         currentHp = maxHp;
-        damage = 10;
+        damage = 5;
         defPercent = 0;
-        blockChance = 0;
+        blockChance = 50;
 		silverCoin = 500;
         goldCoin = 50;
         inventorySize = 10;

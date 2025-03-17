@@ -50,9 +50,9 @@ public class Enemy : MonoBehaviour
     }
 
     protected bool Attack() {
-        float random = UnityEngine.Random.Range(0, 100f);
+        int random = UnityEngine.Random.Range(1, 100);
 
-        if (random > (float)Player.Instance.BlockChance) {
+        if (random > Player.Instance.BlockChance) {
             int calculatedDamage = 0;
 
             if (Player.Instance.DefPercent != 0) calculatedDamage = damage - ((damage * Player.Instance.DefPercent) / 100);
@@ -62,7 +62,11 @@ public class Enemy : MonoBehaviour
             LastDealtDamage = calculatedDamage;
             return true;
         }
-        else return false;
+        else {
+            if(Player.Instance.SapphireEquipped) Player.Instance.IsSapphireEffectActive = true;
+            if(Player.Instance.EmeraldEquipped) Player.Instance.IsEmeraldEffectActive = true;
+            return false;
+        }
     }
 
     public void Die() {

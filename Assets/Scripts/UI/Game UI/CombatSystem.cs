@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,8 +70,14 @@ public class CombatSystem : MonoBehaviour
 		for(int i = 0; i < buffIcons.Length; i++) {
 			buffIcons[i].gameObject.SetActive(false);
 		}
+		
 		Player.Instance.IsInCombat = true;
+		Player.Instance.IsSapphireEffectActive = false;
+		Player.Instance.IsEmeraldEffectActive = false;
+
         playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
+		playerUnit.GetComponent<PlayerUnit>().OnEnemyHurt += HurtEnemy;
+
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
 
 		player = Player.Instance;
@@ -116,6 +121,9 @@ public class CombatSystem : MonoBehaviour
 	private void ExitBattleStation() {
         switchCamera.TriggerSwitchAnimation();
         StartCoroutine(ToggleCombatScreen());
+
+		playerUnit.GetComponent<PlayerUnit>().OnEnemyHurt -= HurtEnemy;
+
 		Destroy(playerUnit);
 		Destroy(enemyUnit);
     }
@@ -191,26 +199,44 @@ public class CombatSystem : MonoBehaviour
     }
 
 	public void AttackButton() {
-		if (state != BattleState.PLAYERTURN)
-			return;
+		if(state != BattleState.PLAYERTURN) return;
 
-		enemy.CurrentHp -= player.getDamage();
-		player.ActionCount = 0;
-		UpdateBuffs();
-		UpdateCombatScreen();
-
-		playerUnit.GetComponent<Animator>().SetTrigger("Attack");
-
-		if(enemy.CurrentHp <= 0) {
-			state = BattleState.WON;
-			enemyUnit.GetComponent<Animator>().SetTrigger("Death");
-			StartCoroutine(EndBattle());
-		}
-		else {
-            enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
-            StartCoroutine(EnemyTurn());
-		}
+		StartCoroutine(PlayerAttackMove());
 	}
+
+	private IEnumerator PlayerAttackMove() {
+        player.ActionCount = 0;
+        UpdateCombatScreen();
+
+        if (player.IsSapphireEffectActive) {
+            playerUnit.GetComponent<Animator>().SetTrigger("ComboAttack");
+            player.IsSapphireEffectActive = false;
+            Debug.Log("Sapphire used");
+			yield return new WaitForSeconds(1f);
+        }
+		else if(player.IsEmeraldEffectActive) {
+
+        }
+		else {
+            int random = UnityEngine.Random.Range(1, 100);
+
+            if (random < 50) playerUnit.GetComponent<Animator>().SetTrigger("Attack2");
+            else playerUnit.GetComponent<Animator>().SetTrigger("Attack");
+
+			yield return new WaitForSeconds(.5f);
+        }
+
+        UpdateBuffs();
+
+        if(enemy.CurrentHp <= 0) {
+            state = BattleState.WON;
+            enemyUnit.GetComponent<Animator>().SetTrigger("Death");
+            StartCoroutine(EndBattle());
+        }
+		else {
+            StartCoroutine(EnemyTurn());
+        }
+    } 
 
 	public void InventoryButton() {
 		if(state != BattleState.PLAYERTURN)
@@ -265,4 +291,11 @@ public class CombatSystem : MonoBehaviour
 			activeBuffs.RemoveAt(0);
 		}
 	}
+
+	//PlayerUnit attack animations are calling this function
+	private void HurtEnemy() {
+		enemy.CurrentHp -= player.getDamage();
+		UpdateCombatScreen();
+		enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
+    }
 }
