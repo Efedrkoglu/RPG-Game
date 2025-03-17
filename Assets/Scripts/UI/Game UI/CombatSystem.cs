@@ -21,6 +21,8 @@ public class CombatSystem : MonoBehaviour
 	private GameObject enemyUnit;
 	private BattleState state;
 
+	private int enemyDamageInfo;
+
 	[SerializeField] private Transform playerCombatStation;
 	[SerializeField] private Transform enemyCombatStation;
 	[SerializeField] private TextMeshProUGUI playerHealth;
@@ -79,6 +81,8 @@ public class CombatSystem : MonoBehaviour
 		playerUnit.GetComponent<PlayerUnit>().OnEnemyHurt += HurtEnemy;
 
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
+		enemyUnit.GetComponent<EnemyUnit>().OnPlayerHurt += HurtPlayer;
+		enemyUnit.GetComponent<EnemyUnit>().setEnemy(enemy);
 
 		player = Player.Instance;
 		this.enemy = enemy;
@@ -104,6 +108,8 @@ public class CombatSystem : MonoBehaviour
 
         info.text = "Battle against " + enemy.EnemyName;
         combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
+
+		Debug.Log(Player.Instance.SapphireEquipped);
     }
 
 	private void UpdateCombatScreen() {
@@ -123,8 +129,9 @@ public class CombatSystem : MonoBehaviour
         StartCoroutine(ToggleCombatScreen());
 
 		playerUnit.GetComponent<PlayerUnit>().OnEnemyHurt -= HurtEnemy;
+        enemyUnit.GetComponent<EnemyUnit>().OnPlayerHurt -= HurtPlayer;
 
-		Destroy(playerUnit);
+        Destroy(playerUnit);
 		Destroy(enemyUnit);
     }
 
@@ -146,11 +153,11 @@ public class CombatSystem : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
 		enemy.PlayTurn(enemyUnit, playerUnit);
-		UpdateCombatScreen();
-        info.text = enemy.EnemyName + " dealt " + enemy.LastDealtDamage + " damage";
+        info.text = enemy.EnemyName + " dealt " + enemy.GetDamageInfo() + " damage";
+		yield return new WaitForSeconds(1.5f);
 
         if (player.CurrentHp <= 0) {
-			if(player.RubyEquipped) {
+			if(player.RubyEquipped == 1) {
 				player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
 				StartCoroutine(RevivePlayer());
 			}
@@ -298,4 +305,16 @@ public class CombatSystem : MonoBehaviour
 		UpdateCombatScreen();
 		enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
     }
+
+    //EnemyUnit attack animations are calling this function
+    private void HurtPlayer(bool attackSuccessfull) {
+		if(attackSuccessfull) {
+			player.CurrentHp -= enemy.GetLastDealtDamage();
+			UpdateCombatScreen();
+			playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+		}
+		else {
+			//play block sfx & anim
+		}
+	}
 }

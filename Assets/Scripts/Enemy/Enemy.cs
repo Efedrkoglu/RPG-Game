@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     protected int damage;
     protected int exp;
     protected int turnCount;
+    protected int lastDealtDamage;
+    protected int damageInfo;
     protected List<Loot> loots;
 
     [SerializeField] protected GameObject unit;
@@ -22,8 +24,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject coinPrefab;
     [SerializeField] protected CoinType coinType;
     [SerializeField] protected int coinAmount;
-
-    public int LastDealtDamage { get; set; }
 
     protected virtual void Start() {
         CreateDrops();
@@ -49,24 +49,39 @@ public class Enemy : MonoBehaviour
         
     }
 
-    protected bool Attack() {
+    protected bool CheckAttack() {
         int random = UnityEngine.Random.Range(1, 100);
 
-        if (random > Player.Instance.BlockChance) {
+        if (random > Player.Instance.BlockChance) return true;
+        else {
+            if(Player.Instance.SapphireEquipped == 1) Player.Instance.IsSapphireEffectActive = true;
+            if(Player.Instance.EmeraldEquipped == 1) Player.Instance.IsEmeraldEffectActive = true;
+            return false;
+        }
+    }
+
+    public int GetLastDealtDamage() {
+        return lastDealtDamage;
+    }
+
+    protected void SetLastDealtDamage(bool isAttackSuccessfull) {
+        if(isAttackSuccessfull) {
             int calculatedDamage = 0;
 
             if (Player.Instance.DefPercent != 0) calculatedDamage = damage - ((damage * Player.Instance.DefPercent) / 100);
             else calculatedDamage = damage;
 
-            Player.Instance.CurrentHp -= calculatedDamage;
-            LastDealtDamage = calculatedDamage;
-            return true;
+            lastDealtDamage = calculatedDamage;
         }
-        else {
-            if(Player.Instance.SapphireEquipped) Player.Instance.IsSapphireEffectActive = true;
-            if(Player.Instance.EmeraldEquipped) Player.Instance.IsEmeraldEffectActive = true;
-            return false;
-        }
+        else lastDealtDamage = 0;
+    }
+
+    public int GetDamageInfo() {
+        return damageInfo;
+    }
+
+    protected void SetDamageInfo(int damageInfo) {
+        this.damageInfo = damageInfo;
     }
 
     public void Die() {

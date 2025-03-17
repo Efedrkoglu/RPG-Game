@@ -27,9 +27,9 @@ public class Player : MonoBehaviour
 	private int maxActionCount;
 	private int effectsCount;
 
-	public bool RubyEquipped { get; set; }
-    public bool SapphireEquipped { get; set; }
-    public bool EmeraldEquipped { get; set; }
+	public int RubyEquipped { get; set; }
+    public int SapphireEquipped { get; set; }
+    public int EmeraldEquipped { get; set; }
 
 	public bool IsSapphireEffectActive { get; set; }
 	public bool IsEmeraldEffectActive { get; set; }
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         currentExp = 0;
         maxHp = 50;
         currentHp = maxHp;
-        damage = 5;
+        damage = 20;
         defPercent = 0;
         blockChance = 50;
 		silverCoin = 500;
@@ -71,9 +71,9 @@ public class Player : MonoBehaviour
         actionCount = maxActionCount;
 		effectsCount = 3;
 
-        RubyEquipped = false;
-        SapphireEquipped = false;
-        EmeraldEquipped = false;
+        RubyEquipped = 0;
+        SapphireEquipped = 0;
+        EmeraldEquipped = 0;
     }
 
     public void OnEquipmentEquipped() {

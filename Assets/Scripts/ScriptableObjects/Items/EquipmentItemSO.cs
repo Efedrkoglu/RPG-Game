@@ -43,9 +43,9 @@ public class EquipmentItemSO : ItemSO
                 break;
 
             case EquipmentType.Trinket:
-                if(itemName == "Ruby") Player.Instance.RubyEquipped = true;
-                else if(itemName == "Sapphire") Player.Instance.SapphireEquipped = true;
-                else if(itemName == "Emerald") Player.Instance.EmeraldEquipped = true;
+                if(itemName == "Ruby") Player.Instance.RubyEquipped += 1;
+                else if(itemName == "Sapphire") Player.Instance.SapphireEquipped += 1;
+                else if(itemName == "Emerald") Player.Instance.EmeraldEquipped += 1;
                 break;
 
             default:

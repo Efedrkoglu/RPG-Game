@@ -17,22 +17,21 @@ public class Skeleton : Enemy
 
         if(turnCount % 2 == 0 && turnCount != 0) {
             currentHp += 15;
-            if(Attack()) {
-                enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
-                if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
-            }
-            else {
-                Debug.Log("Player blocked skeleton's attack");
-            }
+
+            if(CheckAttack()) SetLastDealtDamage(true);
+            else SetLastDealtDamage(false);
+
+            SetDamageInfo(GetLastDealtDamage() * 2);
+
+            enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
         }
         else {
-            if(Attack()) {
-                enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
-                if(Player.Instance.CurrentHp > 0) playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
-            }
-            else {
-                Debug.Log("Player blocked skeleton's attack");
-            }
+            if(CheckAttack()) SetLastDealtDamage(true);
+            else SetLastDealtDamage(false);
+
+            SetDamageInfo(GetLastDealtDamage() * 2);
+
+            enemyUnit.GetComponent<Animator>().SetTrigger("Attack");
         }
         turnCount++;
     }
