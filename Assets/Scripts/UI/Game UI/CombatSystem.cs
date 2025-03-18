@@ -228,16 +228,11 @@ public class CombatSystem : MonoBehaviour
         if (player.IsSapphireEffectActive) {
             playerUnit.GetComponent<Animator>().SetTrigger("ComboAttack");
             player.IsSapphireEffectActive = false;
-            Debug.Log("Sapphire used");
 			yield return new WaitForSeconds(1f);
         }
 		else {
-            int random = UnityEngine.Random.Range(1, 100);
-
-            if (random < 50) playerUnit.GetComponent<Animator>().SetTrigger("Attack2");
-            else playerUnit.GetComponent<Animator>().SetTrigger("Attack");
-
-			yield return new WaitForSeconds(.5f);
+            playerUnit.GetComponent<Animator>().SetTrigger("Attack");
+            yield return new WaitForSeconds(.5f);
         }
 
         UpdateBuffs();
@@ -323,6 +318,7 @@ public class CombatSystem : MonoBehaviour
 		}
 		else {
 			//play block sfx & anim
+			playerUnit.GetComponent<Animator>().SetTrigger("Block");
 		}
 	}
 }
