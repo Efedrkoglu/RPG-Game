@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 3
-  attackRange: 0.2
+  attackRange: 0.3
   walkPointRange: 2
   playerMask:
     serializedVersion: 2

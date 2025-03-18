@@ -313,12 +313,12 @@ public class CombatSystem : MonoBehaviour
     private void HurtPlayer(bool attackSuccessfull) {
 		if(attackSuccessfull) {
 			player.CurrentHp -= enemy.GetLastDealtDamage();
-			UpdateCombatScreen();
 			playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
 		}
 		else {
 			//play block sfx & anim
-			playerUnit.GetComponent<Animator>().SetTrigger("Block");
+			playerUnit.GetComponent<Animator>().SetTrigger("Block");	
 		}
+		UpdateCombatScreen();
 	}
 }

@@ -7,7 +7,7 @@ public class Skeleton : Enemy
     protected override void Start() {
         enemyName = "Skeleton";
         maxHp = 50;
-        damage = 1;
+        damage = 30;
         exp = 531;
         base.Start();
     }
@@ -17,6 +17,7 @@ public class Skeleton : Enemy
 
         if(turnCount % 2 == 0 && turnCount != 0) {
             currentHp += 15;
+            if(currentHp > maxHp) currentHp = maxHp;
 
             if(CheckAttack()) SetLastDealtDamage(true);
             else SetLastDealtDamage(false);
