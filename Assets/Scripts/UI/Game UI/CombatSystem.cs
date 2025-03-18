@@ -92,7 +92,7 @@ public class CombatSystem : MonoBehaviour
 		StartCoroutine(ToggleCombatScreen());
 
 		if(turn == 0) StartCoroutine(PlayerTurn());
-		else if(turn == 1) StartCoroutine(EnemyTurn());
+		else if(turn == 1) StartCoroutine(EnemyTurn(false));
 		else StartCoroutine(PlayerTurn());
     }
 
@@ -108,8 +108,6 @@ public class CombatSystem : MonoBehaviour
 
         info.text = "Battle against " + enemy.EnemyName;
         combatScreen.GetComponent<ActionsCounter>()?.UpdateActionsIndicator();
-
-		Debug.Log(Player.Instance.SapphireEquipped);
     }
 
 	private void UpdateCombatScreen() {
@@ -145,16 +143,24 @@ public class CombatSystem : MonoBehaviour
         state = BattleState.PLAYERTURN;
 	}
 
-	private IEnumerator EnemyTurn() {
+	private IEnumerator EnemyTurn(bool isStunned) {
 		if (state == BattleState.STARTED) yield return new WaitForSeconds(2f);
 
         state = BattleState.ENEMYTURN;
-        info.text = enemy.EnemyName + "'s turn";
-        yield return new WaitForSeconds(2f);
 
-		enemy.PlayTurn(enemyUnit, playerUnit);
-        info.text = enemy.EnemyName + " dealt " + enemy.GetDamageInfo() + " damage";
-		yield return new WaitForSeconds(1.5f);
+		if(isStunned) {
+			info.text = "Enemy is stunned";
+			player.IsEmeraldEffectActive = false;
+			yield return new WaitForSeconds(1f);
+		}
+		else {
+            info.text = enemy.EnemyName + "'s turn";
+            yield return new WaitForSeconds(2f);
+
+            enemy.PlayTurn(enemyUnit, playerUnit);
+            info.text = enemy.EnemyName + " dealt " + enemy.GetDamageInfo() + " damage";
+            yield return new WaitForSeconds(1.5f);
+        }
 
         if (player.CurrentHp <= 0) {
 			if(player.RubyEquipped == 1) {
@@ -173,6 +179,10 @@ public class CombatSystem : MonoBehaviour
 	}
 
 	private IEnumerator EndBattle() {
+		if(player.SapphireEquipped == 1 || player.EmeraldEquipped == 1)
+			player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
+
+
 		if(state == BattleState.WON) {
 			info.text = "You defeated the " + enemy.EnemyName;
 			yield return new WaitForSeconds(2f);
@@ -221,9 +231,6 @@ public class CombatSystem : MonoBehaviour
             Debug.Log("Sapphire used");
 			yield return new WaitForSeconds(1f);
         }
-		else if(player.IsEmeraldEffectActive) {
-
-        }
 		else {
             int random = UnityEngine.Random.Range(1, 100);
 
@@ -241,7 +248,8 @@ public class CombatSystem : MonoBehaviour
             StartCoroutine(EndBattle());
         }
 		else {
-            StartCoroutine(EnemyTurn());
+            if(player.IsEmeraldEffectActive) StartCoroutine(EnemyTurn(true));
+			else StartCoroutine(EnemyTurn(false));
         }
     } 
 
@@ -264,7 +272,7 @@ public class CombatSystem : MonoBehaviour
                 StartCoroutine(EndBattle());
             } 
 			else {
-                StartCoroutine(EnemyTurn());
+                StartCoroutine(EnemyTurn(false));
             }
         }
 	}
