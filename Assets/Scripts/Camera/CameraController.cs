@@ -12,13 +12,15 @@ public class CameraController : MonoBehaviour
 	private void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
-	}
 
-	private void Update()
-	{
-		if(player != null) {
+        if (player != null) {
             transform.position = player.transform.position + cameraOffset;
             transform.eulerAngles = new Vector3(X_rotation, transform.rotation.y, transform.rotation.z);
         }
+    }
+
+	private void Update()
+	{
+		transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
 	}
 }

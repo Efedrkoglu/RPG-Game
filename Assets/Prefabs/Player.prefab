@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6916699666327114006}
   - component: {fileID: 930287690907052844}
   - component: {fileID: 4478395316562474787}
-  - component: {fileID: 5846862221161603193}
+  - component: {fileID: 8420566591104072872}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -114,9 +114,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &6940922707614375247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,8 +185,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &5846862221161603193
-BoxCollider:
+--- !u!136 &8420566591104072872
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,6 +203,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6258935, y: 0.80513716, z: 0.13315058}
-  m_Center: {x: -0.012466013, y: 0.40256858, z: 0.00048565865}
+  serializedVersion: 2
+  m_Radius: 0.22
+  m_Height: 0.82
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.42, z: 0}
