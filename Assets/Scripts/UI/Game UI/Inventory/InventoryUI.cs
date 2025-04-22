@@ -69,6 +69,8 @@ public class InventoryUI : MonoBehaviour
             inventorySlot.OnItemEndDrag += OnInventoryItemEndDrag;
             inventorySlot.OnItemDropped += OnInventoryItemDropped;
         }
+
+        Debug.Log("Inventory initialized.");
     }
 
     public void UpdateSlotUI(int slotIndex, InventorySlot slot) {
@@ -87,6 +89,11 @@ public class InventoryUI : MonoBehaviour
     }  
 
     private void ResetSelection() {
+        if(inventorySlotsList == null) {
+            Debug.Log("Inventory slots list is null.");
+            return;
+        }
+
         foreach (InventorySlotUI slot in inventorySlotsList) {
             slot.Deselect();
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventory : MonoBehaviour
 {
@@ -14,27 +15,68 @@ public class Inventory : MonoBehaviour
 
     public event Action OnInventoryItemUsed;
 
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        StartCoroutine(FindUIWithDelay());
+        Debug.Log("Scene loaded");
+    }
+
+    private void OnSceneUnloaded(Scene currentScene) {
+        inventoryUI.InventoryUpdateRequested -= UpdateInventory;
+        inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
+        inventoryUI.OnStartDragging -= OnStartDragging;
+        inventoryUI.OnSwapItems -= OnSwapItems;
+        inventoryUI.OnDropButton -= OnDropItem;
+        inventoryUI.OnUseButton -= OnUseItem;
+
+        equipmentInventoryUI.EquipmentInventoryUpdateRequested -= UpdateEquipmentInventory;
+        equipmentInventoryUI.UnEquipButtonClicked -= UnequipItem;
+        equipmentInventoryUI.EquipmentDescriptionRequested -= OnEquipmentDescriptionRequested;
+
+        Debug.Log("Scene unloaded");
+    }
+
+    private IEnumerator FindUIWithDelay() {
+        yield return null;
+
+        GameObject gameUI = GameObject.FindGameObjectWithTag("UI");
+        if (gameUI != null) {
+            inventoryUI = gameUI.GetComponentInChildren<InventoryUI>(true);
+            equipmentInventoryUI = gameUI.GetComponentInChildren<EquipmentInventoryUI>(true);
+
+
+            inventoryUI.InitializeInventoryUI(inventorySO.size);
+
+            inventoryUI.InventoryUpdateRequested += UpdateInventory;
+            inventoryUI.OnDescriptionRequested += HandleDesriptionRequest;
+            inventoryUI.OnStartDragging += OnStartDragging;
+            inventoryUI.OnSwapItems += OnSwapItems;
+            inventoryUI.OnDropButton += OnDropItem;
+            inventoryUI.OnUseButton += OnUseItem;
+
+            equipmentInventoryUI.EquipmentInventoryUpdateRequested += UpdateEquipmentInventory;
+            equipmentInventoryUI.UnEquipButtonClicked += UnequipItem;
+            equipmentInventoryUI.EquipmentDescriptionRequested += OnEquipmentDescriptionRequested;
+        } else {
+            Debug.LogWarning("UI objesi bulunamadý.");
+        }
+    }
+
     private void Start() {
         inventorySO.Initialize(Player.Instance.InventorySize);
-        inventoryUI.InitializeInventoryUI(inventorySO.size);
-
-        inventoryUI.InventoryUpdateRequested += UpdateInventory;
-        inventoryUI.OnDescriptionRequested += HandleDesriptionRequest;
-        inventoryUI.OnStartDragging += OnStartDragging;
-        inventoryUI.OnSwapItems += OnSwapItems;
-        inventoryUI.OnDropButton += OnDropItem;
-        inventoryUI.OnUseButton += OnUseItem;
-
         inventorySO.EquipmentEquipped += OnEquipmentEquipped;
-
-        equipmentInventoryUI.EquipmentInventoryUpdateRequested += UpdateEquipmentInventory;
-        equipmentInventoryUI.UnEquipButtonClicked += UnequipItem;
-        equipmentInventoryUI.EquipmentDescriptionRequested += OnEquipmentDescriptionRequested;
 
         equipmentInventorySO.OnEquipmentUnequipped += OnEquipmentUnequipped;
     }
 
     private void OnDestroy() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+
         inventoryUI.InventoryUpdateRequested -= UpdateInventory;
         inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
         inventoryUI.OnStartDragging -= OnStartDragging;
@@ -52,6 +94,7 @@ public class Inventory : MonoBehaviour
     }
 
     private void UpdateInventory() {
+        Debug.Log("Updating inventory.");
         foreach(var item in inventorySO.GetCurrentInventoryState()) {
             inventoryUI.UpdateSlotUI(item.Key, item.Value);
         }
@@ -112,7 +155,7 @@ public class Inventory : MonoBehaviour
         int droppedItemAmount = inventorySO.DropItem(dropAmount, index);
 
         if(droppedItem != null && droppedItemAmount > 0) {
-            Item item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+            Item item = Instantiate(itemPrefab, GameObject.FindGameObjectWithTag("Player").transform.position, Quaternion.identity);
             item.InitializeItem(droppedItem, droppedItemAmount);
         }
         UpdateInventory();

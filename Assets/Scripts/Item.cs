@@ -36,7 +36,7 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Player")) {
-            playerInventory = other.gameObject.GetComponent<Inventory>();
+            playerInventory = Player.Instance.gameObject.GetComponent<Inventory>();
         }
     }
 
