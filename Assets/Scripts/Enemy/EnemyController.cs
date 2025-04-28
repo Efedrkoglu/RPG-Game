@@ -122,8 +122,8 @@ public class EnemyController : MonoBehaviour
                 Player.Instance.gameObject.GetComponent<PlayerController>().OnCombatEnded(false);
             }
             else {
-                Player.Instance.gameObject.GetComponent<PlayerController>().SetLastHitEnemy(gameObject);
-                Player.Instance.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+                hitInfo.collider.gameObject.GetComponent<PlayerController>().SetLastHitEnemy(gameObject);
+                hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
                 CombatTriggered?.Invoke(enemyScript, 1);
             }
         }

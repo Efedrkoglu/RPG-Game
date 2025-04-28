@@ -11,12 +11,10 @@ GameObject:
   - component: {fileID: 5542866504399015647}
   - component: {fileID: 3714228900674450775}
   - component: {fileID: 3624404332887520169}
-  - component: {fileID: 6940922707614375247}
   - component: {fileID: 6916699666327114006}
-  - component: {fileID: 930287690907052844}
   - component: {fileID: 4478395316562474787}
   - component: {fileID: 8420566591104072872}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -117,20 +115,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &6940922707614375247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7388059893318517508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007500fbf324608468248cd3182105b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerUnit: {fileID: 5138053907368283989, guid: 13c8e57ed06f4324092963f7bbb5e4d1,
-    type: 3}
 --- !u!114 &6916699666327114006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,25 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   gameScreen: {fileID: 0}
---- !u!114 &930287690907052844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7388059893318517508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccb5d296807d934a82f18579aaeee30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
-  inventorySO: {fileID: 11400000, guid: 763e9fd189327b342ac2c107556a117b, type: 2}
-  equipmentInventorySO: {fileID: 11400000, guid: 7ad2266f7a7b02041ae5f899cc87fe56,
-    type: 2}
-  equipmentInventoryUI: {fileID: 0}
-  itemPrefab: {fileID: 1718588639868609159, guid: efb519bbb72416443b119a1a6ca9e103,
-    type: 3}
 --- !u!95 &4478395316562474787
 Animator:
   serializedVersion: 5
