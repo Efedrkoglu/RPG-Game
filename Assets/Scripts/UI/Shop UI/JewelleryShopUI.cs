@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class JewelleryShopUI : BaseShopUI
+public class JewelleryShopUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI goldCoinText, silverCoinText, rubyPartsText, sapphirePartsText, emeraldPartsText;
     [SerializeField] private GameObject errorMessagePrefab;
@@ -11,6 +11,8 @@ public class JewelleryShopUI : BaseShopUI
     [SerializeField] private ItemSO rubyPartsItemSO, sapphirePartsItemSO, emeraldPartsItemSO, rubyItemSO, sapphireItemSO, emeraldItemSO;
 
     [SerializeField] private GameObject buyRubyButton, buySapphireButton, buyEmeraldButton;
+
+    [SerializeField] private GameObject prevWindow;
 
     private InventorySO playerInventory;
     private int playerRubyParts, playerSapphireParts, playerEmeraldParts, rubyParts, sapphireParts, emeraldParts;
@@ -162,6 +164,7 @@ public class JewelleryShopUI : BaseShopUI
     }
 
     public void CloseButton() {
-        base.OpenGameUI();
+        prevWindow.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

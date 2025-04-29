@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jewellery Shop
+  m_text: Jewelry Shop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 667a2e30fedeca742a7b3e9584343123, type: 2}
   m_sharedMaterial: {fileID: -1927005924639231015, guid: 667a2e30fedeca742a7b3e9584343123,
@@ -1479,6 +1479,7 @@ MonoBehaviour:
   buyRubyButton: {fileID: 134786850077130906}
   buySapphireButton: {fileID: 5707263994576807613}
   buyEmeraldButton: {fileID: 3249529881837402897}
+  prevWindow: {fileID: 0}
 --- !u!114 &5180348512660993363
 MonoBehaviour:
   m_ObjectHideFlags: 0
