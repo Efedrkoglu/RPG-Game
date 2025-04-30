@@ -22,7 +22,6 @@ public class Inventory : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         StartCoroutine(FindUIWithDelay());
-        Debug.Log("Scene loaded");
     }
 
     private void OnSceneUnloaded(Scene currentScene) {
@@ -36,8 +35,6 @@ public class Inventory : MonoBehaviour
         equipmentInventoryUI.EquipmentInventoryUpdateRequested -= UpdateEquipmentInventory;
         equipmentInventoryUI.UnEquipButtonClicked -= UnequipItem;
         equipmentInventoryUI.EquipmentDescriptionRequested -= OnEquipmentDescriptionRequested;
-
-        Debug.Log("Scene unloaded");
     }
 
     private IEnumerator FindUIWithDelay() {
@@ -61,8 +58,6 @@ public class Inventory : MonoBehaviour
             equipmentInventoryUI.EquipmentInventoryUpdateRequested += UpdateEquipmentInventory;
             equipmentInventoryUI.UnEquipButtonClicked += UnequipItem;
             equipmentInventoryUI.EquipmentDescriptionRequested += OnEquipmentDescriptionRequested;
-        } else {
-            Debug.LogWarning("UI objesi bulunamadý.");
         }
     }
 
@@ -94,7 +89,6 @@ public class Inventory : MonoBehaviour
     }
 
     private void UpdateInventory() {
-        Debug.Log("Updating inventory.");
         foreach(var item in inventorySO.GetCurrentInventoryState()) {
             inventoryUI.UpdateSlotUI(item.Key, item.Value);
         }

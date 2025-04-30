@@ -20,7 +20,7 @@ MonoBehaviour:
     Attack
     Bonus: 5,
 
-    Duration: 3,
+    Duration: 3 rounds,
 
     (Only consumable during combat)'
   isStackable: 1

@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         blockChance = 50;
 		silverCoin = 500;
         goldCoin = 50;
-        inventorySize = 10;
+        inventorySize = 20;
         isInCombat = false;
 		isDead = false;
 		levelPoints = 0;

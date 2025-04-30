@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Health Potion
   description: 'Restores great amount of health
 
-    Healing Amount: 20
+    Healing Amount: 20,
 
     (Only
     consumable during combat)'

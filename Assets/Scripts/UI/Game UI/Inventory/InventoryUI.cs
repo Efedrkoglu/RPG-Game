@@ -69,8 +69,6 @@ public class InventoryUI : MonoBehaviour
             inventorySlot.OnItemEndDrag += OnInventoryItemEndDrag;
             inventorySlot.OnItemDropped += OnInventoryItemDropped;
         }
-
-        Debug.Log("Inventory initialized.");
     }
 
     public void UpdateSlotUI(int slotIndex, InventorySlot slot) {

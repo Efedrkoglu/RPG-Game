@@ -15,15 +15,14 @@ MonoBehaviour:
   itemImage: {fileID: 21300000, guid: 1e281df463daec4419a148161d274ec5, type: 3}
   itemName: Healing Potion
   description: 'Heals upon using and at the end of current round grants you a healing
-    buff lasts for certain amount of time and heals you at the end of every round
-    that it lasts.
+    buff lasts for certain amount of time and heals you at the end of every round.
 
-    Healing amount: 5,
+    Healing
+    amount: 5,
 
-    Duration: 3
+    Duration: 3 rounds,
 
-    (Only consumable
-    during combat)
+    (Only consumable during combat)
 
 '
   isStackable: 1

@@ -3,7 +3,12 @@ guid: 3b5ac888e110cb8458ca9dc99da5be47
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stair_Mat
+    second: {fileID: 2100000, guid: 189d68eabacfb7640b732a0dce4a4954, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
