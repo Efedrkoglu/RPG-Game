@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         currentExp = 0;
         maxHp = 50;
         currentHp = maxHp;
-        damage = 15;
+        damage = 25;
         defPercent = 0;
         blockChance = 50;
 		silverCoin = 500;
