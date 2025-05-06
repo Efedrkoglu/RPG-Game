@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bandit : Enemy
+public class BanditVariation : Enemy
 {
     protected override void Start() {
-        enemyName = "Bandit Leader";
-        maxHp = 50;
-        damage = 8;
-        exp = 200;
+        enemyName = "Bandit";
+        maxHp = 30;
+        damage = 5;
+        exp = 120;
         base.Start();
     }
 

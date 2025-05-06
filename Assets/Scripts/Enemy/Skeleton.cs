@@ -5,7 +5,7 @@ using UnityEngine;
 public class Skeleton : Enemy
 {
     protected override void Start() {
-        enemyName = "Skeleton";
+        enemyName = "Skeleton Boss";
         maxHp = 50;
         damage = 30;
         exp = 531;
