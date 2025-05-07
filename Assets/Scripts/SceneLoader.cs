@@ -22,6 +22,12 @@ public class SceneLoader : MonoBehaviour
     }
 
     private void LoadScene() {
+        if(SceneManager.GetActiveScene().name == "Castle") {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            PlayerPrefs.SetFloat("playerXPos", player.transform.position.x);
+            PlayerPrefs.SetFloat("playerYPos", player.transform.position.y);
+            PlayerPrefs.SetFloat("playerZPos", player.transform.position.z);
+        }
         SceneManager.LoadScene(sceneToBeLoaded);
     }
 

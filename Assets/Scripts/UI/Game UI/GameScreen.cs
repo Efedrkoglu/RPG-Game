@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameScreen : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GameScreen : MonoBehaviour
     [SerializeField] private GameObject statsPanel;
     [SerializeField] private Animator statsPanelAnimator;
     [SerializeField] private GameObject levelUpIndicator;
+
+    [SerializeField] private GameObject levelCounterUI;
 
     private void Awake() {
         PlayerController.CombatTriggered += OnCombatTriggered;
@@ -76,10 +79,12 @@ public class GameScreen : MonoBehaviour
     }
 
     public void OnCombatTriggered(Enemy enemy, int turn) {
+        if(levelCounterUI != null) levelCounterUI.SetActive(false);
         gameScreen.SetActive(false);
     }
 
     public void OnCombatEnded(bool combatResult) {
+        if (levelCounterUI != null) levelCounterUI.SetActive(true);
         gameScreen.SetActive(true);
         player = Player.Instance;
         UpdateHpBar();
