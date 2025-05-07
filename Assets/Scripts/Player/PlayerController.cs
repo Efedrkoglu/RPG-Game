@@ -71,11 +71,8 @@ public class PlayerController : MonoBehaviour
 	private IEnumerator CombatTriggeredEvent(Enemy enemy) {
 		yield return new WaitForSeconds(.15f);
 
-        Debug.Log("Damage Dealt: " + Player.Instance.Damage);
-
-        if (enemy.CurrentHp <= Player.Instance.Damage) {
+        if (enemy.CurrentHp <= Player.Instance.getDamage()) {
 			OnCombatEnded(true);
-			Debug.Log("Instant kill");
 		}
 		else {
             listenInputs = false;

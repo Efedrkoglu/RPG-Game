@@ -108,8 +108,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3531809, y: 0.49888718, z: 0.2}
-  m_Center: {x: 0.038281918, y: 0.2565462, z: 0}
+  m_Size: {x: 0.35796985, y: 0.49888718, z: 0.2}
+  m_Center: {x: 0.006315832, y: 0.25654617, z: 0}
 --- !u!114 &1481658660839738934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,9 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44789ded12e531f4b89009750c45f24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 3
-  attackRange: 0.3
-  walkPointRange: 2
+  sightRange: 2.2
+  attackRange: 0.5
+  walkPointRange: 1
   playerMask:
     serializedVersion: 2
     m_Bits: 128

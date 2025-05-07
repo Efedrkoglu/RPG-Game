@@ -100,6 +100,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Chase() {
+        isWalkPointSet = false;
         agent.SetDestination(player.position);
     }
 

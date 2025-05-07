@@ -191,9 +191,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44789ded12e531f4b89009750c45f24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 3
+  sightRange: 2.2
   attackRange: 0.5
-  walkPointRange: 2
+  walkPointRange: 1
   playerMask:
     serializedVersion: 2
     m_Bits: 128

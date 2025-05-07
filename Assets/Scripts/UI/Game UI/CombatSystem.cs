@@ -222,6 +222,7 @@ public class CombatSystem : MonoBehaviour
 	}
 
 	private IEnumerator PlayerAttackMove() {
+		state = BattleState.ENEMYTURN;
         player.ActionCount = 0;
         UpdateCombatScreen();
 
