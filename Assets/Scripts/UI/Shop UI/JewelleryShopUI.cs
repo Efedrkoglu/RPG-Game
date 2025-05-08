@@ -105,12 +105,12 @@ public class JewelleryShopUI : MonoBehaviour
     }
 
     public void BuyRubyButton() {
-        if(Player.Instance.GoldCoin >= 3 && Player.Instance.SilverCoin >= 25 && rubyParts >= 3) {
+        if(Player.Instance.GoldCoin >= 1 && Player.Instance.SilverCoin >= 50 && rubyParts >= 3) {
             int result = playerInventory.AddItem(rubyItemSO, 1);
 
             if(result == 0) {
-                Player.Instance.GoldCoin -= 3;
-                Player.Instance.SilverCoin -= 25;
+                Player.Instance.GoldCoin -= 1;
+                Player.Instance.SilverCoin -= 50;
                 rubyParts -= 3;
                 UpdateUI();
             }
@@ -126,12 +126,12 @@ public class JewelleryShopUI : MonoBehaviour
     }
 
     public void BuySapphireButton() {
-        if (Player.Instance.GoldCoin >= 5 && Player.Instance.SilverCoin >= 25 && sapphireParts >= 3) {
+        if (Player.Instance.GoldCoin >= 1 && Player.Instance.SilverCoin >= 50 && sapphireParts >= 3) {
             int result = playerInventory.AddItem(sapphireItemSO, 1);
 
             if (result == 0) {
-                Player.Instance.GoldCoin -= 5;
-                Player.Instance.SilverCoin -= 25;
+                Player.Instance.GoldCoin -= 1;
+                Player.Instance.SilverCoin -= 50;
                 sapphireParts -= 3;
                 UpdateUI();
             } else {
@@ -145,11 +145,11 @@ public class JewelleryShopUI : MonoBehaviour
     }
 
     public void BuyEmeraldButton() {
-        if (Player.Instance.GoldCoin >= 7 && Player.Instance.SilverCoin >= 50 && emeraldParts >= 3) {
+        if (Player.Instance.GoldCoin >= 1 && Player.Instance.SilverCoin >= 50 && emeraldParts >= 3) {
             int result = playerInventory.AddItem(emeraldItemSO, 1);
 
             if (result == 0) {
-                Player.Instance.GoldCoin -= 7;
+                Player.Instance.GoldCoin -= 1;
                 Player.Instance.SilverCoin -= 50;
                 emeraldParts -= 3;
                 UpdateUI();

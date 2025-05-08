@@ -99,7 +99,7 @@ public class CombatSystem : MonoBehaviour
 	private void InitCombatScreen(Player player, Enemy enemy) {
 		playerHealth.text = player.CurrentHp + "/" + player.getMaxHp();
 		playerDamage.text = player.getDamage().ToString();
-		playerUnit.GetComponent<HpBar>().InitHpBar(player.MaxHp, player.CurrentHp);
+		playerUnit.GetComponent<HpBar>().InitHpBar(player.getMaxHp(), player.CurrentHp);
 
         enemyHealth.text = enemy.CurrentHp + "/" + enemy.MaxHp;
 		enemyDamage.text = enemy.Damage.ToString();
@@ -207,7 +207,7 @@ public class CombatSystem : MonoBehaviour
 	private IEnumerator RevivePlayer() {
 		playerUnit.GetComponent<Animator>().SetTrigger("Death");
 		yield return new WaitForSeconds(2.5f);
-        player.CurrentHp = player.MaxHp / 2;
+        player.CurrentHp = player.getMaxHp() / 2;
         UpdateCombatScreen();
         playerUnit.GetComponent<Animator>().SetTrigger("Revive");
 		info.text = "Your ruby revived you!";
@@ -293,6 +293,7 @@ public class CombatSystem : MonoBehaviour
 				}
 			}
         }
+		UpdateCombatScreen();
     }
 
 	public static void AddBuff(Buff buff) {

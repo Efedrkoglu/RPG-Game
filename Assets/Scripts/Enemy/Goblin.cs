@@ -6,9 +6,9 @@ public class Goblin : Enemy
 {
     protected override void Start() {
         enemyName = "Goblin";
-        maxHp = 50;
-        damage = 8;
-        exp = 200;
+        maxHp = 80;
+        damage = 65;
+        exp = 50;
         base.Start();
     }
 

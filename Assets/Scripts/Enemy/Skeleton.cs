@@ -6,9 +6,9 @@ public class Skeleton : Enemy
 {
     protected override void Start() {
         enemyName = "Skeleton Boss";
-        maxHp = 50;
-        damage = 30;
-        exp = 531;
+        maxHp = 750;
+        damage = 80;
+        exp = 1000;
         base.Start();
     }
 

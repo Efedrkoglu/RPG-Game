@@ -104,13 +104,17 @@ MonoBehaviour:
     type: 3}
   drops:
   - {fileID: 11400000, guid: 44ffd5e24b1bbb94f801ae7566785b73, type: 2}
+  - {fileID: 11400000, guid: 0344e7125f2eff1419e5e93f29026509, type: 2}
+  - {fileID: 11400000, guid: 5524cd763d7713442887f44c3e5dec82, type: 2}
   dropChances:
-  - 0.7
-  maxDropAmount: 03000000
+  - 0.8
+  - 0.8
+  - 0.8
+  maxDropAmount: 060000000600000006000000
   coinPrefab: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
     type: 3}
   coinType: 1
-  coinAmount: 5
+  coinAmount: 15
 --- !u!65 &2823278394103219805
 BoxCollider:
   m_ObjectHideFlags: 0

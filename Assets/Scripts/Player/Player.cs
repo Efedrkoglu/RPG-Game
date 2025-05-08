@@ -56,11 +56,11 @@ public class Player : MonoBehaviour
         currentExp = 0;
         maxHp = 50;
         currentHp = maxHp;
-        damage = 25;
+        damage = 10;
         defPercent = 0;
-        blockChance = 50;
-		silverCoin = 500;
-        goldCoin = 50;
+        blockChance = 5;
+		silverCoin = 0;
+        goldCoin = 0;
         inventorySize = 20;
         isInCombat = false;
 		isDead = false;
@@ -81,13 +81,45 @@ public class Player : MonoBehaviour
     }
 
     public void IncreaseExp(int exp) {
+		bool levelUp = false;
         currentExp += exp;
         while (currentExp >= maxExp) {
+			levelUp = true;
             level++;
             levelPoints++;
 			LevelUp?.Invoke();
             currentExp -= maxExp;
         }
+
+		if(levelUp) {
+            currentHp = getMaxHp();
+			OnHealthChanged?.Invoke();
+        }
+
+		if(level >= 5 && maxExp == 100) {
+			maxExp += 50;
+		}
+		else if(level >= 10 && maxExp == 150) {
+			maxExp += 50;
+			maxActionCount += 1;
+			actionCount = maxActionCount;
+		}
+		else if(level >= 15 && maxExp == 200) {
+			maxExp += 100;
+			maxActionCount += 1;
+			actionCount = maxActionCount;
+			effectsCount += 1;
+		}
+		else if(level >= 20 && maxExp == 300) {
+			maxExp += 100;
+			effectsCount += 1;
+		}
+		else if(level >= 25 && maxExp == 400) {
+			maxExp += 150;
+		}
+		else if(level >= 30 && maxExp == 550) {
+			maxExp += 150;
+		}
     }
 
     public static Player Instance {
@@ -218,7 +250,7 @@ public class Player : MonoBehaviour
 	}
 
 	public int getDamage() {
-		return damage + (strPoints * 5);
+		return damage + (strPoints * 2);
 	}
 
 	public int getMaxHp() {

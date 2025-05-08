@@ -24,4 +24,4 @@ MonoBehaviour:
   attackBonus: 10
   duration: 2
   onlyConsumableDuringCombat: 1
-  consumingCost: 3
+  consumingCost: 2

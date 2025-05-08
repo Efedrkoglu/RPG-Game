@@ -105,14 +105,20 @@ MonoBehaviour:
   lootBagPrefab: {fileID: 2614861107313315734, guid: 50676344999a07b4786e5295a9e7d807,
     type: 3}
   drops:
+  - {fileID: 11400000, guid: 44ffd5e24b1bbb94f801ae7566785b73, type: 2}
   - {fileID: 11400000, guid: 72e25214beb36064697cdf61a1e31cf0, type: 2}
+  - {fileID: 11400000, guid: 8605bd04655f9194eb6927dc26f0c1da, type: 2}
+  - {fileID: 11400000, guid: e07609a0a88b6aa48a298cb64205b60d, type: 2}
   dropChances:
+  - 0.4
+  - 0.9
+  - 0.2
   - 0.7
-  maxDropAmount: 03000000
+  maxDropAmount: 01000000050000000100000003000000
   coinPrefab: {fileID: 3661870373727996444, guid: d118c16188d96534db939cc9e3b3238f,
     type: 3}
-  coinType: 0
-  coinAmount: 15
+  coinType: 1
+  coinAmount: 1
 --- !u!65 &115406359089591663
 BoxCollider:
   m_ObjectHideFlags: 0

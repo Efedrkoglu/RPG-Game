@@ -22,4 +22,4 @@ MonoBehaviour:
   attackBonus: 0
   duration: 0
   onlyConsumableDuringCombat: 0
-  consumingCost: 2
+  consumingCost: 1

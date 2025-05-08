@@ -24,6 +24,7 @@ public class HealingBuff : Buff
         if (duration == 0)
             return;
 
+        Debug.Log("Healing player");
         Player.Instance.CurrentHp += healingAmount;
         duration--;
     }

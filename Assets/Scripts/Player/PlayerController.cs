@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnCombatEnded(bool combatResult) {
 		if(combatResult) {
+			lastHitEnemy.GetComponent<BoxCollider>().isTrigger = true;
 			lastHitEnemy.GetComponent<Enemy>().Die();
 			listenInputs = true;
 		}

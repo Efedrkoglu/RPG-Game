@@ -100,11 +100,11 @@ public class SmelterUI : BaseShopUI
     }
 
     public void BuyGoldIngot() {
-        if (Player.Instance.SilverCoin >= 35 && goldNugget >= 3) {
+        if (Player.Instance.SilverCoin >= 25 && goldNugget >= 3) {
             int result = playerInventory.AddItem(goldIngotItemSO, 1);
 
             if (result == 0) {
-                Player.Instance.SilverCoin -= 35;
+                Player.Instance.SilverCoin -= 25;
                 goldNugget -= 3;
                 UpdateUI();
             }

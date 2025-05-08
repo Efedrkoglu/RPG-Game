@@ -6,9 +6,9 @@ public class Bandit : Enemy
 {
     protected override void Start() {
         enemyName = "Bandit Leader";
-        maxHp = 50;
-        damage = 8;
-        exp = 200;
+        maxHp = 40;
+        damage = 20;
+        exp = 30;
         base.Start();
     }
 

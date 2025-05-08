@@ -16,14 +16,14 @@ MonoBehaviour:
   itemName: Health Potion
   description: 'Restores great amount of health
 
-    Healing Amount: 20,
+    Healing Amount: 50,
 
     (Only
     consumable during combat)'
   isStackable: 1
   stackAmount: 10
   consumeEffect: 0
-  healAmount: 20
+  healAmount: 50
   attackBonus: 0
   duration: 0
   onlyConsumableDuringCombat: 1

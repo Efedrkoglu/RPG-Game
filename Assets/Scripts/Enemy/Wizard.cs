@@ -6,9 +6,9 @@ public class Wizard : Enemy
 {
     protected override void Start() {
         enemyName = "Wizard";
-        maxHp = 50;
-        damage = 8;
-        exp = 200;
+        maxHp = 300;
+        damage = 150;
+        exp = 1000;
         base.Start();
     }
 
