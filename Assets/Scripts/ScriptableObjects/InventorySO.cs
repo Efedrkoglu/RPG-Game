@@ -95,17 +95,23 @@ public class InventorySO : ScriptableObject
         return dropAmount;
     }
 
-    public void UseItem(int index) {
+    public ConsumableItemSO UseItem(int index) {
         if (slots[index].IsEmpty)
-            return;
+            return null;
 
         if(slots[index].item.UseItem()) {
             if (slots[index].item is EquipmentItemSO) {
                 EquipmentItemSO equippedItem = (EquipmentItemSO)slots[index].item;
+                DropItem(1, index);
                 EquipmentEquipped?.Invoke(equippedItem);
             }
-            DropItem(1, index);
+            else if (slots[index].item is ConsumableItemSO) {
+                ConsumableItemSO consumedItem = (ConsumableItemSO)slots[index].item;
+                DropItem(1, index);
+                return consumedItem;
+            }
         }
+        return null;
     }
 
     public Dictionary<int, InventorySlot> GetCurrentInventoryState() {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Skeleton : Enemy
     protected override void Start() {
         enemyName = "Skeleton Boss";
         maxHp = 750;
-        damage = 80;
+        damage = 55;
         exp = 1000;
         base.Start();
     }
@@ -17,6 +18,7 @@ public class Skeleton : Enemy
 
         if(turnCount % 2 == 0 && turnCount != 0) {
             currentHp += 15;
+            if(vfxAnimator != null) vfxAnimator.SetTrigger("Regeneration");
             if(currentHp > maxHp) currentHp = maxHp;
 
             if(CheckAttack()) SetLastDealtDamage(true);

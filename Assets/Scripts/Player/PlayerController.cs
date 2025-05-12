@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour
 	}
 
 	public void CheckAttackHit() {
+		if(Player.Instance.IsInCombat) return;
+
 		Vector3 hitDirection = transform.right;
 		if (spriteRenderer.flipX)
 			hitDirection *= -1;

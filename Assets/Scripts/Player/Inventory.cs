@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private EquipmentInventoryUI equipmentInventoryUI;
     [SerializeField] private Item itemPrefab;
 
-    public event Action OnInventoryItemUsed;
+    public event Action<ConsumableItemSO> OnInventoryItemUsed;
 
     private void OnEnable() {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -179,11 +179,12 @@ public class Inventory : MonoBehaviour
     }
 
     public void OnUseItem(int index) {
-        inventorySO.UseItem(index);
+        ConsumableItemSO item = inventorySO.UseItem(index);
         UpdateInventory();
 
-        if(Player.Instance.IsInCombat)
-            OnInventoryItemUsed?.Invoke();
+        if(Player.Instance.IsInCombat) {
+            if(item != null) OnInventoryItemUsed?.Invoke(item);
+        }
     }
 
     public void OnEquipmentDescriptionRequested(int index) {

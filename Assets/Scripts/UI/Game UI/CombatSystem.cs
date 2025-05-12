@@ -35,6 +35,8 @@ public class CombatSystem : MonoBehaviour
 	[SerializeField] private GameObject combatScreen;
 	[SerializeField] private BuffIcon[] buffIcons;
 
+	[SerializeField] private Animator playerVfx, enemyVfx;
+
     public static List<Buff> activeBuffs;
 
     public static event Action<bool> CombatEnded;
@@ -54,7 +56,7 @@ public class CombatSystem : MonoBehaviour
 
 	private void CombatEndedEvent(bool combatResult) {
 		Player.Instance.IsInCombat = false;
-		CombatEnded?.Invoke(combatResult);
+        CombatEnded?.Invoke(combatResult);
 	}
 
 	private IEnumerator ToggleCombatScreen() {
@@ -67,18 +69,20 @@ public class CombatSystem : MonoBehaviour
 	}
 
 	private void OnCombatTriggered(Enemy enemy, int turn) {
+        Player.Instance.IsInCombat = true;
         state = BattleState.STARTED;
 		activeBuffs = new List<Buff>();
 		for(int i = 0; i < buffIcons.Length; i++) {
 			buffIcons[i].gameObject.SetActive(false);
 		}
 		
-		Player.Instance.IsInCombat = true;
 		Player.Instance.IsSapphireEffectActive = false;
 		Player.Instance.IsEmeraldEffectActive = false;
 
         playerUnit = Instantiate(Player.Instance.PlayerUnit, playerCombatStation.position, playerCombatStation.rotation);
 		playerUnit.GetComponent<PlayerUnit>().OnEnemyHurt += HurtEnemy;
+
+		enemy.setVfxAnimator(enemyVfx);
 
 		enemyUnit = Instantiate(enemy.Unit, enemyCombatStation.position, enemyCombatStation.rotation);
 		enemyUnit.GetComponent<EnemyUnit>().OnPlayerHurt += HurtPlayer;
@@ -155,11 +159,10 @@ public class CombatSystem : MonoBehaviour
 		}
 		else {
             info.text = enemy.EnemyName + "'s turn";
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             enemy.PlayTurn(enemyUnit, playerUnit);
             info.text = enemy.EnemyName + " dealt " + enemy.GetDamageInfo() + " damage";
-            yield return new WaitForSeconds(1.5f);
         }
 
         if (player.CurrentHp <= 0) {
@@ -256,9 +259,9 @@ public class CombatSystem : MonoBehaviour
 		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
 	}
 
-	public void InventoryItemUsed() {
+	public void InventoryItemUsed(ConsumableItemSO item) {
 		UpdateCombatScreen();
-
+		StartCoroutine(ItemUsingAnimation(item));
 		if(player.ActionCount == 0) {
 			gameObject.GetComponent<InventoryPanel>().ToggleInventory();
 			UpdateBuffs();
@@ -270,6 +273,29 @@ public class CombatSystem : MonoBehaviour
 			else {
                 StartCoroutine(EnemyTurn(false));
             }
+        }
+	}
+
+	private IEnumerator ItemUsingAnimation(ConsumableItemSO item) {
+		
+		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+
+		if(item.consumeEffect == Effect.Heal || item.consumeEffect == Effect.HealingBuff) {
+            playerVfx.SetTrigger("Regeneration");
+			yield return new WaitForSeconds(1.5f);
+			if(player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+        }
+		else if(item.consumeEffect == Effect.AttackBuff) {
+            playerVfx.SetTrigger("Buff");
+            yield return new WaitForSeconds(1.5f);
+            if (player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
+        }
+		else if(item.consumeEffect == Effect.Both) {
+            playerVfx.SetTrigger("Regeneration");
+            yield return new WaitForSeconds(1.5f);
+			playerVfx.SetTrigger("Buff");
+			yield return new WaitForSeconds(1.5f);
+            if (player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
         }
 	}
 

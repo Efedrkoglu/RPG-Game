@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected CoinType coinType;
     [SerializeField] protected int coinAmount;
 
+    protected Animator vfxAnimator;
+
     protected virtual void Start() {
         CreateDrops();
         turnCount = 0;
@@ -102,6 +104,10 @@ public class Enemy : MonoBehaviour
         gameObject.GetComponent<Animator>().SetTrigger("Die");
         yield return new WaitForSeconds(3);
         Destroy(gameObject);
+    }
+
+    public void setVfxAnimator(Animator vfxAnimator) {
+        this.vfxAnimator = vfxAnimator;
     }
 
     public string EnemyName {
