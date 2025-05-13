@@ -25,16 +25,20 @@ public class Inventory : MonoBehaviour
     }
 
     private void OnSceneUnloaded(Scene currentScene) {
-        inventoryUI.InventoryUpdateRequested -= UpdateInventory;
-        inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
-        inventoryUI.OnStartDragging -= OnStartDragging;
-        inventoryUI.OnSwapItems -= OnSwapItems;
-        inventoryUI.OnDropButton -= OnDropItem;
-        inventoryUI.OnUseButton -= OnUseItem;
+        if(inventoryUI != null) {
+            inventoryUI.InventoryUpdateRequested -= UpdateInventory;
+            inventoryUI.OnDescriptionRequested -= HandleDesriptionRequest;
+            inventoryUI.OnStartDragging -= OnStartDragging;
+            inventoryUI.OnSwapItems -= OnSwapItems;
+            inventoryUI.OnDropButton -= OnDropItem;
+            inventoryUI.OnUseButton -= OnUseItem;
+        }
 
-        equipmentInventoryUI.EquipmentInventoryUpdateRequested -= UpdateEquipmentInventory;
-        equipmentInventoryUI.UnEquipButtonClicked -= UnequipItem;
-        equipmentInventoryUI.EquipmentDescriptionRequested -= OnEquipmentDescriptionRequested;
+        if(equipmentInventoryUI != null) {
+            equipmentInventoryUI.EquipmentInventoryUpdateRequested -= UpdateEquipmentInventory;
+            equipmentInventoryUI.UnEquipButtonClicked -= UnequipItem;
+            equipmentInventoryUI.EquipmentDescriptionRequested -= OnEquipmentDescriptionRequested;
+        }
     }
 
     private IEnumerator FindUIWithDelay() {

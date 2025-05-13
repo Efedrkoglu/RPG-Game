@@ -26,7 +26,8 @@ public class SceneLoader : MonoBehaviour
     }
 
     public async void LoadScene() {
-        if(SceneManager.GetActiveScene().name == "Castle") {
+        loadingScreen.SetActive(true);
+        if (SceneManager.GetActiveScene().name == "Castle") {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             PlayerPrefs.SetFloat("playerXPos", player.transform.position.x);
             PlayerPrefs.SetFloat("playerYPos", player.transform.position.y);
@@ -35,8 +36,6 @@ public class SceneLoader : MonoBehaviour
 
         var scene = SceneManager.LoadSceneAsync(sceneToBeLoaded);
         scene.allowSceneActivation = false;
-
-        loadingScreen.SetActive(true);
 
         do {
             await Task.Yield();

@@ -28,6 +28,6 @@ MonoBehaviour:
   consumeEffect: 2
   healAmount: 0
   attackBonus: 5
-  duration: 3
+  duration: 2
   onlyConsumableDuringCombat: 1
-  consumingCost: 2
+  consumingCost: 1

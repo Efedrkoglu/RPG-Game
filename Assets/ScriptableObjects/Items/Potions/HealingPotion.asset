@@ -18,7 +18,7 @@ MonoBehaviour:
     buff lasts for certain amount of time and heals you at the end of every round.
 
     Healing
-    amount: 5,
+    amount: 10,
 
     Duration: 3 rounds,
 
@@ -28,8 +28,8 @@ MonoBehaviour:
   isStackable: 1
   stackAmount: 5
   consumeEffect: 1
-  healAmount: 5
+  healAmount: 10
   attackBonus: 0
-  duration: 3
+  duration: 2
   onlyConsumableDuringCombat: 1
   consumingCost: 1

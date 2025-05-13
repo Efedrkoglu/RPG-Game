@@ -16,6 +16,8 @@ MonoBehaviour:
   itemName: Beer
   description: 'Beer
 
+    Consuming cost: 1
+
     (Only consumable during combat)'
   isStackable: 1
   stackAmount: 5
@@ -24,4 +26,4 @@ MonoBehaviour:
   attackBonus: 10
   duration: 2
   onlyConsumableDuringCombat: 1
-  consumingCost: 2
+  consumingCost: 1
