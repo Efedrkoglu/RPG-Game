@@ -11,10 +11,6 @@ public class LeaveDungeon : MonoBehaviour
         if(!confirmationPanel.activeInHierarchy) confirmationPanel.SetActive(true);
     }
 
-    public void YesButton() {
-        SceneManager.LoadScene("Castle");
-    }
-
     public void NoButton() {
         confirmationPanel.SetActive(false);
     }

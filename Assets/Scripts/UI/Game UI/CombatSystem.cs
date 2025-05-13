@@ -185,6 +185,7 @@ public class CombatSystem : MonoBehaviour
 		if(player.SapphireEquipped == 1 || player.EmeraldEquipped == 1)
 			player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
 
+		ClearBuffs();
 
 		if(state == BattleState.WON) {
 			info.text = "You defeated the " + enemy.EnemyName;
@@ -261,6 +262,7 @@ public class CombatSystem : MonoBehaviour
 
 	public void InventoryItemUsed(ConsumableItemSO item) {
 		UpdateCombatScreen();
+		UpdateBuffUI();
 		StartCoroutine(ItemUsingAnimation(item));
 		if(player.ActionCount == 0) {
 			gameObject.GetComponent<InventoryPanel>().ToggleInventory();
@@ -299,7 +301,7 @@ public class CombatSystem : MonoBehaviour
         }
 	}
 
-	public void UpdateBuffs() {
+	private void UpdateBuffs() {
         if (activeBuffs.Count > 0) {
             foreach (var buff in activeBuffs) {
                 buff.ReApplyBuff();
@@ -309,18 +311,34 @@ public class CombatSystem : MonoBehaviour
 				}
             }
 
-			for(int i = 0; i < activeBuffs.Count; i++) {
-				if (activeBuffs[i].Duration != 0) {
-					buffIcons[i].SetBuffIcon(activeBuffs[i].Type, activeBuffs[i].Duration, activeBuffs[i].getDescription());
-					buffIcons[i].gameObject.SetActive(true);
-				}
-				else {
-					buffIcons[i].gameObject.SetActive(false);
-				}
-			}
+			UpdateBuffUI();
         }
 		UpdateCombatScreen();
     }
+
+	private void UpdateBuffUI() {
+		if(activeBuffs.Count > 0) {
+            for (int i = 0; i < activeBuffs.Count; i++) {
+                if (activeBuffs[i].Duration != 0) {
+                    buffIcons[i].SetBuffIcon(activeBuffs[i].Type, activeBuffs[i].Duration, activeBuffs[i].getDescription());
+                    buffIcons[i].gameObject.SetActive(true);
+                } else {
+                    buffIcons[i].gameObject.SetActive(false);
+                }
+            }
+        }
+	}
+
+	private void ClearBuffs() {
+		if(activeBuffs.Count > 0) {
+			foreach(var buff in activeBuffs) {
+				buff.ClearBuff();
+			}
+			for(int i = 0; i < buffIcons.Length; i++) {
+				buffIcons[i].gameObject.SetActive(false);
+			}
+		}
+	}
 
 	public static void AddBuff(Buff buff) {
 		activeBuffs.Add(buff);

@@ -1,13 +1,16 @@
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private string sceneToBeLoaded;
     [SerializeField] private string description;
     [SerializeField] private GameScreen gameScreen;
+    [SerializeField] private GameObject loadingScreen;
 
     private bool listenInput;
 
@@ -18,17 +21,29 @@ public class SceneLoader : MonoBehaviour
     private void Update() {
         if(Input.GetKeyDown(KeyCode.E) && listenInput) {
             LoadScene();
+            listenInput = false;
         }
     }
 
-    private void LoadScene() {
+    public async void LoadScene() {
         if(SceneManager.GetActiveScene().name == "Castle") {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             PlayerPrefs.SetFloat("playerXPos", player.transform.position.x);
             PlayerPrefs.SetFloat("playerYPos", player.transform.position.y);
             PlayerPrefs.SetFloat("playerZPos", player.transform.position.z);
         }
-        SceneManager.LoadScene(sceneToBeLoaded);
+
+        var scene = SceneManager.LoadSceneAsync(sceneToBeLoaded);
+        scene.allowSceneActivation = false;
+
+        loadingScreen.SetActive(true);
+
+        do {
+            await Task.Yield();
+        } while(scene.progress < .9f);
+
+        await Task.Delay(Random.Range(500, 1500));
+        scene.allowSceneActivation = true;
     }
 
     private void OnTriggerEnter(Collider other) {
