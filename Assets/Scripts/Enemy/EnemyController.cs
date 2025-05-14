@@ -120,7 +120,7 @@ public class EnemyController : MonoBehaviour
         if(isHit) {
             if(Player.Instance.CurrentHp <= enemyScript.Damage) {
                 Player.Instance.CurrentHp -= enemyScript.Damage;
-                Player.Instance.gameObject.GetComponent<PlayerController>().OnCombatEnded(false);
+                hitInfo.collider.gameObject.GetComponent<PlayerController>().OnCombatEnded(false);
             }
             else {
                 hitInfo.collider.gameObject.GetComponent<PlayerController>().SetLastHitEnemy(gameObject);

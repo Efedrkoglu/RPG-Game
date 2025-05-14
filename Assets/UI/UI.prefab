@@ -6165,7 +6165,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4970497761790789892}
         m_TargetAssemblyTypeName: InventoryPanel, Assembly-CSharp
-        m_MethodName: ToggleInventory
+        m_MethodName: CloseInventoryButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10444,6 +10444,7 @@ MonoBehaviour:
   statsPanel: {fileID: 738169173224551690}
   statsPanelAnimator: {fileID: 2310007034357161613}
   levelUpIndicator: {fileID: 4437103702957329380}
+  levelCounterUI: {fileID: 0}
 --- !u!114 &3498301667188055940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10472,6 +10473,10 @@ MonoBehaviour:
   - {fileID: 4860632104375835935}
   - {fileID: 2729352325531008030}
   - {fileID: 4250886690710331892}
+  inventoryButton: {fileID: 6308112008765555641}
+  attackButton: {fileID: 4119317795263570456}
+  playerVfx: {fileID: 0}
+  enemyVfx: {fileID: 0}
 --- !u!114 &4970497761790789892
 MonoBehaviour:
   m_ObjectHideFlags: 0

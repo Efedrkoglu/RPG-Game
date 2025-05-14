@@ -35,6 +35,8 @@ public class CombatSystem : MonoBehaviour
 	[SerializeField] private GameObject combatScreen;
 	[SerializeField] private BuffIcon[] buffIcons;
 
+	[SerializeField] private Button inventoryButton, attackButton;
+
 	[SerializeField] private Animator playerVfx, enemyVfx;
 
     public static List<Buff> activeBuffs;
@@ -164,24 +166,38 @@ public class CombatSystem : MonoBehaviour
             enemy.PlayTurn(enemyUnit, playerUnit);
             info.text = enemy.EnemyName + " dealt " + enemy.GetDamageInfo() + " damage";
         }
+    }
 
+    private void HurtPlayer(bool attackSuccessfull) {
+        if (attackSuccessfull) {
+            player.CurrentHp -= enemy.GetLastDealtDamage();
+            playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
+        } else {
+            //play block sfx & anim
+            playerUnit.GetComponent<Animator>().SetTrigger("Block");
+        }
+        UpdateCombatScreen();
+
+        StartCoroutine(EndEnemyTurn());
+    }
+
+    private IEnumerator EndEnemyTurn() {
+        yield return new WaitForSeconds(.1f);
         if (player.CurrentHp <= 0) {
-			if(player.RubyEquipped == 1) {
-				player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
-				StartCoroutine(RevivePlayer());
-			}
-			else {
+            if (player.RubyEquipped == 1) {
+                player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
+                StartCoroutine(RevivePlayer());
+            } else {
                 state = BattleState.LOST;
                 playerUnit.GetComponent<Animator>().SetTrigger("Death");
                 StartCoroutine(EndBattle());
             }
-		}
-		else {
-			StartCoroutine(PlayerTurn());
-		}
-	}
+        } else {
+            StartCoroutine(PlayerTurn());
+        }
+    }
 
-	private IEnumerator EndBattle() {
+    private IEnumerator EndBattle() {
 		if(player.SapphireEquipped == 1 || player.EmeraldEquipped == 1)
 			player.gameObject.GetComponent<Inventory>().getEquipmentInventorySO().ClearSlot(5);
 
@@ -251,38 +267,34 @@ public class CombatSystem : MonoBehaviour
             if(player.IsEmeraldEffectActive) StartCoroutine(EnemyTurn(true));
 			else StartCoroutine(EnemyTurn(false));
         }
-    } 
+    }
 
-	public void InventoryButton() {
+    //PlayerUnit attack animations are calling this function
+    private void HurtEnemy() {
+        enemy.CurrentHp -= player.getDamage();
+        UpdateCombatScreen();
+        enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
+    }
+
+    public void InventoryButton() {
 		if(state != BattleState.PLAYERTURN)
 			return;
 
+		inventoryButton.interactable = false;
+		attackButton.interactable = false;
 		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
 	}
 
 	public void InventoryItemUsed(ConsumableItemSO item) {
-		UpdateCombatScreen();
 		UpdateBuffUI();
 		StartCoroutine(ItemUsingAnimation(item));
-		if(player.ActionCount == 0) {
-			gameObject.GetComponent<InventoryPanel>().ToggleInventory();
-			UpdateBuffs();
-            if (enemy.CurrentHp <= 0) {
-                state = BattleState.WON;
-                enemyUnit.GetComponent<Animator>().SetTrigger("Death");
-                StartCoroutine(EndBattle());
-            } 
-			else {
-                StartCoroutine(EnemyTurn(false));
-            }
-        }
-	}
+    }
 
 	private IEnumerator ItemUsingAnimation(ConsumableItemSO item) {
-		
 		gameObject.GetComponent<InventoryPanel>().ToggleInventory();
-
-		if(item.consumeEffect == Effect.Heal || item.consumeEffect == Effect.HealingBuff) {
+		yield return new WaitForSeconds(.5f);
+        UpdateCombatScreen();
+        if (item.consumeEffect == Effect.Heal || item.consumeEffect == Effect.HealingBuff) {
             playerVfx.SetTrigger("Regeneration");
 			yield return new WaitForSeconds(1.5f);
 			if(player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
@@ -299,7 +311,19 @@ public class CombatSystem : MonoBehaviour
 			yield return new WaitForSeconds(1.5f);
             if (player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
         }
-	}
+
+        if (player.ActionCount == 0) {
+            UpdateBuffs();
+            ActivateActionButtons();
+            if (enemy.CurrentHp <= 0) {
+                state = BattleState.WON;
+                enemyUnit.GetComponent<Animator>().SetTrigger("Death");
+                StartCoroutine(EndBattle());
+            } else {
+                StartCoroutine(EnemyTurn(false));
+            }
+        }
+    }
 
 	private void UpdateBuffs() {
         if (activeBuffs.Count > 0) {
@@ -348,23 +372,8 @@ public class CombatSystem : MonoBehaviour
 		}
 	}
 
-	//PlayerUnit attack animations are calling this function
-	private void HurtEnemy() {
-		enemy.CurrentHp -= player.getDamage();
-		UpdateCombatScreen();
-		enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
-    }
-
-    //EnemyUnit attack animations are calling this function
-    private void HurtPlayer(bool attackSuccessfull) {
-		if(attackSuccessfull) {
-			player.CurrentHp -= enemy.GetLastDealtDamage();
-			playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
-		}
-		else {
-			//play block sfx & anim
-			playerUnit.GetComponent<Animator>().SetTrigger("Block");	
-		}
-		UpdateCombatScreen();
+	public void ActivateActionButtons() {
+		attackButton.interactable = true;
+		inventoryButton.interactable = true;
 	}
 }

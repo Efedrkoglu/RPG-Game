@@ -22,6 +22,11 @@ public class InventoryPanel : MonoBehaviour
         }
     }
 
+    public void CloseInventoryButton() {
+        ToggleInventory();
+        gameObject.GetComponent<CombatSystem>().ActivateActionButtons();
+    }
+
     private IEnumerator CloseInventory() {
         inventoryAnimator.SetTrigger("Close");
         yield return new WaitForSeconds(.4f);
