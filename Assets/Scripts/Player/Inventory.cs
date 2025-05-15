@@ -69,6 +69,7 @@ public class Inventory : MonoBehaviour
         inventorySO.Initialize(Player.Instance.InventorySize);
         inventorySO.EquipmentEquipped += OnEquipmentEquipped;
 
+        equipmentInventorySO.Initialize();
         equipmentInventorySO.OnEquipmentUnequipped += OnEquipmentUnequipped;
     }
 

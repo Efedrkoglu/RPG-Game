@@ -39,6 +39,8 @@ public class CombatSystem : MonoBehaviour
 
 	[SerializeField] private Animator playerVfx, enemyVfx;
 
+	[SerializeField] private AudioClip hurt, death, healing, powerup;
+
     public static List<Buff> activeBuffs;
 
     public static event Action<bool> CombatEnded;
@@ -171,6 +173,7 @@ public class CombatSystem : MonoBehaviour
     private void HurtPlayer(bool attackSuccessfull) {
         if (attackSuccessfull) {
             player.CurrentHp -= enemy.GetLastDealtDamage();
+            AudioManager.Instance.PlayAudioClip(hurt, enemyUnit.transform);
             playerUnit.GetComponent<Animator>().SetTrigger("Hurt");
         } else {
             //play block sfx & anim
@@ -190,6 +193,7 @@ public class CombatSystem : MonoBehaviour
             } else {
                 state = BattleState.LOST;
                 playerUnit.GetComponent<Animator>().SetTrigger("Death");
+				AudioManager.Instance.PlayAudioClip(death, playerUnit.transform);
                 StartCoroutine(EndBattle());
             }
         } else {
@@ -261,6 +265,7 @@ public class CombatSystem : MonoBehaviour
         if(enemy.CurrentHp <= 0) {
             state = BattleState.WON;
             enemyUnit.GetComponent<Animator>().SetTrigger("Death");
+			AudioManager.Instance.PlayAudioClip(death, enemyUnit.transform);
             StartCoroutine(EndBattle());
         }
 		else {
@@ -273,6 +278,7 @@ public class CombatSystem : MonoBehaviour
     private void HurtEnemy() {
         enemy.CurrentHp -= player.getDamage();
         UpdateCombatScreen();
+		AudioManager.Instance.PlayAudioClip(hurt, enemyUnit.transform);
         enemyUnit.GetComponent<Animator>().SetTrigger("Hurt");
     }
 
@@ -296,19 +302,23 @@ public class CombatSystem : MonoBehaviour
         UpdateCombatScreen();
         if (item.consumeEffect == Effect.Heal || item.consumeEffect == Effect.HealingBuff) {
             playerVfx.SetTrigger("Regeneration");
+			AudioManager.Instance.PlayAudioClip(healing, playerUnit.transform);
 			yield return new WaitForSeconds(1.5f);
 			if(player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
         }
 		else if(item.consumeEffect == Effect.AttackBuff) {
             playerVfx.SetTrigger("Buff");
+            AudioManager.Instance.PlayAudioClip(powerup, playerUnit.transform);
             yield return new WaitForSeconds(1.5f);
             if (player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
         }
 		else if(item.consumeEffect == Effect.Both) {
             playerVfx.SetTrigger("Regeneration");
+            AudioManager.Instance.PlayAudioClip(healing, playerUnit.transform);
             yield return new WaitForSeconds(1.5f);
 			playerVfx.SetTrigger("Buff");
-			yield return new WaitForSeconds(1.5f);
+            AudioManager.Instance.PlayAudioClip(powerup, playerUnit.transform);
+            yield return new WaitForSeconds(1.5f);
             if (player.ActionCount > 0) gameObject.GetComponent<InventoryPanel>().ToggleInventory();
         }
 

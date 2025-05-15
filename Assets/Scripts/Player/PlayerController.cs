@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float movementSpeed;
 	[SerializeField] private GameScreen gameScreen;
 
+	[SerializeField] private AudioClip hurt, death;
+
 	public static event Action<Enemy, int> CombatTriggered;
 
 	private void Start() {
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(.15f);
 
         if (enemy.CurrentHp <= Player.Instance.getDamage()) {
+			AudioManager.Instance.PlayAudioClip(death, enemy.gameObject.transform);
 			OnCombatEnded(true);
 		}
 		else {
@@ -97,6 +100,7 @@ public class PlayerController : MonoBehaviour
 			if (hitInfo.collider.gameObject.CompareTag("Enemy")) {
 				lastHitEnemy = hitInfo.collider.gameObject;
 				hitInfo.collider.gameObject.GetComponent<Animator>().SetTrigger("Hurt");
+				AudioManager.Instance.PlayAudioClip(hurt, hitInfo.collider.gameObject.transform);
 				StartCoroutine(CombatTriggeredEvent(hitInfo.collider.gameObject.GetComponent<Enemy>()));
 			}
 		}

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Skeleton : Enemy
 {
+    [SerializeField] private AudioClip healing;
+
     protected override void Start() {
         enemyName = "Skeleton Boss";
         maxHp = 750;
@@ -18,7 +20,10 @@ public class Skeleton : Enemy
 
         if(turnCount % 2 == 0 && turnCount != 0) {
             currentHp += 15;
-            if(vfxAnimator != null) vfxAnimator.SetTrigger("Regeneration");
+            if(vfxAnimator != null) {
+                AudioManager.Instance.PlayAudioClip(healing, enemyUnit.gameObject.transform);
+                vfxAnimator.SetTrigger("Regeneration");
+            }
             if(currentHp > maxHp) currentHp = maxHp;
 
             if(CheckAttack()) SetLastDealtDamage(true);

@@ -178,6 +178,8 @@ MonoBehaviour:
     m_Bits: 128
   invertSpriteFlip: 1
   enemyScript: {fileID: 465518768071358671}
+  hurt: {fileID: 8300000, guid: 3a990ed6f6d14964c8039b5ab0d061bc, type: 3}
+  death: {fileID: 8300000, guid: 3c9ee830fb9fb0049905393ac27e8e47, type: 3}
 --- !u!95 &8460669447007866628
 Animator:
   serializedVersion: 5

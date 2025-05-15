@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         level = 0;
         maxExp = 100;
         currentExp = 0;
-        maxHp = 50;
+        maxHp = 5;
         currentHp = maxHp;
         damage = 10;
         defPercent = 0;

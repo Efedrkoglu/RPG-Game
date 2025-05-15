@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool invertSpriteFlip = false;
     [SerializeField] private Enemy enemyScript;
 
+    [SerializeField] private AudioClip hurt, death;
+
     private NavMeshAgent agent;
     private SpriteRenderer spriteRenderer;
     private Transform player;
@@ -118,8 +120,10 @@ public class EnemyController : MonoBehaviour
         bool isHit = Physics.SphereCast(transform.position, .1f, hitDirection, out RaycastHit hitInfo, attackRange, playerMask);
 
         if(isHit) {
-            if(Player.Instance.CurrentHp <= enemyScript.Damage) {
+            AudioManager.Instance.PlayAudioClip(hurt, gameObject.transform);
+            if(Player.Instance.CurrentHp <= enemyScript.Damage && Player.Instance.RubyEquipped != 1) {
                 Player.Instance.CurrentHp -= enemyScript.Damage;
+                AudioManager.Instance.PlayAudioClip(death, gameObject.transform);
                 hitInfo.collider.gameObject.GetComponent<PlayerController>().OnCombatEnded(false);
             }
             else {

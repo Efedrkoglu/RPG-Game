@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] private Sprite silverCoin, goldCoin;
     [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private AudioClip coinAudio;
 
     private CoinType coinType;
     private int amount;
@@ -40,6 +41,7 @@ public class Coin : MonoBehaviour
                     itemObtainedFeed?.OnAddCoin(goldCoin, "Gold Coin", amount);
                     break;
             }
+            AudioManager.Instance.PlayAudioClip(coinAudio, gameObject.transform);
             Destroy(gameObject);
         }
     }

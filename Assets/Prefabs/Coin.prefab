@@ -102,6 +102,7 @@ MonoBehaviour:
   silverCoin: {fileID: 21300000, guid: d2cef824f4350a34fa8bf24de6e0ee95, type: 3}
   goldCoin: {fileID: 21300000, guid: bbcfba759a1ab0e4481e621e3d17b0cb, type: 3}
   sr: {fileID: 7267849095453226451}
+  coinAudio: {fileID: 8300000, guid: 06c89a30ae88c82409078cde2a1a873f, type: 3}
 --- !u!95 &3058944966830530717
 Animator:
   serializedVersion: 5

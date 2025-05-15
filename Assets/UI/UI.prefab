@@ -10477,6 +10477,10 @@ MonoBehaviour:
   attackButton: {fileID: 4119317795263570456}
   playerVfx: {fileID: 0}
   enemyVfx: {fileID: 0}
+  hurt: {fileID: 8300000, guid: 3a990ed6f6d14964c8039b5ab0d061bc, type: 3}
+  death: {fileID: 8300000, guid: 3c9ee830fb9fb0049905393ac27e8e47, type: 3}
+  healing: {fileID: 8300000, guid: 8b398c0965e1a874a85d943129fc6d3c, type: 3}
+  powerup: {fileID: 8300000, guid: 408c92c5b19d8b44b990ab34518805fb, type: 3}
 --- !u!114 &4970497761790789892
 MonoBehaviour:
   m_ObjectHideFlags: 0
