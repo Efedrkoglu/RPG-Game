@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ItemObtainedFeed : MonoBehaviour
 {
@@ -15,7 +13,9 @@ public class ItemObtainedFeed : MonoBehaviour
     }
 
     private void OnDestroy() {
-        Player.Instance.gameObject.GetComponent<Inventory>().getInventorySO().OnAddItem -= OnAddItem;
+        if(Player.Instance.gameObject != null) {
+            Player.Instance.gameObject.GetComponent<Inventory>().getInventorySO().OnAddItem -= OnAddItem;
+        }
     }
 
     public void OnAddItem(ItemSO item, int amount) {

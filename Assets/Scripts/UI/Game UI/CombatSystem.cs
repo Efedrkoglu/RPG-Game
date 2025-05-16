@@ -55,7 +55,9 @@ public class CombatSystem : MonoBehaviour
 	private void OnDestroy() {
 		PlayerController.CombatTriggered -= OnCombatTriggered;
         EnemyController.CombatTriggered -= OnCombatTriggered;
-        Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed -= InventoryItemUsed;
+        if(Player.Instance.gameObject != null) {
+            Player.Instance.gameObject.GetComponent<Inventory>().OnInventoryItemUsed -= InventoryItemUsed;
+        }
     }
 
 	private void CombatEndedEvent(bool combatResult) {
